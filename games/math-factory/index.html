@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#10202b">
-<title>MATH FACTORY — 数学ファクトリー v1.3.0</title>
+<title>MATH FACTORY — 数学ファクトリー v1.3.1</title>
 <style>
 :root{--bg:#0d1a22;--panel:#172831;--panel2:#20343d;--line:#36515b;--text:#f2f7f6;--muted:#a5bec4;--mint:#4fe0bc;--amber:#ffbf62;--steel:#304951;--red:#ff8582;--tile:58px}
 *{box-sizing:border-box}
@@ -70,7 +70,7 @@ button,input,select{font:inherit}button{border:1px solid #46616b;border-radius:1
   <header class="head">
     <div class="identity">
       <div class="logo" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="M5 40V23l12 7V20l12 9V13h6v12l8 5v10H5Z" fill="#f0bd69" stroke="#ffe1a1" stroke-width="2" stroke-linejoin="round"/><path d="M12 34h5m7 0h5m6 0h4" stroke="#31535a" stroke-width="3" stroke-linecap="round"/><path d="M31 13V5h4v8" fill="#c4dcdf" stroke="#c4dcdf" stroke-width="2"/></svg></div>
-      <div><div class="eyebrow">Build · Calculate · Automate</div><div class="brand">MATH <span>FACTORY</span><span class="version">v1.3.0</span></div><div class="small">数字をつくる、ちいさな工場。</div></div>
+      <div><div class="eyebrow">Build · Calculate · Automate</div><div class="brand">MATH <span>FACTORY</span><span class="version">v1.3.1</span></div><div class="small">数字をつくる、ちいさな工場。</div></div>
     </div>
     <div class="headright"><div class="statpill"><small>🏭 工場レベル</small><strong id="level">1</strong></div><div class="statpill"><small>🔬 研究ポイント</small><strong><span id="rp">0</span> RP</strong></div><div class="statpill"><small>⭐ 獲得スター</small><strong id="stars">0</strong></div></div>
   </header>
@@ -97,7 +97,7 @@ button,input,select{font:inherit}button{border:1px solid #46616b;border-radius:1
       <div class="board-shell"><div class="factory-caption"><span>INLET / 材料搬入</span><span>OUTLET / 製品出荷</span></div><div class="board-outer"><div class="board" id="board" role="group" aria-label="工場マス目。装置を選んでマスを押すと配置します"></div></div><div class="board-caption">青＝材料の入口　／　灰＝コンベア　／　緑＝完成品の出口　／　▦＝動かせない固定設備</div></div>
       <div class="workbottom">
         <div class="control-bar"><button class="runbtn" id="run">▶ 生産開始</button><button class="subbtn" id="step">⏭ 1コマ進める</button><button class="subbtn" id="reset">↺ やり直す</button></div>
-        <div class="quick-actions"><button id="rotate" title="選択中の装置を時計回りに回す">⟳ 向きを回す</button><button id="straight" title="入口と出口を結ぶ直線ベルトを敷く">▰ 直線ベルトを敷く</button><label class="speedlabel">速度 <select id="speed"><option value="800">ゆっくり（旧標準）</option><option value="400" selected>標準（旧2倍）</option><option value="180">高速（約4倍）</option></select></label></div>
+        <div class="quick-actions"><button id="rotate" title="選択中の装置を時計回りに回す">⟳ 向きを回す</button><button id="straight" title="入口と出口を結ぶ直線ベルトを敷く">▰ 直線ベルトを敷く</button><label class="speedlabel">速度 <select id="speed"><option value="800">ゆっくり</option><option value="400" selected>標準</option><option value="180">速い</option></select></label></div>
         <div class="message" role="status" aria-live="polite"><span id="status">左から装置を選んでください。</span></div>
         <div class="footmetrics"><div class="metric"><small>稼働時間</small><strong><span id="ticks">0</span> <span style="font-size:10px">tick</span></strong></div><div class="metric"><small>装置の台数</small><strong id="used">0 / 3</strong></div><div class="metric"><small>搬送中</small><strong id="activeTokens">0</strong></div><div class="metric"><small>不良品</small><strong id="waste">0</strong></div></div>
       </div>
