@@ -1,0 +1,335 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f6f8fc"><title>ペントミノ・チャレンジ</title><style>
+:root{font-family:'Nunito','Noto Sans JP',system-ui,sans-serif;color:#24334b;background:#f6f8fc;font-synthesis:none}
+*{box-sizing:border-box}
+body{margin:0;min-width:300px;min-height:100vh;background:radial-gradient(ellipse 65% 40% at 10% -5%,#e5f0ff 0%,transparent 100%),radial-gradient(ellipse 65% 30% at 100% 0%,#eff7f1 0%,transparent 90%),#f6f8fc}
+button,select{font:inherit}button{cursor:pointer;border:1px solid #dde5f0;background:#fff;color:#26364c;border-radius:12px;padding:11px 16px;font-weight:700;transition:background .16s ease,border-color .16s ease,transform .16s ease,box-shadow .16s ease}
+button:hover{border-color:#a5c5cf;background:#f4fafb}button:active{transform:scale(.98)}button:focus-visible,select:focus-visible{outline:3px solid #44b8a5;outline-offset:3px}button:disabled{opacity:.36;cursor:default;transform:none}
+.app{max-width:1160px;margin:auto;padding:24px 26px 48px}
+.hidden{display:none!important}.muted{color:#8290a5;font-size:.84rem}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:26px}.brand{display:flex;align-items:center;gap:12px}.brand-mark{width:45px;height:45px;border-radius:14px;background:#223b55;display:grid;place-items:center;flex-shrink:0;box-shadow:0 8px 18px #24476a22}.brand-mark svg{width:31px;height:31px}.brand-text h1{margin:0;font-size:1.28rem;letter-spacing:-.05em;font-weight:900}.brand-text .subbrand{font-size:.73rem;color:#8c9aab;font-weight:600;margin-top:1px}.version{font-size:.72rem;color:#8493a7;font-weight:700;background:#fff;border:1px solid #e3e9f1;padding:7px 11px;border-radius:999px}
+.screen{animation:fade-in .18s ease both}@keyframes fade-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.panel{background:#fff;border:1px solid #e3eaf3;border-radius:22px;padding:26px;margin:0 0 20px;box-shadow:0 13px 40px #283b5b0c}
+h2{font-size:1.45rem;letter-spacing:-.045em;margin:0;font-weight:900;color:#21344b}h3{margin:0;font-size:1rem;font-weight:800}
+.eyebrow{font-weight:900;letter-spacing:.12em;font-size:.7rem;color:#159c8d;margin:0 0 8px}.section-description{margin:9px 0 0;color:#8190a2;font-size:.88rem}
+.home-hero{text-align:center;padding:28px 0 10px}.home-hero h2{font-size:clamp(1.6rem,3vw,2.45rem)}.home-hero p{color:#8090a1;margin:10px 0 0;font-size:.94rem}
+.modechoices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:29px 0 16px}.mode-card{text-align:left;padding:25px;border:1px solid #e4eaf3;border-radius:20px;min-height:220px;display:flex;flex-direction:column;gap:9px;position:relative;overflow:hidden;background:#fff}.mode-card:hover{border-color:#71c4b5;background:#fbfffe;box-shadow:0 10px 26px #173f5320;transform:translateY(-2px)}.mode-card.classic:hover{border-color:#9ba9db;background:#fbfcff}.mode-art{width:84px;height:68px;display:grid;grid-template-columns:repeat(5,1fr);grid-auto-rows:12px;gap:2px;margin-bottom:auto}.mode-art span{border-radius:3px;background:#dfecf1}.mode-art span.on{background:#54baa8}.classic .mode-art span.on{background:#7794d3}.mode-card .mode-title{font-weight:900;font-size:1.26rem;color:#263a53}.mode-card .mode-sub{font-weight:500;color:#8895a6;font-size:.86rem}.mode-card .card-arrow{position:absolute;right:25px;bottom:25px;width:32px;height:32px;display:grid;place-items:center;border-radius:50%;background:#eff8f6;font-size:1.2rem;color:#1a9182}.mode-card.classic .card-arrow{background:#f1f3ff;color:#7184c6}.home-progress{display:flex;justify-content:center;align-items:center;gap:7px;color:#667890;font-size:.88rem;padding:13px}.home-progress strong{color:#d1982c;font-weight:900;font-size:1.05rem}
+.navline{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;gap:10px}.backbtn{border:0;background:transparent;color:#6e8194;font-size:.86rem;padding:8px 0}.backbtn:hover{border:0;background:transparent;color:#159c8d}.screen-heading{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;margin-bottom:23px}
+.progress-summary{display:grid;grid-template-columns:repeat(3,auto);gap:20px;align-items:center;background:#f8fafc;border:1px solid #edf1f6;border-radius:14px;padding:14px 20px}.progress-summary>div{display:flex;flex-direction:column;gap:1px;text-align:center}.progress-summary span{font-size:.7rem;color:#8a98aa;font-weight:700}.progress-summary strong{font-size:1rem;font-weight:900;color:#344962}.progress-summary .gold{color:#d89b2f}.overall-track,.placed-track{height:7px;background:#edf1f5;border-radius:20px;overflow:hidden}.overall-track{margin:-7px 0 24px}.overall-track>div,.placed-track>div{height:100%;width:0;background:#53bea8;transition:width .2s ease;border-radius:20px}
+.stage-group{margin-top:22px}.stage-group-head{display:flex;align-items:center;justify-content:space-between;font-size:.79rem;color:#7c8ca1;margin:0 2px 9px}.stage-group-head strong{font-weight:900;letter-spacing:.06em;color:#6d8297}.stage-group-head span{font-weight:800;color:#bf9649}.levelgrid{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:8px}.level{min-width:0;display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 4px 9px;border-radius:12px;border:1px solid #e6ebf2;background:#fbfcff;line-height:1.2}.level .level-number{font-size:1.07rem;font-weight:900}.level .level-stars{display:flex;gap:1px;white-space:nowrap;font-size:.93rem;letter-spacing:0}.level .filled{color:#e5ae41}.level .empty{color:#dfe5ed}.level .level-state{font-size:.64rem;font-weight:600;color:#8e9bac;white-space:nowrap}.level.cleared{border-color:#f1dfb8;background:#fffdfa}.level.perfect{background:#fff9e9;border-color:#f0cd77}.level.perfect .level-number{color:#9b7120}.level.attempted{border-color:#c1dcd5}.level.current{outline:2px solid #49b8a5;outline-offset:0}.level:hover{background:#f0faf6;border-color:#54b9a6;transform:translateY(-1px)}
+.settings-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:22px}.field{display:flex;flex-direction:column;gap:9px;color:#64758a;font-size:.88rem;font-weight:800}.field select{display:block;width:100%;background:#f9fbfd;border:1px solid #dce5ee;border-radius:13px;padding:16px 14px;font-size:1rem;color:#273e56;min-height:57px}.settings-actions{display:flex;align-items:center;gap:14px;margin-top:24px}.primary{border-color:#179e90;background:#1da995;color:#fff;box-shadow:0 7px 17px #1da99524}.primary:hover{border-color:#158979;background:#188c7d}.settings-note{color:#8090a2;font-size:.83rem}
+.play-panel{padding:20px 21px}.play-nav{display:flex;justify-content:space-between;gap:9px;align-items:center;padding-bottom:14px;border-bottom:1px solid #f0f2f6}.play-nav .backbtn{white-space:nowrap}.play-nav .subtle-nav{font-size:.82rem;color:#91a1b3;border:0;background:transparent;padding:9px 5px}.play-nav .subtle-nav:hover{background:transparent;color:#506882}
+.status{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:17px 0 18px}.metric{display:flex;flex-direction:column;gap:3px;background:#f6f9fc;padding:11px 15px;border-radius:12px;min-width:96px;line-height:1.1}.metric::before{font-size:.63rem;text-transform:uppercase;letter-spacing:.09em;color:#8b9bb0;font-weight:800}.metric#stageTitle::before{content:'PUZZLE'}.metric#clock::before{content:'TIME'}.metric#moves::before{content:'MOVES'}.metric#targets::before{content:'GOAL'}.metric#flipLabel::before{content:'FLIP'}.metric#stageTitle{background:#eaf7f3;color:#168879;font-size:1.05rem;font-weight:900}.metric#clock,.metric#moves{font-weight:900;color:#344860;font-variant-numeric:tabular-nums}.metric#targets,.metric#flipLabel{font-size:.8rem;font-weight:700;color:#65788c}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 272px;gap:16px;align-items:start}.layout section,.layout aside{min-width:0}.play-board-block{border:1px solid #e9edf4;background:#fff;border-radius:18px;overflow:hidden}.play-board-head{display:flex;justify-content:space-between;align-items:center;padding:16px 18px 12px}.play-board-head .small-detail{font-size:.8rem;color:#7f91a5;font-weight:800}.boardwrap{background:#f6f9fd;padding:20px 12px;border-top:1px solid #f0f3f8;border-bottom:1px solid #edf1f5;min-height:240px;overflow:auto;overscroll-behavior:contain;display:flex;align-items:center;justify-content:center;background-image:radial-gradient(#e4eaf2 1px,transparent 1px);background-size:14px 14px}.board{display:grid;gap:3px;width:max-content;margin:auto;touch-action:none}.cell{width:var(--unit);height:var(--unit);background:#dde6f0;border:1px solid #cbd7e3;border-radius:5px;display:grid;place-items:center;font-size:12px;font-weight:900;user-select:none;cursor:crosshair;touch-action:none;box-shadow:inset 0 -1px 0 #00000007}.cell.off{background:transparent;border-color:transparent;box-shadow:none;cursor:default}.cell.preview{background:#60bda2!important;outline:2px solid white;outline-offset:-2px}.cell.cell-selected{outline:2px solid #fff;outline-offset:-3px}.cell.drag-valid{background:#40b68e!important;outline:2px solid #fff;outline-offset:-2px}.cell.drag-invalid{background:#e17d7c!important;outline:2px solid #fff;outline-offset:-2px}.placed-track{height:5px;background:#edf2f6}.drop-status{display:none;margin:0;padding:8px 12px;border-radius:9px;font-size:.8rem;font-weight:800;text-align:center}.drop-status.active{display:block;margin:9px 15px 0}.drop-status.ok{color:#148b6f;background:#e9f9f1}.drop-status.ng{color:#c05b58;background:#fff0ef}
+.toolbar{display:flex;align-items:center;gap:7px;flex-wrap:wrap;padding:14px 2px 5px}.toolbar button{min-height:44px;padding:9px 13px;display:inline-flex;justify-content:center;align-items:center;gap:5px}.toolbar .rotate{font-size:1.2rem;line-height:1}.toolbar .toolbar-spacer{flex:1}.toolbar .hint{color:#a77924;border-color:#f0dfb8;background:#fff8e9}.toolbar .hint:hover{background:#fff3d7}.toolbar .restart{color:#8a9caf;background:transparent;border-color:transparent;font-size:.81rem}.toolbar .restart:hover{background:#f5f8fb;border-color:#edf1f7}
+.notice{font-size:.8rem;color:#8394a7;padding:8px 3px;line-height:1.4;min-height:20px}.notice:empty{display:none}.win{background:#eefaf3;border:1px solid #b9e6cf;border-radius:16px;padding:20px;margin-top:15px;text-align:center}.win h2{font-size:1.4rem}.win button{border-color:#159e8c;background:#1da995;color:#fff;margin-top:8px}
+.bank{border:1px solid #e9edf4;border-radius:18px;padding:16px;background:#fff}.bank-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:11px}.bank-head .muted{font-weight:800;font-variant-numeric:tabular-nums}.pieces{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;--piece-unit:15px}.piece{min-height:100px;padding:9px 5px;border-radius:13px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;position:relative;background:#fafcff;border-color:#e6edf4;touch-action:none;user-select:none;-webkit-user-select:none}.piece strong{font-size:.81rem;color:#516379;font-weight:900}.piece.selected{border:2px solid #43b99f;background:#f1fbf7;box-shadow:0 0 0 3px #43b99f14}.piece.placed{opacity:.48}.piece.placed::after{content:'✓';position:absolute;right:6px;top:3px;color:#1e947c;font-size:1rem;font-weight:900}.piece.selected.placed{opacity:.84}.mini{display:grid;gap:2px}.mini i{width:var(--piece-unit);height:var(--piece-unit);border-radius:3px}.drag-ghost{position:fixed;z-index:9999;pointer-events:none;display:grid;gap:2px;filter:drop-shadow(0 5px 12px #21385055);opacity:.94}.drag-ghost i{width:var(--ghost-unit);height:var(--ghost-unit);border-radius:4px;border:1px solid #ffffff99}
+footer{text-align:center;color:#a1adbd;font-size:.74rem;margin:24px 0 10px}
+@media(max-width:900px){.layout{grid-template-columns:minmax(0,1fr) 232px}.bank{padding:10px}.piece{min-height:86px}.app{padding:18px}.panel{padding:20px}.play-panel{padding:16px}}
+@media(max-width:700px){.layout{display:flex;flex-direction:column;gap:13px}.layout aside{order:0;width:100%}.layout section{order:1;width:100%}.bank{padding:13px}.pieces{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;--piece-unit:12px}.piece{min-height:70px;padding:6px 3px;gap:4px}.bank-head{margin-bottom:9px}.boardwrap{min-height:210px}.modechoices{grid-template-columns:1fr}.mode-card{min-height:160px}.topbar{margin-bottom:16px}.status{gap:7px}.metric{padding:9px 11px;min-width:0}.levelgrid{grid-template-columns:repeat(5,minmax(0,1fr))}.level{min-height:75px}.progress-summary{gap:12px;padding:10px 13px}}
+@media(max-width:450px){.app{padding:11px 10px 30px}.panel{padding:15px;border-radius:17px}.play-panel{padding:12px}.brand-mark{width:39px;height:39px}.brand-text h1{font-size:1.12rem}.brand-text .subbrand{font-size:.66rem}.version{font-size:.68rem;padding:6px 8px}.screen-heading{gap:12px}.screen-heading h2{font-size:1.22rem}.progress-summary{width:100%;justify-content:space-between}.levelgrid{gap:6px}.level{padding:10px 1px 8px;gap:5px;border-radius:10px;min-height:72px}.level .level-number{font-size:.97rem}.level .level-stars{font-size:.83rem}.level .level-state{font-size:.58rem}.settings-fields{grid-template-columns:1fr}.settings-actions{flex-direction:column;align-items:stretch}.settings-actions .primary{min-height:53px}.status{margin:12px 0}.metric{font-size:.8rem;padding:8px 9px}.metric#stageTitle{font-size:.9rem}.metric#targets,.metric#flipLabel{font-size:.75rem}.toolbar{gap:6px}.toolbar button{padding:9px 10px;min-height:42px}.toolbar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.toolbar button{white-space:nowrap;font-size:.86rem}.toolbar .hint{grid-column:span 2}.toolbar .restart{grid-column:3;border-color:#edf1f7;background:#f8fafc}.toolbar .toolbar-spacer{display:none}.pieces{gap:5px}.piece{min-height:66px}.play-board-head{padding:12px 13px 10px}.boardwrap{padding:15px 9px;min-height:190px}}
+</style></head><body><div class="app">
+<header class="topbar"><div class="brand"><div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40"><rect x="3" y="15" width="11" height="11" rx="3" fill="#7ad0bc"/><rect x="15" y="3" width="11" height="11" rx="3" fill="#f5bc58"/><rect x="15" y="15" width="11" height="11" rx="3" fill="#79b8ee"/><rect x="27" y="15" width="11" height="11" rx="3" fill="#e28fab"/><rect x="15" y="27" width="11" height="11" rx="3" fill="#ad98dc"/></svg></div><div class="brand-text"><h1>ペントミノ・チャレンジ</h1><div class="subbrand">PENTOMINO CHALLENGE</div></div></div><span class="version">v0.3.1</span></header>
+<main>
+<div id="homeScreen" class="panel screen"><div class="home-hero"><p class="eyebrow">WELCOME TO PENTOMINO</p><h2>どちらで遊びますか？</h2><p>12種類のピースで、ひらめきのパズルを。</p></div>
+<div class="modechoices">
+<button id="tabStage" class="mode-card" type="button"><span class="mode-art" aria-hidden="true"><span class="on"></span><span class="on"></span><span class="on"></span><span></span><span></span><span></span><span class="on"></span><span class="on"></span><span class="on"></span><span></span><span></span><span></span><span class="on"></span><span></span><span></span></span><span class="mode-title">ステージモード</span><span class="mode-sub">全100ステージ。星3つを目指そう</span><span class="card-arrow" aria-hidden="true">→</span></button>
+<button id="tabClassic" class="mode-card classic" type="button"><span class="mode-art" aria-hidden="true"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span></span><span class="mode-title">クラシックモード</span><span class="mode-sub">長方形を選んで、自由に挑戦</span><span class="card-arrow" aria-hidden="true">→</span></button>
+</div><div class="home-progress">これまでに集めた星 <strong>★ <span id="homeStars">0</span></strong> / 300</div></div>
+<div id="stageSettings" class="panel screen hidden"><div class="navline"><button id="stageBackHome" class="backbtn" type="button">← モード選択</button></div><div class="screen-heading"><div><p class="eyebrow">STAGE SELECT</p><h2>ステージを選ぶ</h2><p class="section-description">星を集めながら、少しずつ進もう</p></div><div class="progress-summary"><div><span>獲得した星</span><strong class="gold">★ <span id="totalStars">0 / 300</span></strong></div><div><span>クリア数</span><strong id="clearedCount">0 / 100</strong></div><div><span>星3達成</span><strong id="perfectCount">0</strong></div></div></div><div class="overall-track"><div id="overallFill"></div></div><div id="levels"></div></div>
+<div id="classicSettings" class="panel screen hidden"><div class="navline"><button id="classicBackHome" class="backbtn" type="button">← モード選択</button></div><p class="eyebrow">CLASSIC MODE</p><h2>クラシックの設定</h2><p class="section-description">全12ピースで長方形を完成させよう</p><div class="settings-fields"><label class="field" for="classicShape">盤面の大きさ<select id="classicShape"><option value="6x10">6 × 10</option><option value="5x12">5 × 12</option><option value="4x15">4 × 15</option><option value="3x20">3 × 20</option></select></label><label class="field" for="classicFlip">裏返し<select id="classicFlip"><option value="yes">ON（許可）</option><option value="no">OFF（禁止）</option></select></label></div><div class="settings-actions"><button id="startClassic" class="primary" type="button">この設定で遊ぶ →</button><span class="settings-note">クラシックモードは星評価なし</span></div></div>
+<div id="playScreen" class="panel play-panel screen hidden"><div class="play-nav"><button id="chooseStage" class="backbtn" type="button">← ステージ一覧</button><button id="playBackHome" class="subtle-nav" type="button">モード選択</button></div>
+<div class="status"><span class="metric" id="stageTitle"></span><span class="metric" id="clock">00:00</span><span class="metric" id="moves">0</span><span class="metric" id="targets"></span><span class="metric" id="flipLabel"></span></div>
+<div class="layout"><section>
+<div class="play-board-block"><div class="play-board-head"><h3>盤面</h3><span class="small-detail">配置 <span id="count">0 / 0</span></span></div><div class="boardwrap"><div class="board" id="board" aria-label="パズル盤面"></div></div><div class="placed-track"><div id="placedFill"></div></div><div id="dropStatus" class="drop-status" aria-live="polite"></div></div>
+<div class="actions" style="display:none" aria-hidden="true"><button id="confirmPlace">確定</button><button id="cancelPreview">取り消し</button></div>
+<div class="toolbar" aria-label="ピース操作"><button id="rotL" title="左回転" aria-label="左回転"><span class="rotate">↶</span><span>左回転</span></button><button id="rotR" title="右回転" aria-label="右回転"><span class="rotate">↷</span><span>右回転</span></button><button id="flip" title="反転" aria-label="反転">⇄ 反転</button><span class="toolbar-spacer"></span><button id="hint" class="hint">✦ ヒント</button><button id="restart" class="restart">最初から</button></div>
+<div id="message" class="notice" aria-live="polite"></div><div id="win" class="win hidden"></div></section>
+<aside class="bank"><div class="bank-head"><h3>ピース</h3><span class="muted">タップして選択</span></div><div id="pieces" class="pieces"></div></aside>
+</div></div>
+</main><footer>プレイ記録はこのブラウザに保存されます</footer></div><script>
+'use strict';
+const BASE={F:['.XX','XX.','.X.'],I:['XXXXX'],L:['X.','X.','X.','XX'],P:['XX','XX','X.'],N:['XX..','.XXX'],T:['XXX','.X.','.X.'],U:['X.X','XXX'],V:['X..','X..','XXX'],W:['X..','XX.','.XX'],X:['.X.','XXX','.X.'],Y:['.X','XX','.X','.X'],Z:['XX.','.X.','.XX']};
+const COLORS={F:'#ee7d80',I:'#60b8e5',L:'#f0b75b',P:'#9c88e6',N:'#64c3aa',T:'#ec91bd',U:'#7bbf75',V:'#e49a60',W:'#72a6de',X:'#ce8edb',Y:'#d8c45b',Z:'#78d0c9'};
+const ALL=Object.keys(BASE);const $=id=>document.getElementById(id);
+function normalize(a){let mx=Math.min(...a.map(p=>p[0])),my=Math.min(...a.map(p=>p[1]));return a.map(([x,y])=>[x-mx,y-my]).sort((a,b)=>a[1]-b[1]||a[0]-b[0]);}
+function key(a){return normalize(a).map(p=>p.join(',')).join(';')}
+function turn(a){return normalize(a.map(([x,y])=>[-y,x]))}function mirror(a){return normalize(a.map(([x,y])=>[-x,y]))}
+const SHAPES=Object.fromEntries(ALL.map(n=>[n,normalize(BASE[n].flatMap((r,y)=>[...r].flatMap((v,x)=>v==='X'?[[x,y]]:[])))]));
+function variants(name,allowFlip){let out=[],seen=new Set();for(let f=0;f<(allowFlip?2:1);f++){let a=f?mirror(SHAPES[name]):SHAPES[name];for(let r=0;r<4;r++){let k=key(a);if(!seen.has(k)){seen.add(k);out.push(a)}a=turn(a)}}return out}
+// Deterministic pseudo-random generator
+function rng(seed){let s=seed>>>0;return ()=>{s=(Math.imul(s,1664525)+1013904223)>>>0;return s/4294967296}}
+function shuffle(a,random){a=[...a];for(let i=a.length-1;i>0;i--){let j=Math.floor(random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+// Exact cover search with minimum remaining values. Stops at the first solution.
+function solve(mask,w,h,names,flipAllowed,locked=[],seed=1,budget=140000){let rand=rng(seed),filled=new Set(locked.flatMap(q=>q.cells.map(([x,y])=>y*w+x))),used=new Set(locked.map(q=>q.name)),remaining=names.filter(n=>!used.has(n));let valid=[];for(let y=0;y<h;y++)for(let x=0;x<w;x++)if(mask[y*w+x]&&!filled.has(y*w+x))valid.push(y*w+x);if(valid.length!==remaining.length*5)return null;
+let candidates=new Map(valid.map(v=>[v,[]]));for(let n of remaining){for(let shape of variants(n,flipAllowed)){let sx=Math.max(...shape.map(p=>p[0])),sy=Math.max(...shape.map(p=>p[1]));for(let y=0;y+sy<h;y++)for(let x=0;x+sx<w;x++){let cells=shape.map(([dx,dy])=>[x+dx,y+dy]);let ids=cells.map(([cx,cy])=>cy*w+cx);if(ids.some(id=>!mask[id]||filled.has(id)))continue;let opt={name:n,cells,ids};for(let id of ids)candidates.get(id).push(opt)}}}
+let visits=0;function dfs(left){if(!left.length)return [];if(++visits>budget)return null;let best=null,options=null;for(let id of left){let opts=candidates.get(id).filter(c=>!used.has(c.name)&&c.ids.every(q=>!filled.has(q)));if(!opts.length)return null;if(!options||opts.length<options.length){best=id;options=opts;if(opts.length===1)break}}for(let c of shuffle(options,rand)){used.add(c.name);c.ids.forEach(q=>filled.add(q));let next=dfs(left.filter(q=>!filled.has(q)));if(next)return [{name:c.name,cells:c.cells},...next];c.ids.forEach(q=>filled.delete(q));used.delete(c.name)}return null}let found=dfs(valid);return found?[...locked,...found]:null}
+// Build an irregular connected silhouette by joining distinct pieces along edges.
+// No isolated five-cell "islands" or single-edge necks.
+function joinedStage(names,flipAllowed,seed){
+ let random=rng(seed),N=names.length,gridSize=30,offset=12;
+ for(let attempt=0;attempt<280;attempt++){
+  let order=shuffle(names,random),placements=[],used=new Set(),touches=[];
+  let first=variants(order[0],flipAllowed)[Math.floor(random()*variants(order[0],flipAllowed).length)];
+  let initial=first.map(([x,y])=>[x+offset,y+offset]);
+  placements.push({name:order[0],cells:initial});
+  initial.forEach(([x,y])=>used.add(y*gridSize+x));
+  let good=true;
+  for(let i=1;i<N;i++){
+   let opts=[],v=variants(order[i],flipAllowed);
+   for(let shape of v)for(let dy=-4;dy<=4;dy++)for(let dx=-4;dx<=4;dx++){
+    // Try positions near any existing piece, not only the most recent one.
+    let near=placements[Math.floor(random()*placements.length)].cells[0];
+    let x0=near[0]+dx,y0=near[1]+dy;
+    let cells=shape.map(([x,y])=>[x+x0,y+y0]);
+    if(cells.some(([x,y])=>x<1||y<1||x>=gridSize-1||y>=gridSize-1||used.has(y*gridSize+x)))continue;
+    let edge=0,neighbors=new Set();
+    for(let [x,y] of cells)for(let [xx,yy] of [[x-1,y],[x+1,y],[x,y-1],[x,y+1]]){
+     if(used.has(yy*gridSize+xx)){edge++;for(let j=0;j<placements.length;j++)if(placements[j].cells.some(p=>p[0]===xx&&p[1]===yy))neighbors.add(j)}
+    }
+    if(edge>=3)opts.push({cells,edge,neighborCount:neighbors.size});
+   }
+   if(!opts.length){good=false;break}
+   opts.sort((a,b)=>(b.edge+b.neighborCount*2)-(a.edge+a.neighborCount*2));
+   let pick=opts[Math.floor(random()*Math.min(10,opts.length))];
+   placements.push({name:order[i],cells:pick.cells});
+   pick.cells.forEach(([x,y])=>used.add(y*gridSize+x));
+  }
+  if(!good)continue;
+  // Reject silhouettes where a piece is effectively a detachable recognizable appendage.
+  let adjacency=placements.map(()=>new Set()),edgeCounts=placements.map(()=>0);
+  for(let i=0;i<placements.length;i++)for(let j=i+1;j<placements.length;j++){
+   let border=0,other=new Set(placements[j].cells.map(([x,y])=>`${x},${y}`));
+   for(let [x,y] of placements[i].cells)for(let [xx,yy] of [[x-1,y],[x+1,y],[x,y-1],[x,y+1]])if(other.has(`${xx},${yy}`))border++;
+   if(border){adjacency[i].add(j);adjacency[j].add(i);edgeCounts[i]+=border;edgeCounts[j]+=border}
+  }
+  if(adjacency.some((a,i)=>a.size<(N>=4?2:1)||edgeCounts[i]<3))continue;
+  let all=placements.flatMap(p=>p.cells),minX=Math.min(...all.map(p=>p[0])),minY=Math.min(...all.map(p=>p[1]));
+  let w=Math.max(...all.map(p=>p[0]))-minX+1,h=Math.max(...all.map(p=>p[1]))-minY+1;
+  if(w>Math.max(12,N*2)||h>Math.max(12,N*2))continue;
+  let solution=placements.map(p=>({name:p.name,cells:p.cells.map(([x,y])=>[x-minX,y-minY])}));
+  let mask=Array(w*h).fill(false);
+  solution.forEach(p=>p.cells.forEach(([x,y])=>mask[y*w+x]=true));
+  return {w,h,mask,solution};
+ }
+ return null;
+}
+function buildStage(num){
+ let random=rng(num*7351+12345),
+ count=num<=5?num+3:num<=10?8+Math.floor((num-6)/3):num<=20?9+Math.floor((num-11)/5):num<=40?10+Math.floor((num-21)/10):num<=60?11:num<=80?11:12;
+ count=Math.min(12,count);
+ let names=shuffle(ALL,random).slice(0,count),flipAllowed=num<=5?true:(num%4!==0);
+ let w,h,mask,solution=null;
+ // Early stages: joined silhouettes, not separate outlines of individual pieces.
+ // Favor broad, mixed boundaries; never show individual piece outlines.
+ if(num<=30){
+  let joined=joinedStage(names,flipAllowed,num*9277+19);
+  if(joined){({w,h,mask,solution}=joined)}
+ }
+ if(!solution){
+  for(let attempt=0;attempt<30&&!solution;attempt++){
+   let factors=[];
+   for(let a=3;a<=Math.sqrt(count*5);a++)if(count*5%a===0)factors.push([a,count*5/a]);
+   if(!factors.length)factors=[[5,count]];
+   [h,w]=factors[Math.floor(random()*factors.length)];
+   if(w<h)[w,h]=[h,w];
+   mask=Array(w*h).fill(true);
+   solution=solve(mask,w,h,names,flipAllowed,[],num*31+attempt,100000);
+  }
+ }
+ if(!solution){
+  // Guaranteed-solvable connected fallback, never separated single-piece islands.
+  let joined=joinedStage(names,flipAllowed,num*19391+57);
+  if(joined)({w,h,mask,solution}=joined);
+ }
+ if(!solution){
+  // Final fallback: use a solvable 5x12 full-board puzzle rather than exposed pieces.
+  names=[...ALL];count=12;w=12;h=5;mask=Array(60).fill(true);
+  solution=solve(mask,w,h,names,true,[],num*17+3,300000);
+  flipAllowed=true;
+ }
+ let locked=[];
+ if(num>=61&&num%5===0&&solution.length>=6)locked=[solution[0]];
+ return {w,h,mask,names,flipAllowed,solution,locked,goalMoves:count-locked.length,goalSeconds:Math.round((count*34+Math.max(0,num-10)*1.5)/10)*10};
+}
+function classicConfig(){let [h,w]=$('classicShape').value.split('x').map(Number);return {w,h,mask:Array(w*h).fill(true),names:[...ALL],flipAllowed:$('classicFlip').value==='yes',locked:[],solution:null,goalMoves:12,goalSeconds:0}}
+let mode='stage',level=0,cfg,placed=[],selected='F',orientation={},moves=0,elapsed=0,started=false,ended=false,hinted=false,history=[],timer=null,previewAt=null,keyboardPos=[0,0];
+let drag=null,dragIgnoreClickUntil=0,lastTapPiece=null,lastTapTime=0;let progress;try{progress=JSON.parse(localStorage.getItem('pentomino_progress_v1')||'{}')}catch{progress={}}
+function save(){try{localStorage.setItem('pentomino_progress_v1',JSON.stringify(progress))}catch{}}
+function setMsg(s){$('message').textContent=s}function shapeOf(n){return orientation[n]||SHAPES[n]}
+function start(newCfg){endDrag(false);cfg=newCfg;placed=cfg.locked.map(p=>({...p,locked:true}));selected=cfg.names.find(n=>!placed.some(p=>p.name===n))||cfg.names[0];orientation={};moves=0;elapsed=0;started=false;ended=false;hinted=false;history=[];previewAt=null;keyboardPos=[0,0];$('win').classList.add('hidden');setMsg('');render();}
+function record(){history.push({placed:structuredClone(placed),moves,orientation:structuredClone(orientation)});if(history.length>300)history.shift()}
+function begin(){if(!started){started=true}}
+function occupied(){let m=new Map();for(let p of placed)for(let [x,y] of p.cells)m.set(y*cfg.w+x,p.name);return m}
+function canPlace(n,cells){let occ=occupied();return cells.every(([x,y])=>x>=0&&y>=0&&x<cfg.w&&y<cfg.h&&cfg.mask[y*cfg.w+x]&&!occ.has(y*cfg.w+x))}
+function placeAt(x,y){if(ended)return;let n=selected;if(!n)return;let previous=placed.find(p=>p.name===n);if(previous?.locked)return;let shape=shapeOf(n),cells=shape.map(([dx,dy])=>[x+dx,y+dy]);let saved=placed;if(previous)placed=placed.filter(p=>p.name!==n);if(!canPlace(n,cells)){placed=saved;setMsg('そこには配置できません。ピースが重ならない位置を選んでください。');renderBoard();return}placed=saved;record();placed=placed.filter(p=>p.name!==n);placed.push({name:n,cells});moves++;begin();previewAt=null;let next=cfg.names.find(z=>!placed.some(p=>p.name===z));if(next)selected=next;setMsg(`${n} を配置しました。`);render();checkWin()}
+function propose(x,y){if(ended||!selected)return;let shape=shapeOf(selected),cells=shape.map(([dx,dy])=>[x+dx,y+dy]);let prev=placed.find(p=>p.name===selected);let saved=placed;if(prev)placed=placed.filter(p=>p.name!==selected);let valid=canPlace(selected,cells);placed=saved;if(!valid){setMsg("赤い位置には置けません。緑色のマスを選んでください。");previewAt=null;renderBoard();return}previewAt=cells;keyboardPos=[x,y];setMsg("緑色の配置予定を確認して「✓ ここに置く」を押してください。");renderBoard();}function select(n){if(ended)return;selected=n;let p=placed.find(p=>p.name===n);if(p)orientation[n]=normalize(p.cells);previewAt=null;render();setMsg(`${n} を選択中`)}
+function transform(kind){if(ended||!selected)return;let p=placed.find(q=>q.name===selected);if(p?.locked)return;if(kind==='flip'&&!cfg.flipAllowed){setMsg('この問題では裏返しは禁止されています。');return}record();let a=shapeOf(selected);orientation[selected]=kind==='left'?turn(turn(turn(a))):kind==='right'?turn(a):mirror(a);previewAt=null;if(p){let x=Math.min(...p.cells.map(c=>c[0])),y=Math.min(...p.cells.map(c=>c[1]));placed=placed.filter(q=>q.name!==selected);let cells=orientation[selected].map(([dx,dy])=>[x+dx,y+dy]);if(canPlace(selected,cells)){placed.push({name:selected,cells});moves++;begin()}else{placed.push(p);setMsg('その向きでは配置できないため、元の位置に戻しました。')}}render()}
+function removeSelected(){let p=placed.find(q=>q.name===selected);if(!p||p.locked||ended)return;record();placed=placed.filter(q=>q.name!==selected);moves++;begin();render()}
+function undo(){if(!history.length||ended)return;let v=history.pop();placed=v.placed;orientation=v.orientation;moves=Math.max(moves,v.moves);render();setMsg('直前の操作を戻しました。操作回数は減りません。')}
+function timeText(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
+function checkWin(){let occ=occupied();let total=cfg.mask.filter(Boolean).length;if(occ.size!==total)return;if(cfg.names.some(n=>!placed.some(p=>p.name===n)))return;ended=true;let stars=1+(mode==='stage'&&!hinted&&elapsed<=cfg.goalSeconds?1:0)+(mode==='stage'&&!hinted&&moves<=cfg.goalMoves?1:0);if(mode==='stage'){let old=progress[level]||{clear:false,time:false,moves:false};old.clear=true;if(!hinted&&elapsed<=cfg.goalSeconds)old.time=true;if(!hinted&&moves<=cfg.goalMoves)old.moves=true;progress[level]=old;save();renderLevels();stars=Number(old.clear)+Number(old.time)+Number(old.moves)}let headline=mode==='stage'?`<h2>🎉 STAGE ${level} クリア！</h2><div style="font-size:30px;color:#f7c65a">${'★'.repeat(stars)}${'☆'.repeat(3-stars)}</div>`:'<h2>🎉 クラシック完成！</h2>';$('win').innerHTML=headline+`<p>クリアタイム ${timeText(elapsed)} ／ 操作 ${moves} 回</p>`+(hinted?'<p>ヒントを使用したため、この挑戦ではクリアの星のみ獲得対象です。</p>':'')+(mode==='stage'&&level<100?'<button id="nextLevel">次のステージへ →</button>':'');$('win').classList.remove('hidden');if(mode==='stage'&&level<100)$('nextLevel').onclick=()=>loadLevel(level+1);setMsg('すべてのマスが埋まりました！');render()}
+function hint(levelHint){if(ended)return;let locked=placed.map(p=>({name:p.name,cells:p.cells}));let solution=solve(cfg.mask,cfg.w,cfg.h,cfg.names,cfg.flipAllowed,locked,level*17+3,100000);if(!solution){setMsg('現在の配置では完成できないか、探索が時間内に終わりませんでした。配置を戻してみてください。');render();return}let next=solution.find(p=>!placed.some(q=>q.name===p.name));if(!next){setMsg('配置はすべて完了しています。');return}selected=next.name;hinted=true;begin();if(levelHint===1)setMsg(`ヒント1：次は「${next.name}」のピースを使ってみましょう。`);if(levelHint===2){previewAt=next.cells;setMsg(`ヒント2：「${next.name}」を白枠の位置に置けます。`)}if(levelHint===3){record();placed.push({name:next.name,cells:next.cells});moves++;setMsg(`ヒント3：「${next.name}」を自動配置しました。`);checkWin()}render()}
+function renderBoard(){
+ let board=$('board'),unit=Math.max(17,Math.min(39,Math.floor((Math.min($('board').parentElement.clientWidth-24,730)-Math.max(0,cfg.w-1)*3)/cfg.w)));
+ board.style.setProperty('--unit',unit+'px');board.style.gridTemplateColumns=`repeat(${cfg.w},${unit}px)`;board.innerHTML='';
+ let occ=occupied(),prev=new Set((previewAt||[]).map(([x,y])=>y*cfg.w+x));
+ for(let y=0;y<cfg.h;y++)for(let x=0;x<cfg.w;x++){
+  let id=y*cfg.w+x,n=occ.get(id),el=document.createElement('div');
+  el.className='cell'+(!cfg.mask[id]?' off':'')+(prev.has(id)?' preview':'');
+  if(n){el.style.background=COLORS[n];el.style.color='#172338';el.textContent=n;if(n===selected)el.classList.add('cell-selected')}
+  if(cfg.mask[id])el.setAttribute('aria-label',`${x+1}列${y+1}行`);
+  board.appendChild(el);
+ }
+ $('confirmPlace').disabled=!previewAt||ended;$('cancelPreview').disabled=!previewAt||ended;
+ $('dropStatus').textContent='';$('dropStatus').className='drop-status';
+}
+function renderPieces(){let box=$('pieces');box.innerHTML='';for(let n of cfg.names){let p=placed.find(q=>q.name===n),a=shapeOf(n),w=Math.max(...a.map(q=>q[0]))+1,h=Math.max(...a.map(q=>q[1]))+1;let b=document.createElement('button');b.className='piece'+(selected===n?' selected':'')+(p?' placed':'');b.setAttribute('aria-label',`${n} ピース${p?'（配置済み）':''}${selected===n?'、選択中':''}`);let label=document.createElement('strong');label.textContent=n;b.appendChild(label);let mini=document.createElement('div');mini.className='mini';mini.style.gridTemplateColumns=`repeat(${w},var(--piece-unit))`;let set=new Set(a.map(q=>q.join(',')));for(let y=0;y<h;y++)for(let x=0;x<w;x++){let i=document.createElement('i');i.style.background=set.has(`${x},${y}`)?COLORS[n]:'transparent';mini.appendChild(i)}b.appendChild(mini);b.onclick=()=>{select(n)};box.appendChild(b)}}
+
+// Unified pointer dragging: mouse button held and touch contact behave identically.
+function startDrag(e,n,source='board'){
+ if(ended||e.button!==0)return;
+ let p=placed.find(q=>q.name===n);if(p?.locked)return;
+ e.preventDefault();endDrag(false);selected=n;
+ if(p)orientation[n]=normalize(p.cells);
+ let a=shapeOf(n),w=Math.max(...a.map(v=>v[0]))+1,h=Math.max(...a.map(v=>v[1]))+1;
+ let ghost=document.createElement('div');ghost.className='drag-ghost';
+ let u=Math.max(21,Math.min(37,Math.floor(140/Math.max(w,h))));
+ ghost.style.setProperty('--ghost-unit',u+'px');ghost.style.gridTemplateColumns=`repeat(${w},${u}px)`;
+ let cells=new Set(a.map(q=>q.join(',')));
+ for(let y=0;y<h;y++)for(let x=0;x<w;x++){let i=document.createElement('i');i.style.background=cells.has(`${x},${y}`)?COLORS[n]:'transparent';i.style.borderColor=cells.has(`${x},${y}`)?'#ffffff99':'transparent';ghost.appendChild(i)}
+ document.body.appendChild(ghost);
+ drag={id:e.pointerId,name:n,source,ghost,valid:false,anchor:null,cellIds:[],startX:e.clientX,startY:e.clientY};
+ document.addEventListener('pointermove',dragMove,{passive:false});
+ document.addEventListener('pointerup',dragUp);
+ document.addEventListener('pointercancel',dragCancel);
+ dragMove(e);
+}
+function dragMove(e){
+ if(!drag||e.pointerId!==drag.id)return;
+ if(e.cancelable)e.preventDefault();
+ let d=drag,g=d.ghost;d.lastX=e.clientX;d.lastY=e.clientY;
+ g.style.left=(e.clientX-g.offsetWidth/2)+'px';
+ g.style.top=(e.clientY-g.offsetHeight/2-22)+'px';
+ let board=$('board'),rect=board.getBoundingClientRect(),first=board.querySelector('.cell');
+ if(!first)return;
+ let r=first.getBoundingClientRect(),step=r.width+3;
+ // Align the center of the dragged piece with the pointer, not its top-left.
+ let shape=shapeOf(d.name),sw=Math.max(...shape.map(v=>v[0]))+1,sh=Math.max(...shape.map(v=>v[1]))+1;
+ let x=Math.round((e.clientX-rect.left-r.width/2)/step-(sw-1)/2);
+ let y=Math.round((e.clientY-rect.top-r.height/2)/step-(sh-1)/2);
+ let inside=e.clientX>=rect.left&&e.clientX<=rect.right&&e.clientY>=rect.top&&e.clientY<=rect.bottom;
+ let cells=shape.map(([dx,dy])=>[x+dx,y+dy]);
+ let saved=placed;placed=placed.filter(p=>p.name!==d.name);
+ let valid=inside&&canPlace(d.name,cells);placed=saved;
+ d.valid=valid;d.anchor=[x,y];d.cellIds=cells.map(([cx,cy])=>cy*cfg.w+cx);
+ board.querySelectorAll('.cell.drag-valid,.cell.drag-invalid').forEach(el=>el.classList.remove('drag-valid','drag-invalid'));
+ for(let [cx,cy] of cells)if(cx>=0&&cy>=0&&cx<cfg.w&&cy<cfg.h){
+  let el=board.children[cy*cfg.w+cx];if(el)el.classList.add(valid?'drag-valid':'drag-invalid');
+ }
+ g.style.opacity=valid?'.94':'.55';
+ $('dropStatus').textContent=valid?'配置できます':'ここには置けません';$('dropStatus').className='drop-status active '+(valid?'ok':'ng');
+}
+function endDrag(commit){
+ if(!drag)return;
+ let d=drag;drag=null;
+ document.removeEventListener('pointermove',dragMove);
+ document.removeEventListener('pointerup',dragUp);
+ document.removeEventListener('pointercancel',dragCancel);
+ d.ghost.remove();
+ $('dropStatus').textContent='';$('dropStatus').className='drop-status';
+ dragIgnoreClickUntil=Date.now()+450;
+ let moved=Math.hypot(d.lastX-d.startX,d.lastY-d.startY)>12;
+ if(commit&&!moved&&d.source!=='board'){selected=d.name;previewAt=null;render();setMsg(`${d.name} を選択中`);return}
+ if(commit&&d.valid&&d.anchor){selected=d.name;placeAt(...d.anchor)}
+ else if(cfg){render();if(commit)setMsg('配置できない位置で離したため、元に戻しました。')}
+}
+function dragUp(e){if(drag&&e.pointerId===drag.id){dragMove(e);endDrag(true)}}
+function dragCancel(e){if(drag&&e.pointerId===drag.id)endDrag(false)}
+$('board').addEventListener('pointerdown',e=>{
+ if(e.button!==0||ended||drag)return;
+ let cell=e.target.closest('.cell');if(!cell||cell.classList.contains('off'))return;
+ let n=cell.textContent||selected;if(!n)return;
+ if(cell.textContent){
+  let now=Date.now();
+  if(lastTapPiece===cell.textContent&&now-lastTapTime<380){
+   lastTapTime=0;lastTapPiece=null;retrievePiece(cell.textContent);e.preventDefault();return;
+  }
+  lastTapPiece=cell.textContent;lastTapTime=now;
+ }
+ let p=placed.find(q=>q.name===n);if(p?.locked)return;
+ startDrag(e,n,'board');
+});
+
+function render(){if(!cfg)return;renderBoard();renderPieces();$('stageTitle').textContent=mode==='stage'?`STAGE ${level}`:'クラシック';$('clock').textContent=timeText(elapsed);$('moves').textContent=String(moves);$('targets').textContent=mode==='stage'?`${timeText(cfg.goalSeconds)} / ${cfg.goalMoves}回`:'自由挑戦';$('flipLabel').textContent=cfg.flipAllowed?'反転可':'反転禁止';$('flip').disabled=!cfg.flipAllowed;$('count').textContent=`${placed.length}/${cfg.names.length}`;$('placedFill').style.width=(placed.length/cfg.names.length*100)+'%';$('chooseStage').textContent=mode==='stage'?'← ステージ一覧':'← 設定に戻る';}
+function showScreen(which){
+ for(let id of ['homeScreen','stageSettings','classicSettings','playScreen'])$(id).classList.toggle('hidden',id!==which);
+ if(which==='stageSettings'||which==='homeScreen')renderLevels();
+ window.scrollTo({top:0,behavior:'instant'});
+}
+function returnToLevels(){endDrag(false);started=false;showScreen('stageSettings')}
+function returnHome(){endDrag(false);started=false;showScreen('homeScreen')}
+function showClassicSettings(){mode='classic';started=false;showScreen('classicSettings')}
+function showStageSettings(){mode='stage';started=false;showScreen('stageSettings')}
+function renderLevels(){
+ let box=$('levels');box.innerHTML='';let total=0,cleared=0,perfect=0;
+ for(let base=1;base<=100;base+=10){
+  let group=document.createElement('section');group.className='stage-group';
+  let title=document.createElement('div');title.className='stage-group-head';
+  let groupStars=0;
+  let grid=document.createElement('div');grid.className='levelgrid';
+  for(let i=base;i<base+10;i++){
+   let p=progress[i]||{},s=Number(!!p.clear)+Number(!!p.time)+Number(!!p.moves);
+   let status=s===3?'完全達成':p.clear?'クリア済み':p.attempted?'挑戦中':'未挑戦';
+   total+=s;groupStars+=s;if(p.clear)cleared++;if(s===3)perfect++;
+   let b=document.createElement('button');b.type='button';
+   b.className='level '+(s===3?'perfect':p.clear?'cleared':p.attempted?'attempted':'notplayed')+(mode==='stage'&&level===i?' current':'');
+   b.setAttribute('aria-label',`ステージ ${i}、${status}、星 ${s} / 3`);
+   b.innerHTML=`<span class="level-number">${i}</span><span class="level-stars">${'<span class="filled">★</span>'.repeat(s)}${'<span class="empty">★</span>'.repeat(3-s)}</span><span class="level-state">${status}</span>`;
+   b.onclick=()=>loadLevel(i);grid.appendChild(b);
+  }
+  title.innerHTML=`<strong>STAGE ${String(base).padStart(2,'0')}–${String(base+9).padStart(2,'0')}</strong><span>★ ${groupStars} / 30</span>`;
+  group.appendChild(title);group.appendChild(grid);box.appendChild(group);
+ }
+ $('totalStars').textContent=`${total} / 300`;
+ $('overallFill').style.width=(total/300*100)+'%';
+ $('clearedCount').textContent=`${cleared} / 100`;
+ $('perfectCount').textContent=`${perfect}`;
+ $('homeStars').textContent=total;
+}
+function loadLevel(n){
+ mode='stage';level=n;
+ let old=progress[n]||{};old.attempted=true;progress[n]=old;save();
+ let data=buildStage(n);showScreen('playScreen');start(data);
+}
+function setClassic(){mode='classic';showScreen('playScreen');start(classicConfig())}
+$('tabStage').onclick=showStageSettings;
+$('tabClassic').onclick=showClassicSettings;
+$('stageBackHome').onclick=returnHome;
+$('classicBackHome').onclick=returnHome;
+$('playBackHome').onclick=returnHome;
+$('chooseStage').onclick=()=>{if(mode==='stage')returnToLevels();else showClassicSettings()};
+$('startClassic').onclick=setClassic;
+$('confirmPlace').onclick=()=>{if(previewAt){let x=Math.min(...previewAt.map(p=>p[0])),y=Math.min(...previewAt.map(p=>p[1]));placeAt(x,y)}};
+$('cancelPreview').onclick=()=>{previewAt=null;renderBoard()};
+$('rotL').onclick=()=>transform('left');
+$('rotR').onclick=()=>transform('right');
+$('flip').onclick=()=>transform('flip');
+$('hint').onclick=()=>hint(3);
+$('restart').onclick=()=>{if(confirm('現在の挑戦を最初からやり直しますか？'))start(mode==='stage'?buildStage(level):classicConfig())};
+function retrievePiece(n){
+ if(ended)return;
+ let p=placed.find(q=>q.name===n);
+ if(!p||p.locked)return;
+ record();
+ orientation[n]=normalize(p.cells);
+ placed=placed.filter(q=>q.name!==n);
+ selected=n;moves++;begin();previewAt=null;
+ render();setMsg(`${n} を手元に戻しました`);
+}
+$('board').addEventListener('dblclick',e=>{
+ let cell=e.target.closest('.cell');if(!cell||!cell.textContent)return;
+ retrievePiece(cell.textContent);
+});
+document.addEventListener('keydown',e=>{if(!cfg||$('playScreen').classList.contains('hidden')||['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName))return;let k=e.key.toLowerCase();if(k==='r'){transform('right');e.preventDefault()}else if(k==='f'){transform('flip');e.preventDefault()}else if(k==='enter'){if(previewAt)placeAt(...keyboardPos);else propose(...keyboardPos);e.preventDefault()}else if(k.startsWith('arrow')){let dx=k==='arrowright'?1:k==='arrowleft'?-1:0,dy=k==='arrowdown'?1:k==='arrowup'?-1:0;keyboardPos=[Math.max(0,Math.min(cfg.w-1,keyboardPos[0]+dx)),Math.max(0,Math.min(cfg.h-1,keyboardPos[1]+dy))];propose(...keyboardPos);e.preventDefault()}});
+setInterval(()=>{if(started&&!ended&&!$('playScreen').classList.contains('hidden')){elapsed++;$('clock').textContent=timeText(elapsed)}},1000);window.addEventListener('resize',()=>cfg&&renderBoard());showScreen('homeScreen');
+</script></body></html>
