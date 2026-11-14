@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10202b">
+<title>MATH FACTORY — 数学ファクトリー v1.2.1</title>
+<style>
+:root{--bg:#0d1a22;--panel:#172831;--panel2:#20343d;--line:#36515b;--text:#f2f7f6;--muted:#a5bec4;--mint:#4fe0bc;--amber:#ffbf62;--steel:#304951;--red:#ff8582;--tile:58px}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 65% -25%,#294c55 0,transparent 40%),repeating-linear-gradient(0deg,#0b1820 0px,#0b1820 49px,#102029 50px);color:var(--text);font:15px/1.5 system-ui,-apple-system,"Yu Gothic","Meiryo",sans-serif}
+button,input,select{font:inherit}button{border:1px solid #46616b;border-radius:10px;background:#2a424e;color:var(--text);padding:10px 12px;cursor:pointer;transition:background .16s,transform .12s,border-color .16s}button:hover:not(:disabled){background:#395664;border-color:#7199a1}button:active:not(:disabled){transform:translateY(1px)}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--amber);outline-offset:2px}button:disabled{opacity:.4;cursor:not-allowed}
+.app{width:min(1510px,100%);margin:auto;padding:18px 18px 35px}
+.head{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;margin-bottom:17px}.identity{display:flex;align-items:center;gap:13px}.logo{width:54px;height:54px;border-radius:13px;border:1px solid #61848a;background:linear-gradient(155deg,#42666a,#203b44);display:grid;place-items:center;box-shadow:inset 0 2px #ffffff20,0 8px 20px #0005}.logo svg{width:35px;height:35px}.eyebrow{text-transform:uppercase;letter-spacing:.16em;color:#8faeb7;font-size:10px;font-weight:800}.brand{font-size:27px;letter-spacing:.03em;font-weight:950;line-height:1.2}.brand span{color:var(--amber)}.version{display:inline-block;margin-left:5px;color:#8fa7b0;font-size:11px;font-weight:600}.headright{display:flex;gap:8px;flex-wrap:wrap}.statpill{background:#20343c;border:1px solid #3c5961;border-radius:12px;min-width:94px;padding:8px 11px;display:flex;flex-direction:column;gap:1px}.statpill small{color:#a4bac1;font-size:10px}.statpill strong{font-size:17px;color:#f3f8f7}
+.order{background:linear-gradient(100deg,#203942,#1b3038 65%,#283f42);border:1px solid #47626a;border-radius:17px;padding:17px 22px;display:grid;grid-template-columns:minmax(205px,1fr) auto minmax(210px,1fr);align-items:center;gap:24px;margin-bottom:15px;position:relative;overflow:hidden}.order:before{content:"";position:absolute;inset:0 0 auto;height:5px;background:repeating-linear-gradient(110deg,#edb958 0,#edb958 20px,#29353b 20px,#29353b 40px)}.order-id{font-size:12px;color:var(--amber);font-weight:850;letter-spacing:.12em}.order-name{font-size:23px;font-weight:900;line-height:1.35}.order-hint{color:#b3c9cb;font-size:12px;margin-top:5px}.formula{display:flex;align-items:center;gap:11px}.formula .num{min-width:62px;text-align:center;padding:8px 13px;background:#173d61;border:1px solid #3b81ab;border-radius:10px;font-size:28px;font-weight:950}.formula .num.to{background:#1b604e;border-color:#4ac8a2;color:#9bffe1}.formula .arrow{font-size:23px;color:#c0d0d3}.formula .quantity{white-space:nowrap;font-weight:800;color:#ffcf83}.orderprogress{min-width:0}.progressline{display:flex;justify-content:space-between;align-items:center;font-weight:750;gap:8px}.progressline b{color:#9ef1d7}.progressbar{height:13px;background:#0c252e;border:1px solid #405860;border-radius:30px;overflow:hidden;margin-top:8px}.progressbar>div{height:100%;background:repeating-linear-gradient(120deg,#42c9a4 0,#42c9a4 12px,#6fe7c0 12px,#6fe7c0 21px);transition:width .25s}
+.layout{display:grid;grid-template-columns:240px minmax(0,1fr) 263px;gap:14px;align-items:start}.panel{background:linear-gradient(150deg,#1b3039,#14252e);border:1px solid #3c5760;border-radius:15px;box-shadow:0 14px 30px #020b1273;min-width:0}.panel.pad{padding:16px}.panel-heading{display:flex;align-items:center;justify-content:space-between;gap:7px;margin-bottom:12px}.stepnum{width:26px;height:26px;display:inline-grid;place-items:center;border-radius:7px;background:#eeb35b;color:#263138;font-size:14px;font-weight:950}.sectiontitle{font-size:15px;font-weight:850;margin:0;display:flex;align-items:center;gap:9px}.small{font-size:12px;color:var(--muted)}.mini-label{font-size:11px;color:#90b0b7;font-weight:800;letter-spacing:.07em}.pallet-description{font-size:12px;color:#b8ced1;margin:0 0 11px}.tool-group{display:grid;gap:7px}.tool-card{padding:9px;display:flex;align-items:center;text-align:left;gap:9px;min-height:54px;background:#263e49}.tool-card.active{border-color:var(--amber);background:#47503c;box-shadow:inset 0 0 0 1px var(--amber)}.tool-card .tool-icon{width:41px;height:39px;border:1px solid #ffffff25;border-radius:9px;display:grid;place-items:center;font-size:22px;line-height:1;font-weight:900;flex:none;background:var(--tool-color,#51636a);color:white;text-shadow:0 2px 3px #0004}.tool-txt b{font-size:13px;display:block}.tool-txt small{display:block;color:#adc1c5;font-size:10px}.tool-card.active .tool-txt small{color:#e5e4bf}.tool-card:disabled{opacity:.46}.palette-sep{margin:16px 0 10px;border-top:1px solid #3b545b;padding-top:12px}.compact-tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.compact-tools .tool-card{display:flex;flex-direction:column;text-align:center;gap:4px;padding:8px 2px;font-size:11px}.compact-tools .tool-icon{width:34px;height:33px;font-size:17px}.compact-tools .tool-txt small{display:none}.pal-footer{margin-top:14px;background:#20343c;border-radius:10px;padding:11px;font-size:12px;color:#b8d2d2}.pal-footer b{color:var(--amber)}
+.workspace{overflow:hidden}.workhead{padding:15px 17px 12px;display:flex;align-items:center;justify-content:space-between;gap:9px;flex-wrap:wrap}.workhead h2{font-size:17px;margin:0;font-weight:900}.live{display:flex;align-items:center;gap:7px;background:#263c47;border:1px solid #48616b;border-radius:18px;padding:5px 11px;font-size:12px;color:#bcd0d3}.live-dot{width:8px;height:8px;border-radius:50%;background:#a1b2b7}.live.running .live-dot{background:#51e9b9;box-shadow:0 0 0 3px #3fe2b930;animation:pulse 1s infinite}.live.completed .live-dot{background:var(--amber)}@keyframes pulse{50%{opacity:.42}}
+.board-shell{padding:15px 10px 20px;background:linear-gradient(180deg,#1c3038,#1a2c33);border-top:1px solid #35515a;border-bottom:1px solid #35515a}.factory-caption{display:flex;justify-content:space-between;align-items:center;max-width:666px;margin:0 auto 8px;padding:0 4px;color:#93b3b8;font-size:10px;letter-spacing:.1em;font-weight:750}.board-outer{overflow:auto;padding:13px;background:linear-gradient(155deg,#14242b,#111f26);border:1px solid #3f5760;border-radius:12px;box-shadow:inset 0 7px 22px #0004;scrollbar-width:thin}.board{display:grid;grid-template-columns:repeat(10,var(--tile));grid-template-rows:repeat(7,var(--tile));gap:3px;margin:auto;width:max-content;user-select:none;touch-action:none;cursor:crosshair}.board:not(.belt-mode){cursor:pointer}.cell{border:1px solid #3e5660;border-radius:5px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:linear-gradient(155deg,#294049,#22343d);width:var(--tile);height:var(--tile)}.cell:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(145deg,#ffffff0a,transparent 45%,#00000017)}.cell.is-empty:after{content:"+";font-size:20px;color:#607981;font-weight:300}.cell:hover{outline:2px solid #ffce79;outline-offset:-2px;z-index:1}.cell.selected{outline:3px solid #ffe7aa;outline-offset:-3px;z-index:2;box-shadow:0 0 15px #ffb75662}.cell.input{background:linear-gradient(135deg,#2674a8,#194a77);border:2px solid #6dbdf5}.cell.output{background:linear-gradient(135deg,#238670,#125b4c);border:2px solid #64dfbc}.cell.belt{background:repeating-linear-gradient(90deg,#394c55 0px,#394c55 9px,#435862 9px,#435862 14px);border:2px solid #718892;box-shadow:inset 0 4px #ffffff1a,inset 0 -4px #0004}.cell.belt .belttrack{position:absolute;inset:11px 1px;opacity:.7;background:repeating-linear-gradient(90deg,#b2c5c7 0px,#b2c5c7 3px,transparent 3px,transparent 13px);transform:rotate(var(--belt-angle));border-top:1px solid #a3bac4;border-bottom:1px solid #a3bac4}.cell.belt .sym{font-size:19px;color:#f2ffff;filter:drop-shadow(0 1px 2px #0008)}.board.is-running .cell.belt .belttrack{animation:conveyor .44s linear infinite}@keyframes conveyor{to{background-position:13px 0}}
+.cell.add{--machine:#267cae}.cell.sub{--machine:#ba6959}.cell.mul{--machine:#bc8830}.cell.div{--machine:#3994ac}.cell.square{--machine:#8060ae}.cell.mod{--machine:#b06c9a}.cell.even{--machine:#7c71bd}.cell.split{--machine:#617d9d}.cell.merge{--machine:#598f6b}.cell.trash{--machine:#955d68}.cell:not(.belt):not(.input):not(.output):not(.is-empty){border:2px solid color-mix(in srgb,var(--machine) 70%,white);background:linear-gradient(140deg,color-mix(in srgb,var(--machine) 73%,#12252c),color-mix(in srgb,var(--machine) 48%,#112730));box-shadow:inset 0 3px #ffffff26,inset 0 -5px #0003}.machine-name{position:absolute;top:3px;left:4px;font-size:9px;font-weight:800;opacity:.88}.cell .sym{position:relative;font-size:24px;line-height:1;font-weight:950}.cell .direction{position:absolute;right:3px;bottom:2px;font-size:15px;color:#fff3d8;font-weight:900;filter:drop-shadow(0 1px 2px #0009)}.cell .mini{position:absolute;left:3px;bottom:3px;font-size:10px;background:#0a2231b8;padding:1px 4px;border-radius:3px;font-weight:900}.io-mark{position:absolute;top:3px;left:4px;color:#e9f7ff;font-size:9px;font-weight:900;letter-spacing:.08em}.cell .io-num{font-size:24px;font-weight:950;margin-top:8px;text-shadow:0 2px 2px #0004}.token{position:absolute;inset:auto;z-index:4;min-width:33px;min-height:29px;border-radius:7px;background:linear-gradient(#fff4b9,#ffd26f);border:2px solid #fffbd9;color:#243037;display:grid;place-items:center;padding:1px 3px;font-weight:950;font-size:13px;box-shadow:0 0 16px #eab85bb0;pointer-events:none;animation:tokenpop .2s ease-out}@keyframes tokenpop{from{transform:scale(.7);opacity:.3}to{transform:scale(1);opacity:1}}
+.board-caption{margin:10px 0 0;text-align:center;font-size:11px;color:#a7bfc3}.workbottom{padding:15px 16px 16px}.control-bar{display:flex;align-items:stretch;gap:9px;flex-wrap:wrap}.runbtn{flex:2 1 175px;min-height:53px;background:linear-gradient(180deg,#42c49a,#23866e);border-color:#7af8cc;color:#0c2a2b;font-weight:950;font-size:17px;box-shadow:0 5px 0 #135e51}.runbtn:hover:not(:disabled){background:linear-gradient(#64e3b6,#35ab88)}.subbtn{flex:1 1 104px;font-weight:800;font-size:13px}.quick-actions{margin-top:10px;display:flex;gap:7px;align-items:center;flex-wrap:wrap}.quick-actions button{font-size:12px;padding:8px 10px}.speedlabel{font-size:12px;color:#a5bfc4;margin-left:auto}.speedlabel select{border:1px solid #52707b;border-radius:7px;background:#223b45;color:white;padding:7px}.message{margin-top:12px;display:flex;align-items:start;gap:8px;padding:10px 12px;background:#233d45;border:1px solid #3e6464;border-left:4px solid var(--amber);border-radius:9px;min-height:48px;font-size:13px;line-height:1.6}.message:before{content:"i";font-size:13px;font-weight:900;color:#2b3940;background:#f1c66e;min-width:19px;height:19px;display:grid;place-items:center;border-radius:50%;margin-top:1px}.footmetrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:14px}.metric{padding:9px 4px;background:#203740;border:1px solid #36535b;border-radius:8px;text-align:center}.metric small{display:block;font-size:10px;color:#9eb7bd}.metric strong{font-size:17px;color:#ebf9f5}
+.side-section+.side-section{border-top:1px solid #38525c;margin-top:18px;padding-top:16px}.inspector-empty{border:1px dashed #536e75;border-radius:11px;padding:22px 12px;text-align:center;background:#243c44}.inspector-empty .big{font-size:28px;display:block;margin-bottom:7px}.inspect-title{display:flex;align-items:center;justify-content:space-between;margin:6px 0 13px}.inspect-title b{font-size:18px}.inspect-title small{color:#9db9bf}.inspect-unit{border-radius:10px;padding:12px;background:#203741;border:1px solid #3a5a64}.inspector-label{font-size:12px;color:#c2d8d9;font-weight:800;display:block;margin:0 0 6px}.number-line{display:flex;gap:7px}.number-line button{width:44px;height:43px;font-weight:950;font-size:22px;padding:0}.number-line input{width:calc(100% - 102px);height:43px;background:#112b34;border:1px solid #62838a;color:#fff;border-radius:9px;text-align:center;font-size:21px;font-weight:850;min-width:0}.direction-pad{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}.direction-pad button{padding:10px 0;font-size:19px;font-weight:900}.direction-pad button.on{background:#d9a34d;color:#27353d;border-color:#f5d28c}.inspect-delete{margin-top:12px;width:100%;color:#ffc2bd;border-color:#a2706c;background:#513b3d}.howto{display:grid;gap:10px}.howto-row{display:flex;gap:9px;align-items:start;font-size:12px;color:#cadadb}.howto-num{display:grid;place-items:center;min-width:24px;height:24px;background:#36535b;border-radius:50%;font-weight:900;color:#f1d08c}.section-toggle{width:100%;display:flex;justify-content:space-between;align-items:center;background:transparent;border:0;padding:0;text-align:left;font-size:14px;font-weight:850}.section-toggle:hover{background:transparent!important}.expand-body{padding-top:12px}.stage-list{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-top:10px}.stage-list button{font-size:11px;padding:9px 0;border-radius:8px;font-weight:850}.stage-list button.active{background:#805f30;border:2px solid var(--amber);color:white}.stage-list button.cleared:after{content:"★";display:block;color:#fbd273}.research-list{display:grid;gap:6px;margin-top:8px}.research-list button{text-align:left;padding:9px;font-size:12px;line-height:1.45}.research-list b{display:block}.research-list small{display:block;color:#abbfc3}.footer{color:#8da7ad;text-align:center;font-size:11px;padding-top:15px}
+.modal{position:fixed;inset:0;background:#071216de;z-index:30;display:flex;align-items:center;justify-content:center;padding:20px}.modal.hidden{display:none}.modalbox{text-align:center;max-width:440px;width:100%;background:linear-gradient(135deg,#24454b,#16323d);border:2px solid #71b8aa;border-radius:18px;box-shadow:0 25px 90px #000b;padding:28px 20px;position:relative;overflow:hidden}.modalbox:before{content:"";position:absolute;top:0;left:0;right:0;height:7px;background:repeating-linear-gradient(110deg,#ffbd5a 0 18px,#223c3d 18px 36px)}.modalbox h2{font-size:27px;margin:8px 0;color:#a7ffe0}.stars-big{font-size:40px;color:#ffcf65;letter-spacing:6px}.modalbox p{color:#d4e9e9}.modal-actions{display:flex;justify-content:center;gap:9px;flex-wrap:wrap}.modal-actions button{font-weight:800}.modal-actions .primary{background:#319e80;border-color:#8bf4cd;color:#062e2d}
+@media(max-width:1360px){:root{--tile:53px}.layout{grid-template-columns:210px minmax(0,1fr) 235px}.app{padding:12px}.order{gap:12px}.panel.pad{padding:13px}.brand{font-size:25px}}
+@media(max-width:1080px){.layout{grid-template-columns:205px minmax(0,1fr)}.right{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:16px}.right .side-section+.side-section{border-top:0;margin:0;padding:0}.order{grid-template-columns:1fr auto}.orderprogress{grid-column:1/-1}}
+@media(max-width:740px){:root{--tile:49px}.app{padding:10px}.layout{grid-template-columns:1fr}.right{grid-column:auto;display:block}.right .side-section+.side-section{border-top:1px solid #38525c;margin-top:15px;padding-top:15px}.brand{font-size:22px}.logo{width:43px;height:43px}.headright{width:100%}.statpill{flex:1;min-width:0}.order{grid-template-columns:1fr;padding:15px}.orderprogress{grid-column:auto}.formula{justify-content:center}.tool-group{grid-template-columns:repeat(3,1fr)}.tool-card{flex-direction:column;text-align:center;gap:5px;min-height:72px;padding:8px 2px}.tool-txt small{display:none}.tool-card .tool-icon{width:39px;height:35px}.compact-tools{grid-template-columns:repeat(4,1fr)}.workhead{padding:13px}.board-outer{padding:8px}.board-shell{padding:9px 8px 16px}.footmetrics{gap:4px}.metric{padding:7px 1px}.metric strong{font-size:15px}.workbottom{padding:12px}.order-name{font-size:20px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+
+/* v1.2.1: multiple-input manufacturing orders and visible quality audit */
+.batch-ticket{background:linear-gradient(130deg,#1c3436,#152b32);border:1px solid #48666a;border-radius:14px;padding:12px 17px;margin:-5px 0 15px;box-shadow:0 4px 14px #0003}
+.ticket-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px}.ticket-head b{display:block;font-size:14px;color:#ffce81}.ticket-head span{display:block;color:#bbced1;font-size:12px}.stamp-box{padding:7px 11px;border:1px solid #8d7953;border-radius:7px;background:#3c3830;color:#eadabb;white-space:normal;font-size:12px}.stamp-box strong{color:#ffe0a1;margin-left:6px}
+.batch-list{display:flex;gap:6px;flex-wrap:wrap}.batch-item{font-size:13px;font-weight:800;color:#eaf3f3;background:#283f48;border:1px solid #57707b;border-radius:7px;padding:7px 11px;min-width:90px;text-align:center}.batch-item .batch-number{color:#a8c1cb;font-size:10px;margin-right:5px}.batch-item .output-arrow{color:#ffc16c;margin:0 6px}.batch-item.done{border-color:#58dbb5;background:#1c584c}.batch-item.removed{border-color:#a7b7bf;background:#37464d}.batch-item.active{border-color:#f3bb64;box-shadow:0 0 0 1px #e6b665}.batch-item .reject{color:#ffc49d}
+.tool-count{font-size:11px;color:#ffe6af;margin-left:auto;white-space:nowrap}.tool-card:disabled .tool-count{color:#a1b6b9}.compact-tools .tool-count{margin-left:0}.tool-card.locked{opacity:.33}
+.order .formula .num{font-size:23px}.order .formula .num:first-child:before{content:'例';font-size:10px;position:absolute;top:2px;left:5px;color:#98c9e9}.order .formula .num:first-child{position:relative}
+.message.warn{border-left-color:#ff8582}.message.warn:before{content:'!';background:#ff8582}.failbox{border-color:#e99383}.failbox h2{color:#ffb4a8}
+@media(max-width:740px){.ticket-head{gap:7px}.ticket-head b{font-size:19px}.stamp-box{width:100%;min-width:0}.batch-list{grid-template-columns:1fr}.batch-item{min-width:0;padding:11px}.batch-value{font-size:28px}.reject{font-size:20px}.order .formula .num{font-size:23px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="head">
+    <div class="identity">
+      <div class="logo" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="M5 40V23l12 7V20l12 9V13h6v12l8 5v10H5Z" fill="#f0bd69" stroke="#ffe1a1" stroke-width="2" stroke-linejoin="round"/><path d="M12 34h5m7 0h5m6 0h4" stroke="#31535a" stroke-width="3" stroke-linecap="round"/><path d="M31 13V5h4v8" fill="#c4dcdf" stroke="#c4dcdf" stroke-width="2"/></svg></div>
+      <div><div class="eyebrow">Build · Calculate · Automate</div><div class="brand">MATH <span>FACTORY</span><span class="version">v1.2.1</span></div><div class="small">数字をつくる、ちいさな工場。</div></div>
+    </div>
+    <div class="headright"><div class="statpill"><small>🏭 工場レベル</small><strong id="level">1</strong></div><div class="statpill"><small>🔬 研究ポイント</small><strong><span id="rp">0</span> RP</strong></div><div class="statpill"><small>⭐ 獲得スター</small><strong id="stars">0</strong></div></div>
+  </header>
+  <section class="order" aria-label="今回の注文">
+    <div><div class="order-id" id="stageId">ORDER 01 / 20</div><div class="order-name" id="stageTitle">はじめての工場</div><div class="order-hint" id="stageDesc">まずは装置を置いてみましょう</div></div>
+    <div class="formula"><span class="num" id="inputValue">3</span><span class="arrow">➜</span><span class="num to" id="target">12</span><span class="quantity">× <span id="quantity">2</span>個</span></div>
+    <div class="orderprogress"><div class="progressline"><span>📦 納品状況</span><b id="delivery">0 / 2個</b></div><div class="progressbar"><div id="progress" style="width:0%"></div></div><div class="small" style="margin-top:7px">まずは下の大きな注文カードを確認して、材料と完成品の対応を見よう！</div></div>
+  </section>
+  <section class="batch-ticket" aria-label="注文票と品質規格">
+    <div class="ticket-head"><div><b>📌 この注文で作る数字</b><span>左が材料、右が完成品です。下のカードを見れば「何が来て、何を作るか」がすぐにわかります。</span></div><div class="stamp-box">必須工程 <strong id="requiredTypes">× 乗算</strong><div class="small" style="margin-top:5px;color:#dcebec">すべてのカードを指定どおりに加工するとクリア</div></div></div>
+    <div class="batch-list" id="batchSamples"></div>
+  </section>
+  <main class="layout">
+    <aside class="panel pad left">
+      <div class="panel-heading"><h2 class="sectiontitle"><span class="stepnum">1</span> 装置を選ぶ</h2></div>
+      <p class="pallet-description">使いたい装置を選び、ベルトをクリック。別の装置を選んで押せば上書きできます。</p>
+      <div class="tool-group" id="basicTools"></div>
+      <div class="palette-sep"><div class="mini-label">特別な装置</div></div>
+      <div class="compact-tools" id="advancedTools"></div>
+      <div class="pal-footer"><b>💡 ベルトの置き方</b><div style="margin-top:3px">「ベルト」を選んでマスを<strong>ドラッグ</strong>。曲がり角も自動で向きが変わります。</div></div>
+    </aside>
+    <section class="panel workspace">
+      <div class="workhead"><h2>🏭 工場フロア <span class="small">10 × 7マス</span></h2><div class="live" id="runState"><span class="live-dot"></span><span id="runText">設計中</span></div></div>
+      <div class="board-shell"><div class="factory-caption"><span>INLET / 材料搬入</span><span>OUTLET / 製品出荷</span></div><div class="board-outer"><div class="board" id="board" role="group" aria-label="工場マス目。装置を選んでマスを押すと配置します"></div></div><div class="board-caption">青＝材料の入口　／　灰＝コンベア　／　緑＝完成品の出口</div></div>
+      <div class="workbottom">
+        <div class="control-bar"><button class="runbtn" id="run">▶ 生産開始</button><button class="subbtn" id="step">⏭ 1コマ進める</button><button class="subbtn" id="reset">↺ やり直す</button></div>
+        <div class="quick-actions"><button id="rotate" title="選択中の装置を時計回りに回す">⟳ 向きを回す</button><button id="straight" title="入口と出口を結ぶ直線ベルトを敷く">▰ 直線ベルトを敷く</button><label class="speedlabel">速度 <select id="speed"><option value="800">ゆっくり（旧標準）</option><option value="400" selected>標準（旧2倍）</option><option value="180">高速（約4倍）</option></select></label></div>
+        <div class="message" role="status" aria-live="polite"><span id="status">左から装置を選んでください。</span></div>
+        <div class="footmetrics"><div class="metric"><small>稼働時間</small><strong><span id="ticks">0</span> <span style="font-size:10px">tick</span></strong></div><div class="metric"><small>装置の台数</small><strong id="used">0 / 3</strong></div><div class="metric"><small>搬送中</small><strong id="activeTokens">0</strong></div><div class="metric"><small>不良品</small><strong id="waste">0</strong></div></div>
+      </div>
+    </section>
+    <aside class="panel pad right">
+      <div class="side-section"><div class="panel-heading"><h2 class="sectiontitle"><span class="stepnum">2</span> 装置を設定</h2></div><div id="inspector"></div></div>
+      <div class="side-section"><div class="panel-heading"><h2 class="sectiontitle"><span class="stepnum">3</span> 生産して納品</h2></div><div class="howto"><div class="howto-row"><span class="howto-num">①</span><span>注文票を確認して、必要な<strong>加工装置</strong>をベルトに置く。</span></div><div class="howto-row"><span class="howto-num">②</span><span>右側で数値・向きを設定する。装置はクリックで上書き交換。</span></div><div class="howto-row"><span class="howto-num">③</span><span>緑の<strong>「生産開始」</strong>で全素材を一括製造。開始後の変更はリセットが必要。</span></div></div></div>
+      <div class="side-section"><button class="section-toggle" id="stageToggle" aria-expanded="false">🗺 ステージ一覧 <span id="stageChevron">＋</span></button><div class="expand-body" id="stagePanel" hidden><div class="small">クリア済みのステージはいつでも再挑戦できます。</div><div class="stage-list" id="stageList"></div></div></div>
+      <div class="side-section"><button class="section-toggle" id="researchToggle" aria-expanded="false">🔬 研究開発 <span id="researchChevron">＋</span></button><div class="expand-body" id="researchPanel" hidden><div class="small">研究ポイントで新しい装置を解放できます。</div><div class="research-list" id="research"></div></div></div>
+      <div class="side-section"><div class="small">⭐ 全ロットを正しく検品してクリア。装置の台数・稼働時間の条件で追加の星を獲得。<br>装置の目安：<b id="limit">3</b>台以内 / <b id="timeLimit">26 tick</b>以内</div></div>
+    </aside>
+  </main>
+  <div class="footer">セーブは自動保存されます。旧版のセーブを参照できる保存環境では、研究ポイント・ステージ解放を引き継ぎます。新しい注文の★は改めて挑戦してください。</div>
+</div>
+<div class="modal hidden" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modalbox"><div class="eyebrow">ORDER COMPLETE</div><h2 id="modalTitle">📦 注文達成！</h2><div class="stars-big" id="modalStars">★★★</div><p id="modalText"></p><div class="modal-actions"><button id="replay">↺ もう一度</button><button class="primary" id="next">次の注文へ ➜</button></div></div></div>
+<div class="modal hidden" id="failModal" role="dialog" aria-modal="true" aria-labelledby="failTitle"><div class="modalbox failbox"><div class="eyebrow">QUALITY CHECK FAILED</div><h2 id="failTitle">⚠ 検品で問題を発見</h2><p id="failText"></p><div class="modal-actions"><button class="primary" id="retryDesign">↺ 配置を直して再挑戦</button></div></div></div>
+<script>
+'use strict';
+const W=10,H=7,SAVE='math_factory_v1_2_save',OLD_SAVE='math_factory_v1_save';
+const mk=(id,inputs,outputs,desc,required,stock,limit,time,hint)=>({id,inputs,outputs,desc,required,stock,limit,time,hint,qty:outputs.filter(v=>v!==null).length});
+const STAGES=[
+ mk(1,[3,5,7],[12,20,28],'初めての量産ライン',['mul'],{mul:1},1,23,'×4を1台置き、3種類の材料をすべて加工しよう。'),
+ mk(2,[5,7,9],[13,15,17],'同じ数を加える',['add'],{add:1,mul:1},1,23,'＋8なら、それぞれの材料が8ずつ大きくなる。'),
+ mk(3,[9,12,18],[4,7,13],'同じ数を引く',['sub'],{sub:1,add:1},1,23,'−5の装置を使ってみよう。'),
+ mk(4,[4,6,9],[20,30,45],'倍率をそろえる',['mul'],{mul:1,add:1,sub:1},1,23,'全部を5倍にするなら、1台の乗算機で十分。'),
+ mk(5,[12,20,28],[3,5,7],'分配して小さくする',['div'],{div:1,add:1,sub:1},1,23,'すべて4で割る。同じ設定で3素材を処理しよう。'),
+ mk(6,[3,5,8],[17,25,37],'二工程の生産ライン',['mul','add'],{mul:1,add:1,sub:1},2,24,'先に×4、次に＋5。順序を入れ替えると結果が変わる。'),
+ mk(7,[7,8,10],[31,35,43],'倍率と調整値',['mul','add'],{mul:1,add:1,sub:1},2,24,'各製品の差に注目。×4と＋3で作れる。'),
+ mk(8,[8,10,12],[10,14,18],'加工順序の研究',['sub','mul'],{sub:1,mul:1,add:1},2,24,'まず−3してから×2する。'),
+ mk(9,[6,7,9],[42,49,63],'省設備の工場',['mul'],{mul:1,add:1,sub:1,div:1},1,23,'1台で全素材を変換。×7が近道。'),
+ mk(10,[5,7,9],[40,52,64],'第1工場の検定',['mul','add'],{mul:2,add:1,sub:1},3,25,'×3 → ＋5 → ×2。別の短い組み合わせも考えられる。'),
+ mk(11,[3,4,5],[9,16,25],'平方の生産ライン',['square'],{square:1,mul:1,add:1},1,23,'平方機は数字を2乗する。×固定値とは違う働きをする。'),
+ mk(12,[4,5,7],[18,27,51],'平方の仕上げ加工',['square','add'],{square:1,add:1,sub:1},2,24,'まず2乗してから＋2。'),
+ mk(13,[7,8,11],[1,2,2],'余りを取り出す',['mod'],{mod:1,sub:1,add:1},1,23,'余り機の値を6にすると、7→1、8→2、11→5。今回は3を設定。'),
+ mk(14,[10,13,17],[1,4,8],'周期を見つける',['mod'],{mod:1,add:1,sub:1},1,23,'9で割った余りを調べよう。'),
+ mk(15,[5,6,8],[24,35,63],'平方から一歩引く',['square','sub'],{square:1,sub:1,add:1},2,24,'x²−1 の加工ライン。平方機の後に−1。'),
+ mk(16,[9,12,15],[64,121,196],'括弧で順序を設計',['sub','square'],{square:1,sub:1,add:1},2,24,'(x−1)²。減算を先にすることが重要。'),
+ mk(17,[4,5,8,9,12],[4,null,8,null,12],'検品工場：偶数だけ出荷',['even'],{even:1,add:1,sub:1},1,32,'偶数判定機を通すと奇数は正しく選別される。捨てるだけでは合格にならない。'),
+ mk(18,[3,4,5,6,7],[4,null,6,null,8],'加工してから選別',['add','even'],{add:1,even:1,sub:1},2,33,'＋1の後で偶数判定をする。順序を逆にすると検品が失敗する。'),
+ mk(19,[8,11,14],[9,3,12],'余りから製品をつくる',['mod','mul'],{mod:1,mul:1,add:1},2,24,'まず5で割った余りを出し、次に×3。'),
+ mk(20,[7,9,11],[202,330,490],'最終注文：複合自動化',['square','mul','add'],{square:1,mul:1,add:1,sub:1},3,25,'平方 → ×4 → ＋6。3台で正確に量産しよう。')
+];
+const TYPES={
+ select:{sym:'◎',name:'選択',short:'選ぶ',color:'#526b76'},
+ erase:{sym:'⌫',name:'撤去',short:'消す',color:'#915761'},
+ belt:{sym:'➜',name:'コンベア',short:'ベルト',sub:'数字を運ぶ',color:'#556e7e'},
+ add:{sym:'＋',name:'加算機',short:'加算',sub:'数字を足す',color:'#267cae'},
+ sub:{sym:'−',name:'減算機',short:'減算',sub:'数字を引く',color:'#ba6959'},
+ mul:{sym:'×',name:'乗算機',short:'乗算',sub:'数字を掛ける',color:'#bc8830'},
+ div:{sym:'÷',name:'除算機',short:'除算',sub:'数字を割る',color:'#3994ac'},
+ square:{sym:'x²',name:'平方機',short:'平方',color:'#8060ae'},
+ mod:{sym:'%',name:'余り機',short:'余り',color:'#b06c9a'},
+ even:{sym:'◇',name:'偶数判定',short:'偶数',color:'#7c71bd'},
+ split:{sym:'⑂',name:'分岐機',short:'分岐',color:'#617d9d'},
+ merge:{sym:'∑',name:'合流機',short:'合流',color:'#598f6b'},
+ trash:{sym:'▤',name:'廃棄機',short:'廃棄',color:'#955d68'}
+};
+const RESEARCH=[
+ {id:'square',name:'平方機',cost:12,need:11,desc:'2乗する装置を解放'},
+ {id:'mod',name:'余り計算機',cost:18,need:13,desc:'剰余を求める装置を解放'},
+ {id:'even',name:'偶数判定機',cost:24,need:17,desc:'偶数だけを通す検品装置'},
+ {id:'split',name:'分岐コンベア',cost:30,need:21,desc:'フリーファクトリー用（準備中）'},
+ {id:'merge',name:'合流装置',cost:35,need:21,desc:'フリーファクトリー用（準備中）'},
+ {id:'trash',name:'廃棄シュート',cost:10,need:21,desc:'フリーファクトリー用（準備中）'}
+];
+const $=id=>document.getElementById(id);
+const idx=(x,y)=>y*W+x,vec=[[0,-1],[1,0],[0,1],[-1,0]],arrows=['↑','→','↓','←'];
+const current=()=>STAGES[stage-1];
+const at=(x,y)=>x>=0&&y>=0&&x<W&&y<H?grid[idx(x,y)]:null;
+function readStore(k){try{return JSON.parse(localStorage.getItem(k))||{}}catch{return {}}}
+const save=readStore(SAVE),previous=readStore(OLD_SAVE),legacy=Object.keys(save).length?save:previous;
+let progress={unlocked:Math.max(1,Math.min(20,legacy.unlocked||1)),cleared:save.cleared||{},rp:Number(legacy.rp)||0,research:legacy.research||{}};
+let stage=1,grid=[],tokens=[],tool='mul',selected=null,playing=false,timer=null,runStarted=false,ticks=0,delivered=0,rejected=0,waste=0,spawned=0,finished=false,failed=false,serial=0,lotState=[];
+let dragging=false,lastDrag=null,ignoreNextClick=false;
+function persist(){try{localStorage.setItem(SAVE,JSON.stringify(progress))}catch{}}
+function status(s,isWarning=false){$('status').textContent=s;$('status').parentElement.classList.toggle('warn',isWarning)}
+function used(){return grid.filter(c=>c&&!['input','output','belt','trash'].includes(c.type)).length}
+function countType(k){return grid.filter(c=>c?.type===k).length}
+function available(k){return ['select','erase','belt'].includes(k)||(current().stock[k]||0)>0}
+function initGrid(){grid=Array.from({length:W*H},()=>null);grid[idx(0,3)]={type:'input',dir:1};grid[idx(9,3)]={type:'output',dir:1};for(let x=1;x<9;x++)grid[idx(x,3)]={type:'belt',dir:1}}
+function stop(){playing=false;if(timer){clearInterval(timer);timer=null}}
+function loadStage(n){
+ stop();stage=n;initGrid();tokens=[];ticks=0;delivered=0;rejected=0;waste=0;spawned=0;serial=0;finished=false;failed=false;runStarted=false;selected=null;lotState=current().inputs.map(()=>'pending');
+ tool=current().required[0];$('modal').classList.add('hidden');$('failModal').classList.add('hidden');
+ $('stageId').textContent='ORDER '+String(stage).padStart(2,'0')+' / 20';
+ $('stageTitle').textContent=current().desc;$('stageDesc').textContent=`材料${current().inputs.length}種類をまとめて加工。下の注文カードの数字を確認して工場を作ろう。`;
+ $('inputValue').textContent=current().inputs.length+'種';$('target').textContent=current().qty+'個';$('quantity').textContent='注文';
+ $('limit').textContent=current().limit;$('timeLimit').textContent=current().time+' tick';
+ $('requiredTypes').textContent=current().required.map(k=>TYPES[k].sym+' '+TYPES[k].short).join(' → ');
+ status('💡 '+current().hint);renderAll();
+}
+function renderLot(){
+ const root=$('batchSamples');root.replaceChildren();current().inputs.forEach((value,i)=>{
+  const moving=tokens.some(t=>t.order===i);
+  const state=lotState[i]==='done'?'出荷済み':lotState[i]==='removed'?'選別済み':moving?'搬送中':'未完了';
+  const el=document.createElement('div');el.className='batch-item '+(lotState[i]==='done'?'done':lotState[i]==='removed'?'removed':moving?'active':'');
+  const expected=current().outputs[i];
+  el.innerHTML=`<div class="batch-top"><span class="batch-number">注文 ${i+1}</span><span class="batch-state">${state}</span></div><div class="batch-main"><div class="batch-side"><small>材料</small><strong class="batch-value">${value}</strong></div><span class="output-arrow">➜</span><div class="batch-side out"><small>${expected===null?'処理結果':'作る数'}</small>${expected===null?'<strong class="reject">除外</strong>':`<strong class="batch-value">${expected}</strong>`}</div></div>`;
+  if(lotState[i]==='done')el.title='納品済み';else if(lotState[i]==='removed')el.title='検品で正しく除外';else if(moving)el.title='現在搬送中';else el.title='未完了';
+  root.appendChild(el);
+ });
+}
+function renderBoard(){
+ const board=$('board');board.innerHTML='';board.classList.toggle('belt-mode',tool==='belt');board.classList.toggle('is-running',playing);
+ const frag=document.createDocumentFragment();
+ for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+  const i=idx(x,y),c=grid[i];let el=document.createElement('div');el.className='cell '+(c?c.type:'is-empty')+(selected===i?' selected':'');el.dataset.x=x;el.dataset.y=y;
+  let name=c?(c.type==='input'?'材料投入機':c.type==='output'?'製品納品機':TYPES[c.type].name):'空きマス';
+  el.title=`${x+1}列${y+1}行：${name}${c&&!['input','output'].includes(c.type)?' '+arrows[c.dir]:''}`;
+  if(c){if(c.type==='input'||c.type==='output'){
+    el.innerHTML=`<span class="io-mark">${c.type==='input'?'IN':'OUT'}</span><strong class="io-num">${c.type==='input'?'📥':'📦'}</strong>`;
+   }else{if(c.type==='belt'){let track=document.createElement('span');track.className='belttrack';track.style.setProperty('--belt-angle',c.dir%2?'0deg':'90deg');el.appendChild(track)}
+    else{let label=document.createElement('span');label.className='machine-name';label.textContent=TYPES[c.type].short;el.appendChild(label)}
+    let sym=document.createElement('span');sym.className='sym';sym.textContent=c.type==='belt'?arrows[c.dir]:TYPES[c.type].sym;el.appendChild(sym);
+    if(c.type!=='belt'){let d=document.createElement('span');d.className='direction';d.textContent=arrows[c.dir];el.appendChild(d)}
+    if(['add','sub','mul','div','mod'].includes(c.type)){let mini=document.createElement('span');mini.className='mini';mini.textContent='n='+c.value;el.appendChild(mini)}
+   }}
+  for(const t of tokens){if(t.x===x&&t.y===y){let a=document.createElement('div');a.className='token';a.textContent=t.v;el.appendChild(a)}}
+  frag.appendChild(el);
+ }
+ board.appendChild(frag);
+}
+function makeTool(k){
+ const d=TYPES[k],btn=document.createElement('button');btn.type='button';btn.className='tool-card'+(tool===k?' active':'')+(!available(k)?' locked':'');btn.style.setProperty('--tool-color',d.color);
+ const left=current().stock[k]||0,spent=countType(k);
+ btn.disabled=!available(k)||runStarted||finished||failed;btn.title=!available(k)?'この注文の装置在庫にはありません':`${d.name}（${spent}/${left}台使用中）`;
+ btn.innerHTML=`<span class="tool-icon">${d.sym}</span><span class="tool-txt"><b>${d.name}</b>${d.sub?`<small>${d.sub}</small>`:''}</span>${!['belt','select','erase'].includes(k)?`<span class="tool-count">${spent}/${left}</span>`:''}`;
+ btn.setAttribute('aria-pressed',tool===k?'true':'false');
+ btn.onclick=()=>{ignoreNextClick=false;tool=k;selected=null;renderAll();status(k==='belt'?'空きマスをドラッグしてコンベアを敷こう。':`${d.name}を選択しました。装置の上から押すと交換できます。`)};
+ return btn;
+}
+function renderTools(){const basic=$('basicTools'),advanced=$('advancedTools');basic.replaceChildren();advanced.replaceChildren();for(const k of ['belt','add','sub','mul','div'])basic.appendChild(makeTool(k));for(const k of ['square','mod','even','split','merge','trash'])advanced.appendChild(makeTool(k))}
+function attachInputValue(c){
+ const v=$('insValue');if(!v)return;
+ function update(n){if(runStarted||finished||failed)return;c.value=Math.max(1,Math.min(100,Math.round(Number(n)||1)));v.value=c.value;renderBoard()}
+ v.onchange=()=>update(v.value);$('valueMinus').onclick=()=>update(c.value-1);$('valuePlus').onclick=()=>update(c.value+1);
+}
+function renderInspector(){
+ const el=$('inspector');if(selected===null||!grid[selected]){el.innerHTML='<div class="inspector-empty"><span class="big">⚙️</span><b>ここで数値を設定</b><p class="small" style="margin:6px 0 0">装置を設置するか、置いた装置を選ぶと設定が表示されます。</p></div>';return}
+ const c=grid[selected],d=TYPES[c.type],name=c.type==='input'?'材料投入機':c.type==='output'?'製品納品機':d.name;
+ let html=`<div class="inspect-title"><b>${name}</b><small>${selected%W+1}列 ${Math.floor(selected/W)+1}行</small></div>`;
+ if(['add','sub','mul','div','mod'].includes(c.type)){
+  html+=`<div class="inspect-unit"><label class="inspector-label" for="insValue">計算する数</label><div class="number-line"><button id="valueMinus" type="button" aria-label="1減らす" ${runStarted?'disabled':''}>−</button><input id="insValue" type="number" min="1" max="100" step="1" value="${c.value}" ${runStarted?'disabled':''}><button id="valuePlus" type="button" aria-label="1増やす" ${runStarted?'disabled':''}>＋</button></div><div class="small" style="margin-top:7px">全素材に同じ設定が適用されます。${runStarted?' 生産開始後は固定されます。':''}</div></div>`;
+ }
+ if(c.type!=='input'&&c.type!=='output'){
+  html+=`<div style="margin-top:13px"><label class="inspector-label">数字を流す向き</label><div class="direction-pad">${arrows.map((a,i)=>`<button type="button" data-dir="${i}" class="${c.dir===i?'on':''}" ${runStarted?'disabled':''} aria-label="${['上','右','下','左'][i]}向き">${a}</button>`).join('')}</div></div><button id="deleteSelected" type="button" class="inspect-delete" ${runStarted?'disabled':''}>🗑 この装置を撤去</button>`;
+ }
+ if(c.type==='even')html+='<p class="small">偶数は通過し、奇数は正しく選別・除外されます。</p>';
+ if(c.type==='square')html+='<p class="small">投入された数字を2乗します。</p>';
+ el.innerHTML=html;attachInputValue(c);
+ el.querySelectorAll('[data-dir]').forEach(b=>b.onclick=()=>{if(runStarted||finished||failed)return;c.dir=Number(b.dataset.dir);renderAll()});
+ const del=$('deleteSelected');if(del)del.onclick=()=>{if(runStarted||finished||failed)return;grid[selected]=null;selected=null;renderAll();status('装置を撤去しました。')};
+}
+function renderStages(){const el=$('stageList');el.replaceChildren();STAGES.forEach(s=>{let b=document.createElement('button');b.textContent=s.id;b.className=(s.id===stage?'active ':'')+(progress.cleared[s.id]?'cleared ':'');b.disabled=s.id>progress.unlocked;b.title=s.id>progress.unlocked?'前のステージをクリアすると解放':s.desc;b.onclick=()=>loadStage(s.id);el.appendChild(b)})}
+function renderResearch(){const el=$('research');el.replaceChildren();RESEARCH.forEach(r=>{let b=document.createElement('button');let owned=!!progress.research[r.id],automatic=stage>=r.need,beyond=r.need>20;b.disabled=beyond||owned||automatic||progress.rp<r.cost||runStarted;b.innerHTML=`<b>${owned?'✅':automatic?'🔓':'🔬'} ${r.name} — ${beyond?'準備中':owned?'研究済':automatic?'自動解放':r.cost+' RP'}</b><small>${r.desc}${beyond?'':' / ST'+r.need+'で自動解放'}</small>`;b.onclick=()=>{if(progress.rp<r.cost)return;progress.rp-=r.cost;progress.research[r.id]=true;persist();renderAll();status(r.name+'の研究が完了しました！')};el.appendChild(b)})}
+function renderStats(){
+ $('rp').textContent=progress.rp;$('level').textContent=Math.max(1,Math.ceil(progress.unlocked/2));$('stars').textContent=Object.values(progress.cleared).reduce((a,b)=>a+Number(b||0),0);
+ $('ticks').textContent=ticks;$('used').textContent=used()+' / '+current().limit;$('waste').textContent=waste;$('activeTokens').textContent=tokens.length;
+ const processed=delivered+rejected;$('delivery').textContent=`良品${delivered}/${current().qty}個${rejected?'・選別'+rejected+'個':''}`;
+ $('progress').style.width=Math.min(100,100*processed/current().inputs.length)+'%';
+ $('runState').className='live '+(playing?'running':finished?'completed':'');$('runText').textContent=playing?'稼働中':finished?'出荷完了':failed?'検品停止':runStarted?'一時停止':'設計中';
+ $('run').textContent=playing?'⏸ 一時停止':runStarted?'▶ 生産再開':'▶ 生産開始';$('run').disabled=finished||failed;$('step').disabled=playing||finished||failed;$('rotate').disabled=runStarted||finished||failed;$('straight').disabled=runStarted||finished||failed;
+ renderLot();
+}
+function renderAll(){renderBoard();renderTools();renderInspector();renderStages();renderResearch();renderStats()}
+function defaultValue(k){return k==='mul'||k==='div'||k==='mod'?2:1}
+function cellClick(x,y){
+ const i=idx(x,y),c=grid[i];
+ if(runStarted||finished||failed){selected=i;renderInspector();status('生産開始後は設計を固定しています。編集するには「やり直す」を押してください。');return}
+ if(c&&['input','output'].includes(c.type)){selected=i;renderAll();return}
+ if(tool==='select'){selected=i;renderAll();return}
+ if(tool==='erase'){grid[i]=null;selected=null;renderAll();status('装置を撤去しました。');return}
+ if(tool==='belt'){grid[i]={type:'belt',dir:c?.dir??1};selected=i;renderAll();status('ベルトを設置しました。');return}
+ if(!available(tool))return;
+ if(c?.type===tool){selected=i;renderAll();return}
+ const stock=current().stock[tool]||0;
+ if(countType(tool)>=stock){status(`${TYPES[tool].name}の在庫は${stock}台です。別の場所にある装置を交換・撤去してください。`,true);return}
+ // 異なる装置を選んで既存装置をクリックすると、数値は初期化して即座に上書き。
+ grid[i]={type:tool,dir:c?.dir??1,value:defaultValue(tool)};selected=i;renderAll();
+ status(`${TYPES[tool].name}に${c&&c.type!=='belt'?'交換':'設置'}しました。右側で${['add','sub','mul','div','mod'].includes(tool)?'計算する数を設定':'向きを確認'}してください。`);
+}
+function reset(){stop();tokens=[];ticks=0;delivered=0;rejected=0;waste=0;spawned=0;serial=0;finished=false;failed=false;runStarted=false;lotState=current().inputs.map(()=>'pending');$('failModal').classList.add('hidden');for(const c of grid)if(c?.type==='split')c.flip=0;status('設計を編集できます。装置はそのまま残っています。');renderAll()}
+function process(v,c){switch(c.type){case 'add':v+=c.value;break;case 'sub':v-=c.value;break;case 'mul':v*=c.value;break;case 'div':if(v%c.value!==0)return null;v/=c.value;break;case 'mod':v%=c.value;break;case 'square':v*=v;break;case 'even':if(v%2)return null;break;}if(!Number.isSafeInteger(v)||Math.abs(v)>1000000)return null;return v}
+function fail(reason){stop();failed=true;waste++;$('failText').textContent=reason+'\nすべての材料を仕様どおり加工する必要があります。配置や装置の設定を見直してください。';$('failModal').classList.remove('hidden');status('⚠ 検品不合格：'+reason,true);renderAll()}
+function tick(){
+ if(finished||failed)return;
+ const justStarted=!runStarted;runStarted=true;ticks++;if(justStarted){renderTools();renderInspector()}let next=[],occupied=new Set();
+ for(const t of tokens){
+  const here=at(t.x,t.y);if(!here){fail('材料がベルトから外れました。');return}
+  let direction=here.dir;
+  if(here.type==='split'){direction=(here.dir+(here.flip||0))%4;here.flip=1-(here.flip||0)}
+  const [dx,dy]=vec[direction],nx=t.x+dx,ny=t.y+dy,n=at(nx,ny);
+  if(!n||n.type==='input'){fail(`素材 #${t.order+1} (${current().inputs[t.order]}) が搬送経路から外れました。`);return}
+  const expected=current().outputs[t.order];
+  if(n.type==='output'){
+   if(expected===null){fail(`素材 #${t.order+1} は選別除外が必要ですが出荷口に届きました。`);return}
+   if(t.v!==expected){fail(`素材 #${t.order+1} の製品は ${t.v} でした。注文票の ${expected} と異なります。`);return}
+   const missing=current().required.filter(k=>!t.trace.includes(k));
+   if(missing.length){fail(`素材 #${t.order+1} は必須工程「${missing.map(k=>TYPES[k].name).join('・')}」を通っていません。`);return}
+   lotState[t.order]='done';delivered++;continue;
+  }
+  if(n.type==='trash'){fail(`素材 #${t.order+1} は検品機を通らず廃棄されました。`);return}
+  const trace=(n.type==='belt'||n.type==='merge'||n.type==='split')?t.trace:[...t.trace,n.type];
+  const v=process(t.v,n);
+  if(v===null){
+    if(n.type==='even'&&expected===null){lotState[t.order]='removed';rejected++;continue}
+    fail(`素材 #${t.order+1} は「${TYPES[n.type].name}」で加工できませんでした。`);return;
+  }
+  const key=idx(nx,ny);if(occupied.has(key)){fail('ベルト上で素材が衝突しました。');return}
+  occupied.add(key);next.push({x:nx,y:ny,v,order:t.order,id:t.id,trace});
+ }
+ tokens=next;
+ if((ticks-1)%4===0&&spawned<current().inputs.length){const order=spawned;tokens.push({x:0,y:3,v:current().inputs[order],order,id:++serial,trace:[]});spawned++}
+ if(delivered+rejected===current().inputs.length){complete();return}
+ if(ticks>=160){fail('生産が160 tickを超えました。矢印や搬送ルートを調べてください。');return}
+ renderBoard();renderStats();
+}
+function complete(){
+ stop();finished=true;let score=1;if(used()<=current().limit)score++;if(ticks<=current().time)score++;
+ const old=Number(progress.cleared[stage]||0),gain=score>old?(score-old)*5:0;progress.cleared[stage]=Math.max(old,score);
+ progress.rp+=gain;progress.unlocked=Math.max(progress.unlocked,Math.min(20,stage+1));persist();
+ $('modalStars').textContent='★'.repeat(score)+'☆'.repeat(3-score);
+ $('modalText').textContent=`全${current().inputs.length}素材を正しく処理！ 良品${delivered}個・検品除外${rejected}個。\n経過 ${ticks} tick ・ 装置 ${used()}台 ・ 研究ポイント +${gain}`;
+ $('next').style.display=stage<20?'inline-block':'none';$('modal').classList.remove('hidden');
+ status(`注文達成！ 全ロット検品合格。${score}★、研究ポイント +${gain}`);renderAll();
+}
+function toggleRun(){
+ if(finished||failed)return;
+ if(playing){stop();status('一時停止。生産中の工場は固定されています。修正には「やり直す」を押してください。');renderAll();return}
+ playing=true;runStarted=true;status('工場が稼働中！ 注文票の素材が順番に搬入されます。');timer=setInterval(tick,Number($('speed').value));renderAll();
+}
+function rotateSelected(){if(runStarted||finished||failed){status('設計変更には「やり直す」を押してください。');return}if(selected!==null&&grid[selected]&&!['input','output'].includes(grid[selected].type)){grid[selected].dir=(grid[selected].dir+1)%4;renderAll();status('矢印の向きを変えました。')}else status('向きを変更したい装置を先に押してください。')}
+function straightBelt(){
+ if(runStarted||finished||failed)return;let count=0;
+ for(let x=1;x<9;x++){const c=at(x,3);if(!c||c.type==='belt'){grid[idx(x,3)]={type:'belt',dir:1};count++}}
+ selected=null;renderAll();status(count?'入口から出口までの空きマスに右向きベルトを敷きました。':'ベルトを敷ける空きマスがありません。');
+}
+function cellFromPoint(event){const hit=document.elementFromPoint(event.clientX,event.clientY)?.closest('.cell');if(!hit||!$('board').contains(hit))return null;return {x:Number(hit.dataset.x),y:Number(hit.dataset.y)}}
+function paintBelt(x,y){const c=at(x,y);if(!c||c.type==='belt'){grid[idx(x,y)]={type:'belt',dir:c?.dir??1};return true}return false}
+function stepDragCell(p){
+ if(!lastDrag){if(paintBelt(p.x,p.y)){lastDrag=p;renderBoard()}return}
+ if(p.x===lastDrag.x&&p.y===lastDrag.y)return;
+ let x=lastDrag.x,y=lastDrag.y,changes=false;
+ for(const [dx,dy,steps] of [[Math.sign(p.x-x),0,Math.abs(p.x-x)],[0,Math.sign(p.y-y),Math.abs(p.y-y)]]){
+  for(let j=0;j<steps;j++){
+   const nx=x+dx,ny=y+dy;if(!paintBelt(nx,ny))break;
+   const previous=at(x,y);if(previous?.type==='belt')previous.dir=dx===1?1:dx===-1?3:dy===1?2:0;
+   x=nx;y=ny;changes=true;
+  }
+ }
+ lastDrag={x,y};if(changes)renderBoard();
+}
+const board=$('board');
+board.addEventListener('pointerdown',e=>{
+ if(tool!=='belt'||runStarted||finished||failed||e.button!==0)return;
+ const p=cellFromPoint(e);if(!p)return;
+ const c=at(p.x,p.y);if(c&&c.type!=='belt')return;
+ dragging=true;lastDrag=null;ignoreNextClick=true;
+ board.setPointerCapture?.(e.pointerId);stepDragCell(p);e.preventDefault();
+});
+board.addEventListener('pointermove',e=>{if(!dragging)return;const p=cellFromPoint(e);if(p)stepDragCell(p)});
+function endDrag(){if(dragging){dragging=false;lastDrag=null;selected=null;renderAll();status('ベルトを敷きました。');setTimeout(()=>{ignoreNextClick=false},70)}}
+board.addEventListener('pointerup',endDrag);board.addEventListener('pointercancel',endDrag);
+board.addEventListener('click',e=>{if(ignoreNextClick){ignoreNextClick=false;return}const cell=e.target.closest('.cell');if(!cell||!board.contains(cell))return;cellClick(Number(cell.dataset.x),Number(cell.dataset.y))});
+board.addEventListener('contextmenu',e=>{e.preventDefault();if(runStarted||finished||failed)return;const c=e.target.closest('.cell');if(!c)return;const x=Number(c.dataset.x),y=Number(c.dataset.y),data=at(x,y);if(data&&!['input','output'].includes(data.type)){data.dir=(data.dir+1)%4;selected=idx(x,y);renderAll();status('右クリックで向きを変更しました。')}});
+$('run').onclick=toggleRun;$('step').onclick=()=>{if(!playing&&!finished&&!failed)tick()};$('reset').onclick=reset;$('rotate').onclick=rotateSelected;$('straight').onclick=straightBelt;
+$('speed').onchange=()=>{try{localStorage.setItem('math_factory_speed',String($('speed').value))}catch{}if(playing){stop();toggleRun()}};
+try{const speed=localStorage.getItem('math_factory_speed');if(['800','400','180'].includes(speed))$('speed').value=speed}catch{}
+$('replay').onclick=()=>loadStage(stage);$('next').onclick=()=>loadStage(Math.min(20,stage+1));$('retryDesign').onclick=reset;
+for(const key of ['stage','research']){const toggle=$(key+'Toggle'),panel=$(key+'Panel'),chevron=$(key+'Chevron');toggle.onclick=()=>{panel.hidden=!panel.hidden;toggle.setAttribute('aria-expanded',String(!panel.hidden));chevron.textContent=panel.hidden?'＋':'−'}}
+document.addEventListener('keydown',e=>{if(e.target.matches('input,select,textarea'))return;if(e.code==='KeyR')rotateSelected();if(e.code==='Space'){e.preventDefault();toggleRun()}if(e.code==='Escape'&&selected!==null){selected=null;renderAll()}if(e.code==='Delete'&&selected!==null&&grid[selected]&&!['input','output'].includes(grid[selected].type)&&!runStarted&&!finished&&!failed){grid[selected]=null;selected=null;renderAll()}});
+loadStage(1);
+</script>
+</body>
+</html>
