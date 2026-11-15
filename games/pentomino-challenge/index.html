@@ -44,16 +44,150 @@ footer{text-align:center;color:#a1adbd;font-size:.74rem;margin:24px 0 10px}
 .clear-best{color:#73869b;font-size:.85rem;margin:8px 0 19px}.clear-best strong{color:#b48a29}
 .clear-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.clear-actions button{min-height:47px;padding:10px;font-size:.87rem}.clear-actions .primary{background:#1da995;color:#fff;border-color:#179e90}.clear-actions .wide{grid-column:1 / -1}
 @media(max-width:450px){.clear-card{padding:22px 17px 17px;border-radius:20px}.clear-detail{font-size:.83rem}.clear-detail strong{font-size:.78rem}.clear-stars{gap:4px}}
+
+/* v0.3.4 : art-directed, asset-free visual refinement. */
+:root{--ink:#21384c;--mint:#1da995;--line:#e2eaf1;--softshadow:0 12px 32px rgba(32,66,88,.065)}
+body{background:radial-gradient(ellipse 44% 26% at 100% 3%,rgba(132,215,212,.20),transparent 100%),radial-gradient(ellipse 49% 28% at 0% 14%,rgba(139,187,236,.18),transparent 100%),#f6f9fb;}
+.app{max-width:1180px}
+.topbar{padding:5px 2px 0}.brand-mark{background:linear-gradient(145deg,#264968,#18344d);border:1px solid #406781;box-shadow:0 5px 9px #294c6222,0 12px 25px #24476a1a}
+.panel{border-color:#e1eaf0;box-shadow:0 3px 8px #122d4310,0 19px 54px #2b62760d}
+button{box-shadow:0 2px 0 #2d4e6508}
+button:hover{box-shadow:0 5px 15px #2d4e6514}
+button:focus-visible,select:focus-visible{outline-color:#3bb5a2;outline-offset:2px}
+/* Home: integrated illustration instead of a generic empty header. */
+.home-hero{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);align-items:center;gap:12px;text-align:left;position:relative;isolation:isolate;min-height:275px;padding:22px 24px 18px;border-radius:22px;background:linear-gradient(115deg,#f0fcf9 0%,#dff5f4 52%,#d5eafb 100%);overflow:hidden;border:1px solid #e0f1ee}
+.home-hero::before{content:'';position:absolute;width:340px;height:340px;border:1px solid #fff8;border-radius:50%;left:-180px;bottom:-245px;z-index:-1}
+.home-hero .eyebrow{color:#148d89}
+.home-hero h2{font-weight:950;font-size:clamp(1.7rem,3.55vw,3rem);line-height:1.25;letter-spacing:-.06em;color:#20405a}
+.home-hero p:not(.eyebrow){max-width:330px;color:#547c8c;font-weight:650;line-height:1.7}
+.hero-copy{padding:10px 0 10px 15px;position:relative;z-index:1}
+.hero-visual{width:100%;position:relative;z-index:1;filter:drop-shadow(0 12px 16px rgba(26,89,115,.12));}
+.hero-svg{display:block;width:100%;max-height:260px}
+.home-choice-heading{display:flex;align-items:center;justify-content:space-between;margin:25px 2px -13px}
+.home-choice-heading h3{color:#365267;letter-spacing:-.035em}
+.home-choice-heading>span{color:#97a7b8;font-size:.78rem;font-weight:750}
+.modechoices{margin-top:25px;gap:16px}.mode-card{min-height:206px;border:1px solid #e2ebf0;background:linear-gradient(165deg,#fff 55%,#f2fbf8);box-shadow:0 3px 10px #2b60700d,0 1px 1px #2546530c}
+.mode-card.classic{background:linear-gradient(165deg,#fff 55%,#f2f5fe)}
+.mode-card::before{content:'';position:absolute;width:180px;height:180px;right:-72px;top:-88px;border-radius:50%;background:rgba(76,189,173,.09);pointer-events:none}
+.mode-card.classic::before{background:rgba(119,148,211,.12)}
+.mode-art{filter:drop-shadow(0 4px 3px #395a6a1a)}.mode-art span.on{box-shadow:inset 0 2px 0 #ffffffa8,inset 0 -2px 0 #154e4340;transform:translateY(-1px)}
+.mode-card .mode-title{letter-spacing:-.03em}.mode-card .mode-sub{line-height:1.55}
+.mode-card .card-arrow{border:1px solid #d0e9e2}
+.home-progress{display:inline-flex;position:relative;left:50%;transform:translateX(-50%);padding:11px 19px;background:#f5faf9;border-radius:999px;border:1px solid #e5f0ed;margin:6px 0 0;white-space:nowrap}
+/* Stage map: rows read like curated collections. */
+.progress-summary{background:linear-gradient(115deg,#f7fbfc,#ecf7f5);border-color:#e2eeed}
+.progress-summary strong{font-size:1.06rem}
+.overall-track{height:8px;border:1px solid #ecf2f4}
+.overall-track>div,.placed-track>div{background:linear-gradient(90deg,#2ba79c,#69cfaa)}
+.stage-group{border:1px solid #e9edf2;background:#fbfcfe;border-radius:18px;padding:15px 16px 17px;margin-top:15px;box-shadow:0 1px 3px #14375b05}
+.stage-group-head{margin:0 3px 12px}.stage-group-head strong{color:#3a5b6f}.stage-group-head span{color:#b88226}
+.level{background:#fff;border:1px solid #dfe8f0;border-bottom:3px solid #dce5ed;border-radius:13px;min-height:93px;justify-content:center;transition:transform .15s ease,background .15s ease,border .15s ease,box-shadow .15s ease}
+.level .level-number{font-size:1.15rem}.level .level-stars{font-size:1.05rem;letter-spacing:-.04em}
+.level .level-state{font-size:.68rem;color:#7d94a7}
+.level.cleared{border-color:#f0dfb3;background:#fffdf7;border-bottom-color:#e6cb84}
+.level.perfect{background:linear-gradient(160deg,#fff8db,#fffdfa);border-color:#e5be62;border-bottom-color:#d6a646;box-shadow:0 4px 11px #c69e3920}
+.level.current{outline-color:#1cae97}
+.level:hover{box-shadow:0 6px 16px #6b9eb12a;transform:translateY(-2px)}
+/* Classic puzzle selector gets a visual board preview. */
+.classic-preview-block{padding:19px;margin-top:20px;border:1px solid #e0eaf0;background:linear-gradient(140deg,#f6fafc,#edf8f4);border-radius:18px}
+.classic-preview-label{display:flex;justify-content:space-between;gap:12px;margin-bottom:12px;font-size:.83rem;color:#607a8c;font-weight:800}
+.classic-preview-label strong{color:#248c7b;font-variant-numeric:tabular-nums}
+.classic-preview-grid{display:grid;gap:3px;width:100%;margin:0 auto;justify-content:center;filter:drop-shadow(0 4px 8px #3b6a7a1e)}
+.classic-preview-cell{aspect-ratio:1;border-radius:3px;background:#cbdce8;border:1px solid #b8cedd;box-shadow:inset 0 1px 0 #fff9,inset 0 -2px 0 #577c991a}
+.classic-preview-cell.accent{background:#b5e3dc}
+.primary{background:linear-gradient(155deg,#31b9a1,#158f84);border-color:#178f83;box-shadow:0 3px 0 #137668,0 8px 20px #1da99525}
+.primary:hover{background:linear-gradient(145deg,#36bba6,#117f75);border-color:#13796f}
+/* Playing field: raised jewel-like tiles, clear empty cells. */
+.play-panel{background:#fff}
+.play-board-block{border:1px solid #dce8ef;box-shadow:0 3px 14px #2b5a7310;}
+.play-board-head{background:linear-gradient(180deg,#fff,#fafcfd)}
+.boardwrap{background:radial-gradient(ellipse at 46% 26%,#fff 2%,#eff6f9 100%);background-image:radial-gradient(#d7e4eb .85px,transparent .85px),radial-gradient(ellipse at 46% 26%,#fff 2%,#eff6f9 100%);background-size:16px 16px,100% 100%;background-position:0 0,center;}
+.cell{background:#e0eaf2;border:1px solid #ccdce7;border-radius:6px;box-shadow:inset 0 1px 2px #849daf35,inset 0 2px 1px #ffffffaa;transition:background-color .1s ease,outline-color .1s ease}
+.cell.off{background:transparent;border-color:transparent;box-shadow:none;background-image:none}
+.cell.filled{position:relative;border:1px solid #ffffff9c;border-radius:6px;color:#20384c!important;box-shadow:inset 0 2px 2px #ffffff98,inset 0 -3px 0 #254f6d35,0 2px 3px #1d46612a;z-index:1;text-shadow:0 1px 0 #fff6}
+.cell.filled::after{content:'';position:absolute;inset:2px 3px auto 3px;height:20%;max-height:6px;border-radius:3px;background:linear-gradient(180deg,#ffffff70,transparent);pointer-events:none}
+.cell.cell-selected{outline:2px solid #258d83;outline-offset:-1px;z-index:2}
+.cell.drag-valid{background:#41c8a3!important;outline:2px solid #16836e;outline-offset:-2px}
+.cell.drag-invalid{background:#f08e84!important;outline:2px solid #c75a59;outline-offset:-2px}
+.placed-track{height:7px}
+.bank{background:linear-gradient(165deg,#fff,#f8fbfd);border-color:#dfe9f0;box-shadow:0 3px 12px #29577309}
+.active-piece-chip{display:inline-flex;align-items:center;gap:7px;border:1px solid #dcece7;background:#f3faf8;padding:5px 10px;border-radius:999px;color:#668c86;font-size:.72rem;font-weight:700;white-space:nowrap}
+.active-piece-chip strong{font-size:1rem;line-height:1;color:#159c8d;text-shadow:0 1px 0 #fff}
+.piece{border:1px solid #e0e8ef;border-bottom:3px solid #e2e9ef;background:linear-gradient(160deg,#fff,#f5f9fb);box-shadow:0 2px 5px #355e7610;transition:transform .14s ease,box-shadow .14s ease,border-color .14s ease,background .14s ease;}
+.piece:hover{background:#fff;box-shadow:0 5px 12px #355e761c}
+.piece.selected{border:2px solid #22ad97;border-bottom:3px solid #148c7c;background:linear-gradient(150deg,#f3fffb,#e8f9f2);box-shadow:0 0 0 3px #28b39a1d,0 5px 11px #1b988527}
+.piece.placed{opacity:.65}
+.piece.placed::after{background:#fff;border:1px solid #cae9d8;border-radius:50%;width:19px;height:19px;display:grid;place-items:center;font-size:.72rem;right:5px;top:5px}
+.piece.selected.placed{opacity:1}
+.piece strong{font-size:.87rem;color:#39546b}
+.mini i{border-radius:4px;box-shadow:inset 0 2px 1px #ffffff9c,inset 0 -3px 0 #20496533,0 1px 2px #26445d18}
+.mini i[style*="transparent"]{box-shadow:none}
+.drag-ghost i{box-shadow:inset 0 2px 1px #ffffff9c,inset 0 -3px 0 #20496533,0 2px 3px #26445d22}
+.toolbar{border:1px solid #e4edf2;border-radius:16px;padding:9px;margin-top:12px;background:#f9fbfc;gap:8px}
+.toolbar button{background:#fff;border:1px solid #dce8ef;border-bottom:2px solid #d1dfe8;color:#456276;min-height:44px}
+.toolbar .hint{background:linear-gradient(140deg,#fffaf0,#fff0cb);border-color:#edd7a0;border-bottom-color:#d9b66f;color:#9a6b18;font-weight:850}
+.toolbar .restart{color:#75899a;background:transparent;border-color:transparent;border-bottom-color:transparent}
+.metric{border:1px solid #ebf0f5;background:linear-gradient(160deg,#fafcfe,#f3f8fa)}
+.metric#stageTitle{background:linear-gradient(155deg,#eafbf4,#dcf4ed);border-color:#cfece4}
+.metric#clock,.metric#moves{font-size:1rem}
+.notice{color:#547e8b;font-weight:700}
+.drop-status.ok{border:1px solid #bee6d4}.drop-status.ng{border:1px solid #f4c5bf}
+/* Finish screen: focus on stars, reward and readable score breakdown. */
+.clear-overlay{background:rgba(21,42,59,.64);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.clear-card{position:relative;isolation:isolate;overflow:hidden;border:1px solid #ffffffb8;background:radial-gradient(ellipse at 50% -16%,#fff4cb 0%,#fffaf0 31%,#fff 67%);box-shadow:0 18px 60px #091c345a,0 30px 90px #0b305455}
+.clear-card>*:not(.clear-celebration){position:relative;z-index:2}
+.clear-label{color:#b58b31;letter-spacing:.19em}
+.clear-card h2{color:#2d465b}
+.clear-stars{gap:6px;position:relative;z-index:2}
+.clear-stars span.got{display:inline-block;animation:star-pop .55s cubic-bezier(.17,1.6,.3,1.06) both;color:#f8c54d;-webkit-text-stroke:1.3px #d69b25;text-shadow:0 1px #c28e24,0 4px 10px #eab12c8c}
+.clear-stars span.got:nth-child(2){animation-delay:.15s}.clear-stars span.got:nth-child(3){animation-delay:.3s}
+.clear-stars span.no{filter:grayscale(.6);opacity:.6}
+.clear-count strong{color:#b88125}
+.clear-details{background:#ffffffba;border-color:#eae6db}
+.clear-best{background:#f8f4e9;border-radius:10px;padding:10px 5px;color:#817250}
+.clear-celebration{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:1}
+.clear-celebration i{position:absolute;top:-10%;left:var(--x);display:block;width:8px;height:17px;opacity:0;border-radius:2px;background:var(--c);transform:rotate(var(--a));animation:confetti-drop 1.9s ease-out forwards;animation-delay:var(--d)}
+.clear-celebration i:nth-child(1){--x:6%;--c:#ec9e93;--a:19deg;--d:.05s}.clear-celebration i:nth-child(2){--x:17%;--c:#5dc5a8;--a:-35deg;--d:.21s}.clear-celebration i:nth-child(3){--x:26%;--c:#edc066;--a:46deg;--d:.3s}.clear-celebration i:nth-child(4){--x:36%;--c:#a3a0e0;--a:9deg;--d:.12s}.clear-celebration i:nth-child(5){--x:45%;--c:#72b3e5;--a:31deg;--d:.43s}.clear-celebration i:nth-child(6){--x:54%;--c:#edc066;--a:-20deg;--d:.17s}.clear-celebration i:nth-child(7){--x:63%;--c:#eb9eca;--a:23deg;--d:.04s}.clear-celebration i:nth-child(8){--x:73%;--c:#5dc5a8;--a:-30deg;--d:.3s}.clear-celebration i:nth-child(9){--x:83%;--c:#edc066;--a:43deg;--d:.09s}.clear-celebration i:nth-child(10){--x:93%;--c:#72b3e5;--a:9deg;--d:.23s}.clear-celebration i:nth-child(11){--x:39%;--c:#ed9c86;--a:-13deg;--d:.5s}.clear-celebration i:nth-child(12){--x:69%;--c:#c69be9;--a:29deg;--d:.4s}
+@keyframes star-pop{0%{opacity:0;transform:translateY(13px) scale(.6) rotate(-14deg)}60%{opacity:1;transform:translateY(-2px) scale(1.12) rotate(4deg)}100%{opacity:1;transform:none}}
+@keyframes confetti-drop{0%{opacity:0;transform:translate(0,-25px) rotate(0deg)}14%{opacity:1}85%{opacity:.95}100%{opacity:0;transform:translate(15px,440px) rotate(470deg)}}
+@media(max-width:700px){
+ .home-hero{grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:230px;padding:15px 16px}
+ .hero-copy{padding:6px}.home-hero h2{font-size:clamp(1.4rem,4.3vw,2rem)}
+ .stage-group{padding:12px 10px 13px}.level{min-height:84px}
+ .bank{background:linear-gradient(165deg,#fff,#f7fbfb)}
+}
+@media(max-width:450px){
+ .home-hero{grid-template-columns:1fr;padding:21px 15px 8px;text-align:center;gap:3px}
+ .hero-copy{padding:0}.home-hero h2{font-size:1.9rem}.home-hero p:not(.eyebrow){margin:9px auto 0}
+ .hero-visual{max-width:320px;margin:0 auto}.hero-svg{max-height:176px}
+ .home-choice-heading{margin:20px 1px -12px}
+ .home-progress{font-size:.8rem}
+ .mode-card{min-height:143px;padding:18px}
+ .stage-group{padding:10px 7px 12px;margin-top:12px;border-radius:14px}
+ .stage-group-head{margin:0 5px 9px}
+ .level{min-height:80px;padding:9px 1px 6px;border-radius:10px}
+ .level .level-number{font-size:1rem}.level .level-stars{font-size:.9rem}.level .level-state{font-size:.56rem}
+ .boardwrap{padding:14px 8px}.cell{border-radius:4px}.cell.filled{border-radius:4px}
+ .toolbar{padding:7px;margin-top:11px}
+ .toolbar button{min-height:44px}
+ .active-piece-chip{padding:4px 8px}
+ .clear-card{padding-top:26px}
+}
+@media(prefers-reduced-motion:reduce){
+ .screen,.clear-stars span.got,.clear-celebration i{animation:none!important}
+ *,*::before,*::after{transition-duration:.01ms!important}
+}
+
 </style></head><body><div class="app">
-<header class="topbar"><div class="brand"><div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40"><rect x="3" y="15" width="11" height="11" rx="3" fill="#7ad0bc"/><rect x="15" y="3" width="11" height="11" rx="3" fill="#f5bc58"/><rect x="15" y="15" width="11" height="11" rx="3" fill="#79b8ee"/><rect x="27" y="15" width="11" height="11" rx="3" fill="#e28fab"/><rect x="15" y="27" width="11" height="11" rx="3" fill="#ad98dc"/></svg></div><div class="brand-text"><h1>ペントミノ・チャレンジ</h1><div class="subbrand">PENTOMINO CHALLENGE</div></div></div><span class="version">v0.3.3</span></header>
+<header class="topbar"><div class="brand"><div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40"><rect x="3" y="15" width="11" height="11" rx="3" fill="#7ad0bc"/><rect x="15" y="3" width="11" height="11" rx="3" fill="#f5bc58"/><rect x="15" y="15" width="11" height="11" rx="3" fill="#79b8ee"/><rect x="27" y="15" width="11" height="11" rx="3" fill="#e28fab"/><rect x="15" y="27" width="11" height="11" rx="3" fill="#ad98dc"/></svg></div><div class="brand-text"><h1>ペントミノ・チャレンジ</h1><div class="subbrand">PENTOMINO CHALLENGE</div></div></div><span class="version">v0.3.4</span></header>
 <main>
-<div id="homeScreen" class="panel screen"><div class="home-hero"><p class="eyebrow">WELCOME TO PENTOMINO</p><h2>どちらで遊びますか？</h2><p>12種類のピースで、ひらめきのパズルを。</p></div>
+<div id="homeScreen" class="panel screen"><div class="home-hero"><div class="hero-copy"><p class="eyebrow">WELCOME TO PENTOMINO</p><h2>ひらめきで、<br>すき間を埋めよう。</h2><p>12種類のピースから広がる、思考のパズル。</p></div><div class="hero-visual"><svg viewBox="0 0 440 260" xmlns="http://www.w3.org/2000/svg" class="hero-svg" aria-hidden="true"><defs><filter id="hs" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#236e83" flood-opacity="0.17"/></filter></defs><circle cx="364" cy="36" r="30" fill="#fff" opacity=".28"/><circle cx="64" cy="215" r="42" fill="#fff" opacity=".16"/><rect x="74" y="24" width="288" height="204" rx="26" fill="#ffffff" fill-opacity=".95" stroke="#ffffff" stroke-width="2" filter="url(#hs)"/><rect x="104" y="48" width="239" height="164" rx="14" fill="#edf5f8"/><rect x="111" y="55" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="136" y="55" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="161" y="55" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="186" y="55" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="211" y="55" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="236" y="55" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="261" y="55" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="286" y="55" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="311" y="55" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="111" y="80" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="136" y="80" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="161" y="80" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="186" y="80" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="211" y="80" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="236" y="80" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="261" y="80" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="286" y="80" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="311" y="80" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="111" y="105" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="136" y="105" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="161" y="105" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="186" y="105" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="211" y="105" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="236" y="105" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="261" y="105" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="286" y="105" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="311" y="105" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="111" y="130" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="136" y="130" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="161" y="130" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="186" y="130" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="211" y="130" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="236" y="130" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="261" y="130" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="286" y="130" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="311" y="130" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="111" y="155" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="136" y="155" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="161" y="155" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="186" y="155" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="211" y="155" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="236" y="155" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="261" y="155" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="286" y="155" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="311" y="155" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="111" y="180" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="136" y="180" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="161" y="180" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="186" y="180" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="211" y="180" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="236" y="180" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="261" y="180" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="286" y="180" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="311" y="180" width="22" height="22" rx="4" fill="#dfe9ef" stroke="#d0dfe7" stroke-width=".6"/><rect x="111" y="55" width="22" height="22" rx="5" fill="#ec91bd" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 115 60 H 127" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="136" y="55" width="22" height="22" rx="5" fill="#ec91bd" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 140 60 H 152" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="161" y="55" width="22" height="22" rx="5" fill="#ec91bd" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 165 60 H 177" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="136" y="80" width="22" height="22" rx="5" fill="#ec91bd" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 140 85 H 152" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="136" y="105" width="22" height="22" rx="5" fill="#ec91bd" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 140 110 H 152" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="186" y="55" width="22" height="22" rx="5" fill="#9c88e6" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 190 60 H 202" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="211" y="55" width="22" height="22" rx="5" fill="#9c88e6" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 215 60 H 227" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="186" y="80" width="22" height="22" rx="5" fill="#9c88e6" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 190 85 H 202" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="211" y="80" width="22" height="22" rx="5" fill="#9c88e6" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 215 85 H 227" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="186" y="105" width="22" height="22" rx="5" fill="#9c88e6" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 190 110 H 202" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="261" y="55" width="22" height="22" rx="5" fill="#e49a60" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 265 60 H 277" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="261" y="80" width="22" height="22" rx="5" fill="#e49a60" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 265 85 H 277" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="261" y="105" width="22" height="22" rx="5" fill="#e49a60" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 265 110 H 277" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="286" y="105" width="22" height="22" rx="5" fill="#e49a60" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 290 110 H 302" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="311" y="105" width="22" height="22" rx="5" fill="#e49a60" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 315 110 H 327" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="111" y="105" width="22" height="22" rx="5" fill="#f0b75b" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 115 110 H 127" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="111" y="130" width="22" height="22" rx="5" fill="#f0b75b" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 115 135 H 127" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="111" y="155" width="22" height="22" rx="5" fill="#f0b75b" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 115 160 H 127" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="111" y="180" width="22" height="22" rx="5" fill="#f0b75b" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 115 185 H 127" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="136" y="180" width="22" height="22" rx="5" fill="#f0b75b" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 140 185 H 152" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="211" y="105" width="22" height="22" rx="5" fill="#ce8edb" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 215 110 H 227" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="186" y="130" width="22" height="22" rx="5" fill="#ce8edb" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 190 135 H 202" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="211" y="130" width="22" height="22" rx="5" fill="#ce8edb" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 215 135 H 227" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="236" y="130" width="22" height="22" rx="5" fill="#ce8edb" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 240 135 H 252" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="211" y="155" width="22" height="22" rx="5" fill="#ce8edb" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 215 160 H 227" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="261" y="130" width="22" height="22" rx="5" fill="#7bbf75" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 265 135 H 277" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="311" y="130" width="22" height="22" rx="5" fill="#7bbf75" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 315 135 H 327" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="261" y="155" width="22" height="22" rx="5" fill="#7bbf75" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 265 160 H 277" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="286" y="155" width="22" height="22" rx="5" fill="#7bbf75" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 290 160 H 302" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><rect x="311" y="155" width="22" height="22" rx="5" fill="#7bbf75" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M 315 160 H 327" stroke="white" stroke-width="1.4" opacity=".55" stroke-linecap="round"/><g filter="url(#hs)"><rect x="8" y="16" width="19" height="19" rx="6" fill="#64c3aa" stroke="white" stroke-width="1"/><rect x="30" y="16" width="19" height="19" rx="6" fill="#64c3aa" stroke="white" stroke-width="1"/><rect x="30" y="38" width="19" height="19" rx="6" fill="#64c3aa" stroke="white" stroke-width="1"/><rect x="52" y="38" width="19" height="19" rx="6" fill="#64c3aa" stroke="white" stroke-width="1"/><rect x="74" y="38" width="19" height="19" rx="6" fill="#64c3aa" stroke="white" stroke-width="1"/></g><g filter="url(#hs)"><rect x="385" y="118" width="19" height="19" rx="6" fill="#d8c45b" stroke="white" stroke-width="1"/><rect x="363" y="140" width="19" height="19" rx="6" fill="#d8c45b" stroke="white" stroke-width="1"/><rect x="385" y="140" width="19" height="19" rx="6" fill="#d8c45b" stroke="white" stroke-width="1"/><rect x="385" y="162" width="19" height="19" rx="6" fill="#d8c45b" stroke="white" stroke-width="1"/><rect x="385" y="184" width="19" height="19" rx="6" fill="#d8c45b" stroke="white" stroke-width="1"/></g><g fill="#ffffff" opacity=".98"><path d="M383 27l4 12 12 4-12 4-4 12-4-12-12-4 12-4z"/><path d="M51 74l2.5 7.5L61 84l-7.5 2.5L51 94l-2.5-7.5L41 84l7.5-2.5z"/></g></svg></div></div><div class="home-choice-heading"><h3>プレイモード</h3><span>遊び方を選択</span></div>
 <div class="modechoices">
 <button id="tabStage" class="mode-card" type="button"><span class="mode-art" aria-hidden="true"><span class="on"></span><span class="on"></span><span class="on"></span><span></span><span></span><span></span><span class="on"></span><span class="on"></span><span class="on"></span><span></span><span></span><span></span><span class="on"></span><span></span><span></span></span><span class="mode-title">ステージモード</span><span class="mode-sub">全100ステージ。星3つを目指そう</span><span class="card-arrow" aria-hidden="true">→</span></button>
 <button id="tabClassic" class="mode-card classic" type="button"><span class="mode-art" aria-hidden="true"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span></span><span class="mode-title">クラシックモード</span><span class="mode-sub">長方形を選んで、自由に挑戦</span><span class="card-arrow" aria-hidden="true">→</span></button>
 </div><div class="home-progress">これまでに集めた星 <strong>★ <span id="homeStars">0</span></strong> / 300</div></div>
 <div id="stageSettings" class="panel screen hidden"><div class="navline"><button id="stageBackHome" class="backbtn" type="button">← モード選択</button></div><div class="screen-heading"><div><p class="eyebrow">STAGE SELECT</p><h2>ステージを選ぶ</h2><p class="section-description">星を集めながら、少しずつ進もう</p></div><div class="progress-summary"><div><span>獲得した星</span><strong class="gold">★ <span id="totalStars">0 / 300</span></strong></div><div><span>クリア数</span><strong id="clearedCount">0 / 100</strong></div><div><span>星3達成</span><strong id="perfectCount">0</strong></div></div></div><div class="overall-track"><div id="overallFill"></div></div><div id="levels"></div></div>
-<div id="classicSettings" class="panel screen hidden"><div class="navline"><button id="classicBackHome" class="backbtn" type="button">← モード選択</button></div><p class="eyebrow">CLASSIC MODE</p><h2>クラシックの設定</h2><p class="section-description">全12ピースで長方形を完成させよう</p><div class="settings-fields"><label class="field" for="classicShape">盤面の大きさ<select id="classicShape"><option value="6x10">6 × 10</option><option value="5x12">5 × 12</option><option value="4x15">4 × 15</option><option value="3x20">3 × 20</option></select></label><label class="field" for="classicFlip">裏返し<select id="classicFlip"><option value="yes">ON（許可）</option><option value="no">OFF（禁止）</option></select></label></div><div class="settings-actions"><button id="startClassic" class="primary" type="button">この設定で遊ぶ →</button><span class="settings-note">クラシックモードは星評価なし</span></div></div>
+<div id="classicSettings" class="panel screen hidden"><div class="navline"><button id="classicBackHome" class="backbtn" type="button">← モード選択</button></div><p class="eyebrow">CLASSIC MODE</p><h2>クラシックの設定</h2><p class="section-description">全12ピースで長方形を完成させよう</p><div class="settings-fields"><label class="field" for="classicShape">盤面の大きさ<select id="classicShape"><option value="6x10">6 × 10</option><option value="5x12">5 × 12</option><option value="4x15">4 × 15</option><option value="3x20">3 × 20</option></select></label><label class="field" for="classicFlip">裏返し<select id="classicFlip"><option value="yes">ON（許可）</option><option value="no">OFF（禁止）</option></select></label></div><div class="classic-preview-block"><div class="classic-preview-label"><span>盤面プレビュー</span><strong id="classicPreviewSize">6 × 10</strong></div><div class="classic-preview-grid" id="classicPreview" aria-label="クラシックの盤面プレビュー"></div></div><div class="settings-actions"><button id="startClassic" class="primary" type="button">この設定で遊ぶ →</button><span class="settings-note">クラシックモードは星評価なし</span></div></div>
 <div id="playScreen" class="panel play-panel screen hidden"><div class="play-nav"><button id="chooseStage" class="backbtn" type="button">← ステージ一覧</button><button id="playBackHome" class="subtle-nav" type="button">モード選択</button></div>
 <div class="status"><span class="metric" id="stageTitle"></span><span class="metric" id="clock">00:00</span><span class="metric" id="moves">0</span><span class="metric" id="targets"></span><span class="metric" id="flipLabel"></span></div>
 <div class="layout"><section>
@@ -61,12 +195,12 @@ footer{text-align:center;color:#a1adbd;font-size:.74rem;margin:24px 0 10px}
 <div class="actions" style="display:none" aria-hidden="true"><button id="confirmPlace">確定</button><button id="cancelPreview">取り消し</button></div>
 <div class="toolbar" aria-label="ピース操作"><button id="rotL" title="左回転" aria-label="左回転"><span class="rotate">↶</span><span>左回転</span></button><button id="rotR" title="右回転" aria-label="右回転"><span class="rotate">↷</span><span>右回転</span></button><button id="flip" title="反転" aria-label="反転">⇄ 反転</button><span class="toolbar-spacer"></span><button id="hint" class="hint">✦ ヒント</button><button id="restart" class="restart">最初から</button></div>
 <div id="message" class="notice" aria-live="polite"></div><div id="win" class="win hidden"></div></section>
-<aside class="bank"><div class="bank-head"><h3>ピース</h3><span class="muted">タップして選択</span></div><div id="pieces" class="pieces"></div></aside>
+<aside class="bank"><div class="bank-head"><h3>ピース</h3><span class="active-piece-chip">選択中 <strong id="activePiece">F</strong></span></div><div id="pieces" class="pieces"></div></aside>
 </div></div>
 </main><footer>プレイ記録はこのブラウザに保存されます</footer></div>
 <div id="clearOverlay" class="clear-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="clearTitle" aria-describedby="clearCount">
  <div class="clear-card">
-  <p id="clearKicker" class="clear-label">STAGE CLEAR</p>
+  <div class="clear-celebration" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p id="clearKicker" class="clear-label">STAGE CLEAR</p>
   <h2 id="clearTitle">ステージクリア！</h2>
   <div id="clearStars" class="clear-stars" aria-hidden="true"></div>
   <p id="clearCount" class="clear-count" aria-live="assertive"></p>
@@ -216,6 +350,24 @@ function buildStage(num){
  if(num>=61&&num%5===0&&solution.length>=6)locked=[solution[0]];
  return {w,h,mask,names,flipAllowed,solution,locked,goalMoves:count-locked.length,goalSeconds:Math.round((count*34+Math.max(0,num-10)*1.5)/10)*10};
 }
+
+function updateClassicPreview(){
+ const value=$('classicShape').value, dims=value.split('x').map(Number);
+ if(dims.length!==2||dims.some(n=>!Number.isFinite(n)))return;
+ const [rows,cols]=dims, box=$('classicPreview');
+ $('classicPreviewSize').textContent=`${rows} × ${cols}`;
+ box.style.gridTemplateColumns=`repeat(${cols},minmax(0,1fr))`;
+ box.style.maxWidth=(cols*19)+'px';box.innerHTML='';
+ const fragment=document.createDocumentFragment();
+ for(let i=0;i<rows*cols;i++){
+  const cell=document.createElement('span');
+  cell.className='classic-preview-cell';
+  if((Math.floor(i/cols)+i%cols)%7===0)cell.classList.add('accent');
+  fragment.appendChild(cell);
+ }
+ box.appendChild(fragment);
+}
+$('classicShape').addEventListener('change',updateClassicPreview);
 function classicConfig(){let [h,w]=$('classicShape').value.split('x').map(Number);return {w,h,mask:Array(w*h).fill(true),names:[...ALL],flipAllowed:$('classicFlip').value==='yes',locked:[],solution:null,goalMoves:12,goalSeconds:0}}
 let mode='stage',level=0,cfg,placed=[],selected='F',orientation={},moves=0,elapsed=0,started=false,ended=false,hinted=false,history=[],timer=null,previewAt=null,keyboardPos=[0,0];
 const EXTRA_MOVE_ALLOWANCE=3;
@@ -298,14 +450,14 @@ function renderBoard(){
  for(let y=0;y<cfg.h;y++)for(let x=0;x<cfg.w;x++){
   let id=y*cfg.w+x,n=occ.get(id),el=document.createElement('div');
   el.className='cell'+(!cfg.mask[id]?' off':'')+(prev.has(id)?' preview':'');
-  if(n){el.style.background=COLORS[n];el.style.color='#172338';el.textContent=n;if(n===selected)el.classList.add('cell-selected')}
+  if(n){el.classList.add('filled');el.dataset.piece=n;el.style.background=COLORS[n];el.style.color='#172338';el.textContent=n;if(n===selected)el.classList.add('cell-selected')}
   if(cfg.mask[id])el.setAttribute('aria-label',`${x+1}列${y+1}行`);
   board.appendChild(el);
  }
  $('confirmPlace').disabled=!previewAt||ended;$('cancelPreview').disabled=!previewAt||ended;
  $('dropStatus').textContent='';$('dropStatus').className='drop-status';
 }
-function renderPieces(){let box=$('pieces');box.innerHTML='';for(let n of cfg.names){let p=placed.find(q=>q.name===n),a=shapeOf(n),w=Math.max(...a.map(q=>q[0]))+1,h=Math.max(...a.map(q=>q[1]))+1;let b=document.createElement('button');b.className='piece'+(selected===n?' selected':'')+(p?' placed':'');b.setAttribute('aria-label',`${n} ピース${p?'（配置済み）':''}${selected===n?'、選択中':''}`);let label=document.createElement('strong');label.textContent=n;b.appendChild(label);let mini=document.createElement('div');mini.className='mini';mini.style.gridTemplateColumns=`repeat(${w},var(--piece-unit))`;let set=new Set(a.map(q=>q.join(',')));for(let y=0;y<h;y++)for(let x=0;x<w;x++){let i=document.createElement('i');i.style.background=set.has(`${x},${y}`)?COLORS[n]:'transparent';mini.appendChild(i)}b.appendChild(mini);b.onclick=()=>{select(n)};box.appendChild(b)}}
+function renderPieces(){let box=$('pieces');box.innerHTML='';for(let n of cfg.names){let p=placed.find(q=>q.name===n),a=shapeOf(n),w=Math.max(...a.map(q=>q[0]))+1,h=Math.max(...a.map(q=>q[1]))+1;let b=document.createElement('button');b.className='piece'+(selected===n?' selected':'')+(p?' placed':'');b.setAttribute('aria-label',`${n} ピース${p?'（配置済み）':''}${selected===n?'、選択中':''}`);b.setAttribute('aria-pressed',selected===n?'true':'false');let label=document.createElement('strong');label.textContent=n;b.appendChild(label);let mini=document.createElement('div');mini.className='mini';mini.style.gridTemplateColumns=`repeat(${w},var(--piece-unit))`;let set=new Set(a.map(q=>q.join(',')));for(let y=0;y<h;y++)for(let x=0;x<w;x++){let i=document.createElement('i');i.style.background=set.has(`${x},${y}`)?COLORS[n]:'transparent';mini.appendChild(i)}b.appendChild(mini);b.onclick=()=>{select(n)};box.appendChild(b)}}
 
 // Unified pointer dragging: mouse button held and touch contact behave identically.
 function startDrag(e,n,source='board'){
@@ -382,7 +534,7 @@ $('board').addEventListener('pointerdown',e=>{
  startDrag(e,n,'board');
 });
 
-function render(){if(!cfg)return;renderBoard();renderPieces();$('stageTitle').textContent=mode==='stage'?`STAGE ${level}`:'クラシック';$('clock').textContent=timeText(elapsed);$('moves').textContent=String(moves);$('targets').textContent=mode==='stage'?`${timeText(cfg.goalSeconds)} / ${allowedMoves()}回`:'自由挑戦';$('targets').title=mode==='stage'?`操作目標：最少${cfg.goalMoves}回＋余裕${EXTRA_MOVE_ALLOWANCE}回（合計${allowedMoves()}回まで）`:'';$('flipLabel').textContent=cfg.flipAllowed?'反転可':'反転禁止';$('flip').disabled=!cfg.flipAllowed;$('count').textContent=`${placed.length}/${cfg.names.length}`;$('placedFill').style.width=(placed.length/cfg.names.length*100)+'%';$('chooseStage').textContent=mode==='stage'?'← ステージ一覧':'← 設定に戻る';}
+function render(){if(!cfg)return;renderBoard();renderPieces();$('stageTitle').textContent=mode==='stage'?`STAGE ${level}`:'クラシック';$('clock').textContent=timeText(elapsed);$('moves').textContent=String(moves);$('targets').textContent=mode==='stage'?`${timeText(cfg.goalSeconds)} / ${allowedMoves()}回`:'自由挑戦';$('targets').title=mode==='stage'?`操作目標：最少${cfg.goalMoves}回＋余裕${EXTRA_MOVE_ALLOWANCE}回（合計${allowedMoves()}回まで）`:'';$('flipLabel').textContent=cfg.flipAllowed?'反転可':'反転禁止';$('activePiece').textContent=selected||'—';$('activePiece').style.color=COLORS[selected]||'#159c8d';$('flip').disabled=!cfg.flipAllowed;$('count').textContent=`${placed.length}/${cfg.names.length}`;$('placedFill').style.width=(placed.length/cfg.names.length*100)+'%';$('chooseStage').textContent=mode==='stage'?'← ステージ一覧':'← 設定に戻る';}
 function showScreen(which){
  closeClearOverlay();
  for(let id of ['homeScreen','stageSettings','classicSettings','playScreen'])$(id).classList.toggle('hidden',id!==which);
@@ -458,5 +610,5 @@ $('board').addEventListener('dblclick',e=>{
  retrievePiece(cell.textContent);
 });
 document.addEventListener('keydown',e=>{if(!cfg||$('playScreen').classList.contains('hidden')||['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName))return;let k=e.key.toLowerCase();if(k==='r'){transform('right');e.preventDefault()}else if(k==='f'){transform('flip');e.preventDefault()}else if(k==='enter'){if(previewAt)placeAt(...keyboardPos);else propose(...keyboardPos);e.preventDefault()}else if(k.startsWith('arrow')){let dx=k==='arrowright'?1:k==='arrowleft'?-1:0,dy=k==='arrowdown'?1:k==='arrowup'?-1:0;keyboardPos=[Math.max(0,Math.min(cfg.w-1,keyboardPos[0]+dx)),Math.max(0,Math.min(cfg.h-1,keyboardPos[1]+dy))];propose(...keyboardPos);e.preventDefault()}});
-setInterval(()=>{if(started&&!ended&&!$('playScreen').classList.contains('hidden')){elapsed++;$('clock').textContent=timeText(elapsed)}},1000);window.addEventListener('resize',()=>cfg&&renderBoard());showScreen('homeScreen');
+setInterval(()=>{if(started&&!ended&&!$('playScreen').classList.contains('hidden')){elapsed++;$('clock').textContent=timeText(elapsed)}},1000);window.addEventListener('resize',()=>cfg&&renderBoard());updateClassicPreview();showScreen('homeScreen');
 </script></body></html>
