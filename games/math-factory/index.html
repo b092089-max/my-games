@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#10202b">
-<title>MATH FACTORY — 数学ファクトリー v1.3.1</title>
+<title>MATH FACTORY — 数学ファクトリー v1.5.0</title>
 <style>
 :root{--bg:#0d1a22;--panel:#172831;--panel2:#20343d;--line:#36515b;--text:#f2f7f6;--muted:#a5bec4;--mint:#4fe0bc;--amber:#ffbf62;--steel:#304951;--red:#ff8582;--tile:58px}
 *{box-sizing:border-box}
@@ -18,7 +18,7 @@ button,input,select{font:inherit}button{border:1px solid #46616b;border-radius:1
 .board-shell{padding:15px 10px 20px;background:linear-gradient(180deg,#1c3038,#1a2c33);border-top:1px solid #35515a;border-bottom:1px solid #35515a}.factory-caption{display:flex;justify-content:space-between;align-items:center;max-width:666px;margin:0 auto 8px;padding:0 4px;color:#93b3b8;font-size:10px;letter-spacing:.1em;font-weight:750}.board-outer{overflow:auto;padding:13px;background:linear-gradient(155deg,#14242b,#111f26);border:1px solid #3f5760;border-radius:12px;box-shadow:inset 0 7px 22px #0004;scrollbar-width:thin}.board{display:grid;grid-template-columns:repeat(10,var(--tile));grid-template-rows:repeat(7,var(--tile));gap:3px;margin:auto;width:max-content;user-select:none;touch-action:none;cursor:crosshair}.board:not(.belt-mode){cursor:pointer}.cell{border:1px solid #3e5660;border-radius:5px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:linear-gradient(155deg,#294049,#22343d);width:var(--tile);height:var(--tile)}.cell:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(145deg,#ffffff0a,transparent 45%,#00000017)}.cell.is-empty:after{content:"+";font-size:20px;color:#607981;font-weight:300}.cell:hover{outline:2px solid #ffce79;outline-offset:-2px;z-index:1}.cell.selected{outline:3px solid #ffe7aa;outline-offset:-3px;z-index:2;box-shadow:0 0 15px #ffb75662}.cell.input{background:linear-gradient(135deg,#2674a8,#194a77);border:2px solid #6dbdf5}.cell.output{background:linear-gradient(135deg,#238670,#125b4c);border:2px solid #64dfbc}.cell.belt{background:repeating-linear-gradient(90deg,#394c55 0px,#394c55 9px,#435862 9px,#435862 14px);border:2px solid #718892;box-shadow:inset 0 4px #ffffff1a,inset 0 -4px #0004}.cell.belt .belttrack{position:absolute;inset:11px 1px;opacity:.7;background:repeating-linear-gradient(90deg,#b2c5c7 0px,#b2c5c7 3px,transparent 3px,transparent 13px);transform:rotate(var(--belt-angle));border-top:1px solid #a3bac4;border-bottom:1px solid #a3bac4}.cell.belt .sym{font-size:19px;color:#f2ffff;filter:drop-shadow(0 1px 2px #0008)}.board.is-running .cell.belt .belttrack{animation:conveyor .44s linear infinite}@keyframes conveyor{to{background-position:13px 0}}
 .cell.add{--machine:#267cae}.cell.sub{--machine:#ba6959}.cell.mul{--machine:#bc8830}.cell.div{--machine:#3994ac}.cell.square{--machine:#8060ae}.cell.mod{--machine:#b06c9a}.cell.even{--machine:#7c71bd}.cell.split{--machine:#617d9d}.cell.merge{--machine:#598f6b}.cell.trash{--machine:#955d68}.cell:not(.belt):not(.input):not(.output):not(.is-empty){border:2px solid color-mix(in srgb,var(--machine) 70%,white);background:linear-gradient(140deg,color-mix(in srgb,var(--machine) 73%,#12252c),color-mix(in srgb,var(--machine) 48%,#112730));box-shadow:inset 0 3px #ffffff26,inset 0 -5px #0003}.machine-name{position:absolute;top:3px;left:4px;font-size:9px;font-weight:800;opacity:.88}.cell .sym{position:relative;font-size:24px;line-height:1;font-weight:950}.cell .direction{position:absolute;right:3px;bottom:2px;font-size:15px;color:#fff3d8;font-weight:900;filter:drop-shadow(0 1px 2px #0009)}.cell .mini{position:absolute;left:3px;bottom:3px;font-size:10px;background:#0a2231b8;padding:1px 4px;border-radius:3px;font-weight:900}.io-mark{position:absolute;top:3px;left:4px;color:#e9f7ff;font-size:9px;font-weight:900;letter-spacing:.08em}.cell .io-num{font-size:24px;font-weight:950;margin-top:8px;text-shadow:0 2px 2px #0004}.token{position:absolute;inset:auto;z-index:4;min-width:33px;min-height:29px;border-radius:7px;background:linear-gradient(#fff4b9,#ffd26f);border:2px solid #fffbd9;color:#243037;display:grid;place-items:center;padding:1px 3px;font-weight:950;font-size:13px;box-shadow:0 0 16px #eab85bb0;pointer-events:none;animation:tokenpop .2s ease-out}@keyframes tokenpop{from{transform:scale(.7);opacity:.3}to{transform:scale(1);opacity:1}}
 .board-caption{margin:10px 0 0;text-align:center;font-size:11px;color:#a7bfc3}.workbottom{padding:15px 16px 16px}.control-bar{display:flex;align-items:stretch;gap:9px;flex-wrap:wrap}.runbtn{flex:2 1 175px;min-height:53px;background:linear-gradient(180deg,#42c49a,#23866e);border-color:#7af8cc;color:#0c2a2b;font-weight:950;font-size:17px;box-shadow:0 5px 0 #135e51}.runbtn:hover:not(:disabled){background:linear-gradient(#64e3b6,#35ab88)}.subbtn{flex:1 1 104px;font-weight:800;font-size:13px}.quick-actions{margin-top:10px;display:flex;gap:7px;align-items:center;flex-wrap:wrap}.quick-actions button{font-size:12px;padding:8px 10px}.speedlabel{font-size:12px;color:#a5bfc4;margin-left:auto}.speedlabel select{border:1px solid #52707b;border-radius:7px;background:#223b45;color:white;padding:7px}.message{margin-top:12px;display:flex;align-items:start;gap:8px;padding:10px 12px;background:#233d45;border:1px solid #3e6464;border-left:4px solid var(--amber);border-radius:9px;min-height:48px;font-size:13px;line-height:1.6}.message:before{content:"i";font-size:13px;font-weight:900;color:#2b3940;background:#f1c66e;min-width:19px;height:19px;display:grid;place-items:center;border-radius:50%;margin-top:1px}.footmetrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:14px}.metric{padding:9px 4px;background:#203740;border:1px solid #36535b;border-radius:8px;text-align:center}.metric small{display:block;font-size:10px;color:#9eb7bd}.metric strong{font-size:17px;color:#ebf9f5}
-.side-section+.side-section{border-top:1px solid #38525c;margin-top:18px;padding-top:16px}.inspector-empty{border:1px dashed #536e75;border-radius:11px;padding:22px 12px;text-align:center;background:#243c44}.inspector-empty .big{font-size:28px;display:block;margin-bottom:7px}.inspect-title{display:flex;align-items:center;justify-content:space-between;margin:6px 0 13px}.inspect-title b{font-size:18px}.inspect-title small{color:#9db9bf}.inspect-unit{border-radius:10px;padding:12px;background:#203741;border:1px solid #3a5a64}.inspector-label{font-size:12px;color:#c2d8d9;font-weight:800;display:block;margin:0 0 6px}.number-line{display:flex;gap:7px}.number-line button{width:44px;height:43px;font-weight:950;font-size:22px;padding:0}.number-line input{width:calc(100% - 102px);height:43px;background:#112b34;border:1px solid #62838a;color:#fff;border-radius:9px;text-align:center;font-size:21px;font-weight:850;min-width:0}.direction-pad{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}.direction-pad button{padding:10px 0;font-size:19px;font-weight:900}.direction-pad button.on{background:#d9a34d;color:#27353d;border-color:#f5d28c}.inspect-delete{margin-top:12px;width:100%;color:#ffc2bd;border-color:#a2706c;background:#513b3d}.howto{display:grid;gap:10px}.howto-row{display:flex;gap:9px;align-items:start;font-size:12px;color:#cadadb}.howto-num{display:grid;place-items:center;min-width:24px;height:24px;background:#36535b;border-radius:50%;font-weight:900;color:#f1d08c}.section-toggle{width:100%;display:flex;justify-content:space-between;align-items:center;background:transparent;border:0;padding:0;text-align:left;font-size:14px;font-weight:850}.section-toggle:hover{background:transparent!important}.expand-body{padding-top:12px}.stage-list{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-top:10px}.stage-list button{font-size:11px;padding:9px 0;border-radius:8px;font-weight:850}.stage-list button.active{background:#805f30;border:2px solid var(--amber);color:white}.stage-list button.cleared:after{content:"★";display:block;color:#fbd273}.research-list{display:grid;gap:6px;margin-top:8px}.research-list button{text-align:left;padding:9px;font-size:12px;line-height:1.45}.research-list b{display:block}.research-list small{display:block;color:#abbfc3}.footer{color:#8da7ad;text-align:center;font-size:11px;padding-top:15px}
+.side-section+.side-section{border-top:1px solid #38525c;margin-top:18px;padding-top:16px}.inspector-empty{border:1px dashed #536e75;border-radius:11px;padding:22px 12px;text-align:center;background:#243c44}.inspector-empty .big{font-size:28px;display:block;margin-bottom:7px}.inspect-title{display:flex;align-items:center;justify-content:space-between;margin:6px 0 13px}.inspect-title b{font-size:18px}.inspect-title small{color:#9db9bf}.inspect-unit{border-radius:10px;padding:12px;background:#203741;border:1px solid #3a5a64}.inspector-label{font-size:12px;color:#c2d8d9;font-weight:800;display:block;margin:0 0 6px}.number-line{display:flex;gap:7px}.number-line button{width:44px;height:43px;font-weight:950;font-size:22px;padding:0}.number-line input{width:calc(100% - 102px);height:43px;background:#112b34;border:1px solid #62838a;color:#fff;border-radius:9px;text-align:center;font-size:21px;font-weight:850;min-width:0}.direction-pad{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}.direction-pad button{padding:10px 0;font-size:19px;font-weight:900}.direction-pad button.on{background:#d9a34d;color:#27353d;border-color:#f5d28c}.inspect-delete{margin-top:12px;width:100%;color:#ffc2bd;border-color:#a2706c;background:#513b3d}.howto{display:grid;gap:10px}.howto-row{display:flex;gap:9px;align-items:start;font-size:12px;color:#cadadb}.howto-num{display:grid;place-items:center;min-width:24px;height:24px;background:#36535b;border-radius:50%;font-weight:900;color:#f1d08c}.section-toggle{width:100%;display:flex;justify-content:space-between;align-items:center;background:transparent;border:0;padding:0;text-align:left;font-size:14px;font-weight:850}.section-toggle:hover{background:transparent!important}.expand-body{padding-top:12px}.stage-list{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-top:10px}.stage-list button{font-size:11px;padding:9px 0;border-radius:8px;font-weight:850}.stage-list button.active{background:#805f30;border:2px solid var(--amber);color:white}.stage-list button.cleared:after{content:"★";display:block;color:#fbd273}.footer{color:#8da7ad;text-align:center;font-size:11px;padding-top:15px}
 .modal{position:fixed;inset:0;background:#071216de;z-index:30;display:flex;align-items:center;justify-content:center;padding:20px}.modal.hidden{display:none}.modalbox{text-align:center;max-width:440px;width:100%;background:linear-gradient(135deg,#24454b,#16323d);border:2px solid #71b8aa;border-radius:18px;box-shadow:0 25px 90px #000b;padding:28px 20px;position:relative;overflow:hidden}.modalbox:before{content:"";position:absolute;top:0;left:0;right:0;height:7px;background:repeating-linear-gradient(110deg,#ffbd5a 0 18px,#223c3d 18px 36px)}.modalbox h2{font-size:27px;margin:8px 0;color:#a7ffe0}.stars-big{font-size:40px;color:#ffcf65;letter-spacing:6px}.modalbox p{color:#d4e9e9}.modal-actions{display:flex;justify-content:center;gap:9px;flex-wrap:wrap}.modal-actions button{font-weight:800}.modal-actions .primary{background:#319e80;border-color:#8bf4cd;color:#062e2d}
 @media(max-width:1360px){:root{--tile:53px}.layout{grid-template-columns:210px minmax(0,1fr) 235px}.app{padding:12px}.order{gap:12px}.panel.pad{padding:13px}.brand{font-size:25px}}
 @media(max-width:1080px){.layout{grid-template-columns:205px minmax(0,1fr)}.right{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:16px}.right .side-section+.side-section{border-top:0;margin:0;padding:0}.order{grid-template-columns:1fr auto}.orderprogress{grid-column:1/-1}}
@@ -63,6 +63,153 @@ button,input,select{font:inherit}button{border:1px solid #46616b;border-radius:1
 .stage-chapter{grid-column:1/-1;margin:12px 0 2px;padding:7px 6px 5px;border-bottom:1px solid #5b7980;color:#ffe0a1;font-weight:900;font-size:12px}
 .batch-value.long-number{font-size:clamp(25px,3vw,39px);letter-spacing:-.055em;overflow-wrap:anywhere}
 @media(max-width:740px){.batch-value.long-number{font-size:clamp(28px,9vw,43px)}}
+
+/* v1.5.0 - compact game-first layout */
+.app{width:min(1560px,100%)}
+.batch-ticket{padding:13px 17px 15px;margin:0 0 12px;border-width:1px;border-radius:13px}
+.batch-ticket:before{height:4px}
+.ticket-head{gap:10px;padding-top:2px;margin-bottom:11px;align-items:center}
+.order-heading{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.ticket-head .order-heading b{font-size:18px;white-space:nowrap}
+.ticket-head .order-heading span{font-size:13px;margin:0;color:#cee1e6}
+.ticket-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.stage-switch{font-size:12px;display:flex;align-items:center;gap:6px;color:#d2e4e8;white-space:nowrap}
+.stage-switch select{background:#223b49;color:#fff;border:1px solid #6c858f;border-radius:8px;font-size:14px;font-weight:900;padding:5px 7px;min-width:64px;max-width:82px}
+.stamp-box{padding:7px 10px;font-size:12px;border-radius:9px}
+.stamp-box strong{font-size:14px;margin-left:5px}
+.batch-list{grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:10px}
+.batch-item{padding:8px 10px 10px;border-width:1px;border-radius:11px}
+.batch-top{margin-bottom:6px}
+.batch-number{font-size:12px}
+.batch-main{gap:8px}
+.batch-side{padding:6px 4px 7px;border-radius:9px}
+.batch-side small{font-size:12px;margin-bottom:3px}
+.batch-value{font-size:clamp(30px,2.9vw,39px);line-height:1.1;letter-spacing:-.025em}
+.batch-value.long-number{font-size:clamp(21px,2vw,29px)}
+.output-arrow{font-size:22px}
+.reject{font-size:22px}
+.layout{grid-template-columns:210px 238px minmax(0,1fr);gap:11px;align-items:start}
+.panel.pad{padding:13px}
+.settings-panel{min-width:0}
+.settings-panel .panel-heading{margin-bottom:11px}
+.pallet-description{margin-bottom:9px}
+.tool-group{gap:6px}
+.tool-card{min-height:46px;padding:6px 7px}
+.tool-card .tool-icon{height:34px;width:35px;font-size:20px}
+.compact-tools{gap:6px}
+.compact-tools .tool-card{min-height:58px}
+.pal-footer{padding:8px;margin-top:10px;font-size:11px}
+.workhead{padding:12px 14px}
+.board-shell{padding:12px 8px 13px}
+.workbottom{padding:12px}
+.control-bar{gap:7px}
+.runbtn{min-height:49px}
+.quick-actions{margin-top:9px}
+.message{margin-top:10px}
+.inspector-empty{padding:22px 9px}
+.footer{font-size:11px;padding-top:8px}
+@media(max-width:1190px){
+ .layout{grid-template-columns:minmax(205px,.95fr) minmax(218px,1.05fr)}
+ .workspace{grid-column:1/-1;grid-row:2}
+}
+@media(max-width:740px){
+ .batch-ticket{padding:13px 11px}
+ .ticket-head{margin-bottom:10px}
+ .ticket-head .order-heading b{font-size:17px}
+ .ticket-controls{width:100%;justify-content:space-between}
+ .stamp-box{width:auto;padding:6px 9px}
+ .batch-list{grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px}
+ .batch-item{padding:8px}
+ .batch-value{font-size:32px}
+ .batch-value.long-number{font-size:23px}
+ .batch-side small{font-size:11px}
+ .layout{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:9px}
+ .workspace{grid-column:1/-1}
+ .panel.pad{padding:11px}
+}
+@media(max-width:550px){
+ .layout{grid-template-columns:minmax(0,1fr)}
+ .workspace{grid-column:auto;grid-row:auto}
+ .batch-list{grid-template-columns:1fr}
+ .order-heading{gap:5px}
+ .ticket-controls{gap:5px}
+ .tool-group{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+ .tool-card{min-width:0;min-height:56px}
+ .tool-card .tool-txt b{font-size:12px}
+ .tool-card .tool-txt small{font-size:9px}
+ .inspector-empty{padding:11px}
+}
+
+/* v1.5.0 - order beside tools, dedicated stage selection screen */
+.app{width:min(1560px,100%)}
+.headright{align-items:center}
+.stage-nav-button{min-height:47px;padding:10px 17px;font-size:14px;font-weight:850;border:1px solid #e1b66b;color:#ffdf9d;background:linear-gradient(135deg,#57462c,#2a4650);box-shadow:0 3px 10px #0003;white-space:nowrap}
+.stage-nav-button:hover:not(:disabled){background:#6a5333;border-color:#f4ce86}
+.layout{grid-template-columns:255px 232px minmax(0,1fr);gap:11px}
+.left{display:flex;flex-direction:column;gap:0}
+.order-summary{padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid #4a6871}
+.mini-order-head{display:flex;flex-direction:column;align-items:flex-start;gap:4px;margin-bottom:12px}
+.mini-order-title{font-size:17px;font-weight:950;color:#ffdf9e}
+.mini-stage-name{color:#c8dee3;font-size:12px}
+.order-summary .batch-list{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
+.order-summary .batch-item{padding:9px 9px 11px;border-width:1px;border-radius:10px;background:#294450}
+.order-summary .batch-top{margin-bottom:6px}
+.order-summary .batch-number{font-size:12px}
+.order-summary .batch-main{grid-template-columns:minmax(0,1fr) 20px minmax(0,1fr);gap:4px}
+.order-summary .batch-side{padding:7px 3px 8px}
+.order-summary .batch-side small{font-size:11px;margin-bottom:3px}
+.order-summary .batch-value{font-size:clamp(23px,2.3vw,32px);line-height:1.1;letter-spacing:-.025em}
+.order-summary .batch-value.long-number{font-size:clamp(17px,1.9vw,24px)}
+.order-summary .output-arrow{font-size:18px;text-align:center}
+.order-summary .reject{font-size:18px}
+.mini-required{background:#3a403b;border:1px dashed #857759;border-radius:9px;padding:8px 9px;margin-top:10px;font-size:11px;color:#f2dbad}
+.mini-required strong{display:block;font-size:13px;color:#ffe1a5;margin-top:3px}
+.tools-heading{margin-bottom:9px}
+.workhead{padding:11px 13px}
+.workhead h2{font-size:16px}
+.board-shell{padding:9px 8px 12px}
+.board-outer{padding:8px}
+.control-bar .runbtn{flex:2 1 175px}
+.control-bar .subbtn{flex:1 1 110px}
+.stage-screen[hidden]{display:none!important}
+.stage-screen{position:fixed;z-index:55;inset:0;background:#07151ceF;overflow-y:auto;padding:24px 15px;display:flex;justify-content:center;align-items:flex-start}
+.stage-screen-wrap{width:min(960px,100%);background:linear-gradient(155deg,#19323c,#10232d);border:1px solid #65858f;border-radius:17px;box-shadow:0 22px 80px #000a;padding:22px}
+.stage-screen-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding-bottom:15px;border-bottom:1px solid #47646e}
+.stage-screen-head h2{margin:3px 0;font-size:25px;color:#ffe4b4}
+.stage-screen-head p{margin:6px 0 0;color:#a9cad1;font-size:12px}
+.stage-screen-head button{font-weight:850}
+.stage-screen-grid{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:8px;margin-top:12px}
+.stage-chapter-heading{grid-column:1/-1;font-size:14px;color:#f6d291;border-bottom:1px solid #42616b;margin:14px 0 2px;padding-bottom:6px}
+.stage-choice{padding:8px 2px 6px;min-height:63px;font-weight:900;display:flex;align-items:center;justify-content:center;gap:3px;flex-direction:column;border:1px solid #547480;background:#284550}
+.stage-choice span{font-size:18px}
+.stage-choice small{font-size:9px;font-weight:700;color:#c7dce0}
+.stage-choice.active{background:#765933;border:2px solid #ffcd78}
+.stage-choice.cleared small{color:#ffcc74}
+.stage-choice.locked{opacity:.37;filter:saturate(.25);cursor:not-allowed}
+@media(max-width:1190px){.layout{grid-template-columns:minmax(220px,.95fr) minmax(225px,1.05fr)}.workspace{grid-column:1/-1;grid-row:2}}
+@media(max-width:740px){.layout{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:9px}.workspace{grid-column:1/-1;grid-row:auto}.headright{width:100%;align-items:stretch}.stage-nav-button{flex:1}.statpill{flex:1;min-width:0}.stage-screen-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}.stage-screen-wrap{padding:14px}}
+@media(max-width:550px){.layout{grid-template-columns:minmax(0,1fr)}.workspace{grid-column:auto}.order-summary .batch-list{grid-template-columns:repeat(auto-fit,minmax(185px,1fr))}.order-summary .batch-item{min-width:0}.stage-choice{min-height:54px}.stage-choice span{font-size:16px}}
+/* v1.5.0 — choose/select and erase modes side by side */
+.mode-tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:0 0 12px}
+.mode-tools .tool-card{min-width:0;min-height:65px;padding:6px 5px;flex-direction:column;justify-content:center;gap:5px;text-align:center}
+.mode-tools .tool-icon{width:35px;height:31px;font-size:19px}
+.mode-tools .tool-txt b{font-size:12px;line-height:1.3}
+.mode-tools .tool-txt small{display:none}
+.mode-tools .tool-card.mode-erase.active{background:#603c42;border-color:#ff9e9b;box-shadow:inset 0 0 0 1px #ff9e9b}
+.board.erase-mode .cell:not(.input):not(.output):not(.wall):not(.is-empty):hover{outline:3px solid #ff8e8a;outline-offset:-3px}
+@media(max-width:550px){.mode-tools{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* v1.5.0: two-inlet challenge and accessible stage tabs */
+.delivery-rule{background:#28515a;border:1px solid #80c9c9;color:#e0fffd;font-size:14px;font-weight:900;text-align:center;border-radius:10px;margin-top:10px;padding:10px 7px}
+.delivery-rule[hidden]{display:none!important}
+.stage-tabs{display:flex;gap:9px;margin-top:16px;flex-wrap:wrap}
+.stage-tabs button{flex:1;min-width:190px;font-weight:850;padding:13px 8px;background:#28424c}
+.stage-tabs button.active{background:#6b5030;color:#ffe0a8;border-color:#ffd28b;box-shadow:inset 0 0 0 1px #e6b86f}
+.cell.cross{border:2px solid #88e6df!important;background:linear-gradient(160deg,#356b73,#253a53)!important;box-shadow:inset 0 3px #ffffff29,0 0 10px #4fe0bc25}
+.cell.cross .sym{font-size:33px;color:#e5ffff;text-shadow:0 0 9px #80d7e0}
+.token-a{border-color:#74cfff!important;background:linear-gradient(#d5eeff,#76c6fa)!important}
+.token-b{border-color:#ffdf86!important;background:linear-gradient(#fff0be,#ffce6a)!important}
+@media(max-width:550px){.stage-tabs button{min-width:0;font-size:12px}}
 </style>
 </head>
 <body>
@@ -70,48 +217,49 @@ button,input,select{font:inherit}button{border:1px solid #46616b;border-radius:1
   <header class="head">
     <div class="identity">
       <div class="logo" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="M5 40V23l12 7V20l12 9V13h6v12l8 5v10H5Z" fill="#f0bd69" stroke="#ffe1a1" stroke-width="2" stroke-linejoin="round"/><path d="M12 34h5m7 0h5m6 0h4" stroke="#31535a" stroke-width="3" stroke-linecap="round"/><path d="M31 13V5h4v8" fill="#c4dcdf" stroke="#c4dcdf" stroke-width="2"/></svg></div>
-      <div><div class="eyebrow">Build · Calculate · Automate</div><div class="brand">MATH <span>FACTORY</span><span class="version">v1.3.1</span></div><div class="small">数字をつくる、ちいさな工場。</div></div>
+      <div><div class="eyebrow">Build · Calculate · Automate</div><div class="brand">MATH <span>FACTORY</span><span class="version">v1.5.0</span></div><div class="small">数字をつくる、ちいさな工場。</div></div>
     </div>
-    <div class="headright"><div class="statpill"><small>🏭 工場レベル</small><strong id="level">1</strong></div><div class="statpill"><small>🔬 研究ポイント</small><strong><span id="rp">0</span> RP</strong></div><div class="statpill"><small>⭐ 獲得スター</small><strong id="stars">0</strong></div></div>
+    <div class="headright"><button type="button" id="stageButton" class="stage-nav-button">🗺 ステージ選択</button><div class="statpill"><small>🏭 工場レベル</small><strong id="level">1</strong></div><div class="statpill"><small>⭐ 獲得スター</small><strong id="stars">0</strong></div></div>
   </header>
-  <section class="order" aria-label="今回の注文">
-    <div><div class="order-id" id="stageId">ORDER 01 / 20</div><div class="order-name" id="stageTitle">はじめての工場</div><div class="order-hint" id="stageDesc">まずは装置を置いてみましょう</div></div>
-    <div class="formula"><span class="num" id="inputValue">3種類</span><span class="arrow">➜</span><span class="num to" id="target">3商品</span></div>
-    <div class="orderprogress"><div class="progressline"><span>📦 納品状況</span><b id="delivery">0 / 2個</b></div><div class="progressbar"><div id="progress" style="width:0%"></div></div><div class="small" style="margin-top:7px">まずは下の大きな注文カードを確認して、材料と完成品の対応を見よう！</div></div>
-  </section>
-  <section class="batch-ticket" aria-label="注文票と品質規格">
-    <div class="ticket-head"><div><b>📋 今回の注文：材料 → 商品</b><span>左の「材料」を加工して、右の「商品」を作りましょう。</span></div><div class="stamp-box">必要な装置（順不同） <strong id="requiredTypes">× 乗算</strong><div class="small" style="margin-top:5px;color:#dcebec">すべてのカードを指定どおりに加工するとクリア</div></div></div>
-    <div class="batch-list" id="batchSamples"></div>
-  </section>
   <main class="layout">
     <aside class="panel pad left">
-      <div class="panel-heading"><h2 class="sectiontitle"><span class="stepnum">1</span> 装置を選ぶ</h2></div>
-      <p class="pallet-description">使いたい装置を選び、ベルトをクリック。別の装置を選んで押せば上書きできます。▦は固定設備で撤去できません。</p>
+      <section class="order-summary" aria-label="今回の注文">
+        <div class="mini-order-head"><span class="mini-order-title">📦 今回の注文</span><span class="mini-stage-name" id="stageName"></span></div>
+        <div class="batch-list" id="batchSamples"></div>
+        <div id="deliveryRule" class="delivery-rule" hidden></div><div class="mini-required">必要な装置 <strong id="requiredTypes"></strong></div>
+      </section>
+      <div class="panel-heading tools-heading"><h2 class="sectiontitle"><span class="stepnum">1</span> 装置を選ぶ</h2></div>
+      <p class="pallet-description">装置を選んでベルトをクリック。別の装置で上書きできます。</p>
+      <div class="mode-tools" id="modeTools" aria-label="操作モード"></div>
       <div class="tool-group" id="basicTools"></div>
-      <div class="palette-sep"><div class="mini-label">特別な装置</div></div>
-      <div class="compact-tools" id="advancedTools"></div>
-      <div class="pal-footer"><b>💡 ベルトの置き方</b><div style="margin-top:3px">「ベルト」を選んでマスを<strong>ドラッグ</strong>。曲がり角も自動で向きが変わります。</div></div>
+      <div id="advancedSection" hidden><div class="palette-sep"><div class="mini-label">特別な装置</div></div><div class="compact-tools" id="advancedTools"></div></div>
+      <div class="pal-footer">💡 ベルトは<strong>ドラッグ</strong>で延長できます。</div>
+    </aside>
+    <aside class="panel pad settings-panel" aria-label="装置の設定">
+      <div class="panel-heading"><h2 class="sectiontitle"><span class="stepnum">2</span> 装置を設定</h2></div>
+      <div id="inspector"></div>
     </aside>
     <section class="panel workspace">
-      <div class="workhead"><h2>🏭 工場フロア <span class="small">10 × 7マス</span></h2><div class="live" id="runState"><span class="live-dot"></span><span id="runText">設計中</span></div></div>
-      <div class="board-shell"><div class="factory-caption"><span>INLET / 材料搬入</span><span>OUTLET / 製品出荷</span></div><div class="board-outer"><div class="board" id="board" role="group" aria-label="工場マス目。装置を選んでマスを押すと配置します"></div></div><div class="board-caption">青＝材料の入口　／　灰＝コンベア　／　緑＝完成品の出口　／　▦＝動かせない固定設備</div></div>
+      <div class="workhead"><h2>🏭 工場フロア</h2></div>
+      <div class="board-shell"><div class="board-outer"><div class="board" id="board" role="group" aria-label="工場マス目。装置を選んでマスを押すと配置します"></div></div></div>
       <div class="workbottom">
-        <div class="control-bar"><button class="runbtn" id="run">▶ 生産開始</button><button class="subbtn" id="step">⏭ 1コマ進める</button><button class="subbtn" id="reset">↺ やり直す</button></div>
-        <div class="quick-actions"><button id="rotate" title="選択中の装置を時計回りに回す">⟳ 向きを回す</button><button id="straight" title="入口と出口を結ぶ直線ベルトを敷く">▰ 直線ベルトを敷く</button><label class="speedlabel">速度 <select id="speed"><option value="800">ゆっくり</option><option value="400" selected>標準</option><option value="180">速い</option></select></label></div>
+        <div class="control-bar"><button class="runbtn" id="run">▶ 生産開始</button><button class="subbtn" id="reset">↺ やり直す</button></div>
+        <div class="quick-actions"><button id="rotate" title="選択中の装置を時計回りに回す">⟳ 向きを回す</button><label class="speedlabel">速度 <select id="speed"><option value="800">ゆっくり</option><option value="400" selected>標準</option><option value="180">速い</option></select></label></div>
         <div class="message" role="status" aria-live="polite"><span id="status">左から装置を選んでください。</span></div>
-        <div class="footmetrics"><div class="metric"><small>稼働時間</small><strong><span id="ticks">0</span> <span style="font-size:10px">tick</span></strong></div><div class="metric"><small>装置の台数</small><strong id="used">0 / 3</strong></div><div class="metric"><small>搬送中</small><strong id="activeTokens">0</strong></div><div class="metric"><small>不良品</small><strong id="waste">0</strong></div></div>
       </div>
     </section>
-    <aside class="panel pad right">
-      <div class="side-section"><div class="panel-heading"><h2 class="sectiontitle"><span class="stepnum">2</span> 装置を設定</h2></div><div id="inspector"></div></div>
-      <div class="side-section"><div class="panel-heading"><h2 class="sectiontitle"><span class="stepnum">3</span> 生産して納品</h2></div><div class="howto"><div class="howto-row"><span class="howto-num">①</span><span>注文票を確認して、必要な<strong>加工装置</strong>をベルトに置く。</span></div><div class="howto-row"><span class="howto-num">②</span><span>右側で数値・向きを設定する。障害物があれば上下にベルトを敷いて迂回。</span></div><div class="howto-row"><span class="howto-num">③</span><span>緑の<strong>「生産開始」</strong>で全素材を一括製造。開始後の変更はリセットが必要。</span></div></div></div>
-      <div class="side-section"><button class="section-toggle" id="stageToggle" aria-expanded="false">🗺 ステージ一覧 <span id="stageChevron">＋</span></button><div class="expand-body" id="stagePanel" hidden><div class="small">全100ステージ。50で最高難易度に到達し、51〜100は同水準の応用注文です。クリア済みは再挑戦できます。</div><div class="stage-list" id="stageList"></div></div></div>
-      <div class="side-section"><button class="section-toggle" id="researchToggle" aria-expanded="false">🔬 研究開発 <span id="researchChevron">＋</span></button><div class="expand-body" id="researchPanel" hidden><div class="small">研究ポイントで新しい装置を解放できます。</div><div class="research-list" id="research"></div></div></div>
-      <div class="side-section"><div class="small">⭐ 全ロットを正しく検品してクリア。装置の台数・稼働時間の条件で追加の星を獲得。<br>装置の目安：<b id="limit">3</b>台以内 / <b id="timeLimit">26 tick</b>以内</div></div>
-    </aside>
   </main>
-  <div class="footer">セーブは自動保存されます。旧版のセーブを参照できる保存環境では、研究ポイント・ステージ解放を引き継ぎます。新しい注文の★は改めて挑戦してください。</div>
+  <div class="footer">進行状況は自動保存されます。</div>
 </div>
+<section id="stageScreen" class="stage-screen" hidden role="dialog" aria-modal="true" aria-labelledby="stageScreenTitle">
+  <div class="stage-screen-wrap">
+    <header class="stage-screen-head">
+      <div><div class="eyebrow">PRODUCTION ORDERS</div><h2 id="stageScreenTitle">🗺 ステージ選択</h2><p id="stageScreenIntro">挑戦したいステージを選んでください。</p></div>
+      <button id="closeStageScreen" type="button">✕ 工場に戻る</button>
+    </header>
+    <div class="stage-tabs"><button id="normalTab" type="button">🏭 通常ステージ（100）</button><button id="dualTab" type="button">🔀 2入口チャレンジ（30）</button></div><div id="stageGrid" class="stage-screen-grid"></div>
+  </div>
+</section>
 <div class="modal hidden" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modalbox"><div class="eyebrow">ORDER COMPLETE</div><h2 id="modalTitle">📦 注文達成！</h2><div class="stars-big" id="modalStars">★★★</div><p id="modalText"></p><div class="modal-actions"><button id="replay">↺ もう一度</button><button class="primary" id="next">次の注文へ ➜</button></div></div></div>
 <div class="modal hidden" id="failModal" role="dialog" aria-modal="true" aria-labelledby="failTitle"><div class="modalbox failbox"><div class="eyebrow">QUALITY CHECK FAILED</div><h2 id="failTitle">⚠ 検品で問題を発見</h2><p id="failText"></p><div class="modal-actions"><button class="primary" id="retryDesign">↺ 配置を直して再挑戦</button></div></div></div>
 <script>
@@ -119,110 +267,113 @@ button,input,select{font:inherit}button{border:1px solid #46616b;border-radius:1
 const W=10,H=7,SAVE='math_factory_v1_2_save',OLD_SAVE='math_factory_v1_save';
 const mk=(id,inputs,outputs,desc,required,stock,limit,time,hint,walls=[])=>({id,inputs,outputs,desc,required,stock,limit,time,hint,walls,qty:outputs.filter(v=>v!==null).length});
 const STAGES=[
- mk(1,[3,5,7],[12,20,28],'初めての量産ライン',['mul'],{mul:1},1,23,'×4を1台置き、3種類の材料をすべて加工しよう。'),
- mk(2,[5,7,9],[13,15,17],'同じ数を加える',['add'],{add:1,mul:1},1,23,'＋8なら、それぞれの材料が8ずつ大きくなる。'),
- mk(3,[9,12,18],[4,7,13],'同じ数を引く',['sub'],{sub:1,add:1},1,23,'−5の装置を使ってみよう。'),
- mk(4,[4,6,9],[20,30,45],'倍率をそろえる',['mul'],{mul:1,add:1,sub:1},1,23,'全部を5倍にするなら、1台の乗算機で十分。'),
- mk(5,[12,20,28],[3,5,7],'分配して小さくする',['div'],{div:1,add:1,sub:1},1,23,'すべて4で割る。同じ設定で3素材を処理しよう。'),
- mk(6,[3,5,8],[17,25,37],'二工程の生産ライン',['mul','add'],{mul:1,add:1,sub:1},2,24,'先に×4、次に＋5。順序を入れ替えると結果が変わる。'),
- mk(7,[7,8,10],[31,35,43],'倍率と調整値',['mul','add'],{mul:1,add:1,sub:1},2,24,'各製品の差に注目。×4と＋3で作れる。'),
- mk(8,[8,10,12],[10,14,18],'加工順序の研究',['sub','mul'],{sub:1,mul:1,add:1},2,24,'まず−3してから×2する。'),
- mk(9,[6,7,9],[42,49,63],'省設備の工場',['mul'],{mul:1,add:1,sub:1,div:1},1,23,'1台で全素材を変換。×7が近道。'),
- mk(10,[5,7,9],[40,52,64],'第1工場の検定',['mul','add'],{mul:2,add:1,sub:1},3,25,'×3 → ＋5 → ×2。別の短い組み合わせも考えられる。'),
- mk(11,[3,4,5],[9,16,25],'平方の生産ライン',['square'],{square:1,mul:1,add:1},1,23,'平方機は数字を2乗する。×固定値とは違う働きをする。'),
- mk(12,[4,5,7],[18,27,51],'平方の仕上げ加工',['square','add'],{square:1,add:1,sub:1},2,24,'まず2乗してから＋2。'),
- mk(13,[7,8,11],[1,2,2],'余りを取り出す',['mod'],{mod:1,sub:1,add:1},1,23,'余り機の値を6にすると、7→1、8→2、11→5。今回は3を設定。'),
- mk(14,[10,13,17],[1,4,8],'周期を見つける',['mod'],{mod:1,add:1,sub:1},1,23,'9で割った余りを調べよう。'),
- mk(15,[5,6,8],[24,35,63],'平方から一歩引く',['square','sub'],{square:1,sub:1,add:1},2,24,'x²−1 の加工ライン。平方機の後に−1。'),
- mk(16,[9,12,15],[64,121,196],'括弧で順序を設計',['sub','square'],{square:1,sub:1,add:1},2,24,'(x−1)²。減算を先にすることが重要。'),
- mk(17,[4,5,8,9,12],[4,null,8,null,12],'検品工場：偶数だけ出荷',['even'],{even:1,add:1,sub:1},1,32,'偶数判定機を通すと奇数は正しく選別される。捨てるだけでは合格にならない。'),
- mk(18,[3,4,5,6,7],[4,null,6,null,8],'加工してから選別',['add','even'],{add:1,even:1,sub:1},2,33,'＋1の後で偶数判定をする。順序を逆にすると検品が失敗する。'),
- mk(19,[8,11,14],[9,3,12],'余りから製品をつくる',['mod','mul'],{mod:1,mul:1,add:1},2,24,'まず5で割った余りを出し、次に×3。'),
- mk(20,[7,9,11],[202,330,490],'第1工場・総合検定',['square','mul','add'],{square:1,mul:1,add:1,sub:1},3,25,'平方 → ×4 → ＋6。3台で正確に量産しよう。'),
- mk(21,[36,33,42],[2,1,4],"計算ラインの応用・検品付き製造",["div","mod","sub"],{"div":1,"mod":1,"sub":1,"add":1},3,19,"注文カードの材料と商品の関係を比べ、複数の装置で共通する計算式を作ろう。", []),
- mk(22,[16,17,13],[68,4,56],"計算ラインの応用・工程の順序",["mod","mul","add"],{"mod":1,"mul":1,"add":1,"sub":1},3,19,"注文カードの材料と商品の関係を比べ、複数の装置で共通する計算式を作ろう。", []),
- mk(23,[32,40,20],[169,225,100],"計算ラインの応用・複数材料の調整",["div","sub","add","square"],{"div":1,"sub":1,"add":1,"square":1},4,19,"注文カードの材料と商品の関係を比べ、複数の装置で共通する計算式を作ろう。", []),
- mk(24,[15,25,30],[8,24,35],"計算ラインの応用・精密ロット",["div","square","add","sub"],{"div":1,"square":1,"add":1,"sub":1},4,19,"注文カードの材料と商品の関係を比べ、複数の装置で共通する計算式を作ろう。", []),
- mk(25,[20,25,40],[158,248,638],"計算ラインの応用・生産設計",["square","mul","sub","div"],{"square":1,"mul":1,"sub":1,"div":1,"add":1},4,19,"注文カードの材料と商品の関係を比べ、複数の装置で共通する計算式を作ろう。", []),
- mk(26,[26,38,14,44],[576,1600,64,2304],"計算ラインの応用・高度な計算",["sub","mul","div","square"],{"sub":1,"mul":1,"div":1,"square":1,"add":1},4,25,"中央がふさがっています。上か下の通路にベルトを回し、すべての材料を加工しよう。", [[4,3],[5,3]]),
- mk(27,[22,19,8,5],[64,81,25,36],"計算ラインの応用・製品検査",["mul","mod","square","div"],{"mul":1,"mod":1,"square":1,"div":1,"add":1,"sub":1},4,25,"中央がふさがっています。上か下の通路にベルトを回し、すべての材料を加工しよう。", [[4,3],[5,3]]),
- mk(28,[45,35,25,40],[5,1,8,3],"計算ラインの応用・設備最適化",["mul","div","add","mod"],{"mul":1,"div":1,"add":1,"mod":1,"sub":1},4,25,"中央がふさがっています。上か下の通路にベルトを回し、すべての材料を加工しよう。", [[4,3],[5,3]]),
- mk(29,[5,10,3,14],[17,9,7,11],"計算ラインの応用・注文達成",["mul","sub","square","mod"],{"mul":1,"sub":1,"square":1,"mod":1,"add":1},4,25,"中央がふさがっています。上か下の通路にベルトを回し、すべての材料を加工しよう。", [[4,3],[5,3]]),
- mk(30,[8,10,12,4],[15,18,21,9],"計算ラインの応用・配管の迂回",["mod","add","mul","div"],{"mod":1,"add":1,"mul":1,"div":1,"sub":1},4,25,"中央がふさがっています。上か下の通路にベルトを回し、すべての材料を加工しよう。", [[4,3],[5,3]]),
- mk(31,[44,36,28,40],[33,17,9,24],"立体的な搬送路・検品付き製造",["div","sub","square","add"],{"div":1,"sub":1,"square":1,"add":1},4,27,"中央の固定設備を避け、外側の通路でベルトをつなごう。複数の計算工程の順序に注目。", [[4,2],[4,3],[4,4]]),
- mk(32,[40,16,14,32],[3996,636,486,2556],"立体的な搬送路・工程の順序",["square","mul","div","sub"],{"square":1,"mul":1,"div":1,"sub":1,"add":1},4,27,"中央の固定設備を避け、外側の通路でベルトをつなごう。複数の計算工程の順序に注目。", [[4,2],[4,3],[4,4]]),
- mk(33,[45,42,24,6],[3595,3131,1019,59],"立体的な搬送路・複数材料の調整",["mul","div","square","sub","add"],{"mul":1,"div":1,"square":1,"sub":1,"add":1},5,27,"中央の固定設備を避け、外側の通路でベルトをつなごう。複数の計算工程の順序に注目。", [[4,2],[4,3],[4,4]]),
- mk(34,[32,39,44,37],[1474,2328,3058,2064],"立体的な搬送路・精密ロット",["sub","square","add","mul","div"],{"sub":1,"square":1,"add":1,"mul":1,"div":1},5,27,"中央の固定設備を避け、外側の通路でベルトをつなごう。複数の計算工程の順序に注目。", [[4,2],[4,3],[4,4]]),
- mk(35,[33,41,5,9],[64,78,null,22],"立体的な搬送路・生産設計",["add","mul","sub","div","even"],{"add":1,"mul":1,"sub":1,"div":1,"even":1},5,27,"中央の固定設備を避け、外側の通路でベルトをつなごう。複数の計算工程の順序に注目。", [[4,2],[4,3],[4,4]]),
- mk(36,[15,14,13,8],[159,120,87,12],"立体的な搬送路・高度な計算",["sub","mod","square","mul","add"],{"sub":1,"mod":1,"square":1,"mul":1,"add":1},5,27,"中央の固定設備を避け、外側の通路でベルトをつなごう。複数の計算工程の順序に注目。", [[4,2],[4,3],[4,4]]),
- mk(37,[21,15,45,9],[298,154,1354,58],"立体的な搬送路・製品検査",["square","add","mul","sub","div"],{"square":1,"add":1,"mul":1,"sub":1,"div":1},5,27,"中央の固定設備を避け、外側の通路でベルトをつなごう。複数の計算工程の順序に注目。", [[4,2],[4,3],[4,4]]),
- mk(38,[5,13,8,9],[1764,9604,3969,4900],"立体的な搬送路・設備最適化",["sub","mod","add","mul","square"],{"sub":1,"mod":1,"add":1,"mul":1,"square":1},5,27,"中央の固定設備を避け、外側の通路でベルトをつなごう。複数の計算工程の順序に注目。", [[4,2],[4,3],[4,4]]),
- mk(39,[21,33,29,37],[7,10,12,8],"立体的な搬送路・注文達成",["sub","mul","div","mod","add"],{"sub":1,"mul":1,"div":1,"mod":1,"add":1},5,27,"中央の固定設備を避け、外側の通路でベルトをつなごう。複数の計算工程の順序に注目。", [[4,2],[4,3],[4,4]]),
- mk(40,[12,4,11,29],[10,6,4,null],"立体的な搬送路・配管の迂回",["mul","mod","add","sub","even"],{"mul":1,"mod":1,"add":1,"sub":1,"even":1},5,27,"中央の固定設備を避け、外側の通路でベルトをつなごう。複数の計算工程の順序に注目。", [[4,2],[4,3],[4,4]]),
- mk(41,[28,16,36,8,32],[5,0,9,1,4],"複合生産ライン・検品付き製造",["mul","div","sub","square","mod"],{"mul":1,"div":1,"sub":1,"square":1,"mod":1},5,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,2],[4,3],[4,4],[4,5],[4,6],[6,0],[6,1],[6,2],[6,3],[6,4],[6,6]]),
- mk(42,[21,11,22,7,25],[324,576,484,961,1156],"複合生産ライン・工程の順序",["mul","sub","mod","add","square"],{"mul":1,"sub":1,"mod":1,"add":1,"square":1},5,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,1],[4,2],[4,3],[4,4],[4,6],[7,0],[7,2],[7,3],[7,4],[7,5],[7,6]]),
- mk(43,[9,6,3,24,27],[22,12,6,18,14],"複合生産ライン・複数材料の調整",["square","mul","div","mod","sub","add"],{"square":1,"mul":1,"div":1,"mod":1,"sub":1,"add":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,2],[4,3],[4,4],[4,5],[4,6],[7,0],[7,1],[7,2],[7,3],[7,4],[7,6]]),
- mk(44,[17,7,19,5,9],[1,6,18,2,16],"複合生産ライン・精密ロット",["sub","add","mul","div","square","mod"],{"sub":1,"add":1,"mul":1,"div":1,"square":1,"mod":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[3,0],[3,1],[3,2],[3,3],[3,4],[3,6],[7,0],[7,2],[7,3],[7,4],[7,5],[7,6]]),
- mk(45,[3,19,9,7,8],[0,2,null,8,null],"複合生産ライン・生産設計",["mul","square","sub","add","mod","even"],{"mul":1,"square":1,"sub":1,"add":1,"mod":1,"even":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,2],[4,3],[4,4],[4,5],[4,6],[6,0],[6,1],[6,2],[6,3],[6,4],[6,6]]),
- mk(46,[22,17,12,7,32],[10,3,4,0,9],"複合生産ライン・高度な計算",["mul","sub","div","add","square","mod"],{"mul":1,"sub":1,"div":1,"add":1,"square":1,"mod":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,1],[4,2],[4,3],[4,4],[4,6],[7,0],[7,2],[7,3],[7,4],[7,5],[7,6]]),
- mk(47,[9,27,42,15,6],[228,124,7,67,103],"複合生産ライン・製品検査",["mul","div","mod","square","add","sub"],{"mul":1,"div":1,"mod":1,"square":1,"add":1,"sub":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,2],[4,3],[4,4],[4,5],[4,6],[7,0],[7,1],[7,2],[7,3],[7,4],[7,6]]),
- mk(48,[27,23,11,15,31],[1764,1225,196,441,2401],"複合生産ライン・設備最適化",["sub","mod","add","mul","div","square"],{"sub":1,"mod":1,"add":1,"mul":1,"div":1,"square":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[3,0],[3,1],[3,2],[3,3],[3,4],[3,6],[6,0],[6,2],[6,3],[6,4],[6,5],[6,6]]),
- mk(49,[6,15,3,9,18],[4,2,7,18,10],"複合生産ライン・注文達成",["mul","square","div","sub","add","mod"],{"mul":1,"square":1,"div":1,"sub":1,"add":1,"mod":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[3,0],[3,2],[3,3],[3,4],[3,5],[3,6],[6,0],[6,1],[6,2],[6,3],[6,4],[6,6]]),
- mk(50,[15,24,7,11,5],[30,null,18,24,null],"複合生産ライン・配管の迂回",["mod","add","sub","mul","div","even"],{"mod":1,"add":1,"sub":1,"mul":1,"div":1,"even":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[3,0],[3,1],[3,2],[3,3],[3,4],[3,6],[6,0],[6,2],[6,3],[6,4],[6,5],[6,6]]),
- mk(51,[38,24,18,9,7],[null,null,10,22,40],"マスター工場・検品付き製造",["square","add","mod","mul","sub","even"],{"square":1,"add":1,"mod":1,"mul":1,"sub":1,"even":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[3,0],[3,2],[3,3],[3,4],[3,5],[3,6],[7,0],[7,1],[7,2],[7,3],[7,4],[7,6]]),
- mk(52,[5,11,13,10,12,4],[18,8,72,0,32,2],"マスター工場・工程の順序",["mul","sub","add","mod","square","div"],{"mul":1,"sub":1,"add":1,"mod":1,"square":1,"div":1},6,39,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[3,0],[3,1],[3,2],[3,3],[3,4],[3,6],[6,0],[6,2],[6,3],[6,4],[6,5],[6,6]]),
- mk(53,[10,35,25,30,15],[49,289,169,225,81],"マスター工場・複数材料の調整",["mul","div","add","sub","mod","square"],{"mul":1,"div":1,"add":1,"sub":1,"mod":1,"square":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[3,0],[3,1],[3,2],[3,3],[3,4],[3,6],[6,0],[6,2],[6,3],[6,4],[6,5],[6,6]]),
- mk(54,[5,40,25,45,20],[4,0,36,null,null],"マスター工場・精密ロット",["add","sub","div","mod","square","even"],{"add":1,"sub":1,"div":1,"mod":1,"square":1,"even":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,2],[4,3],[4,4],[4,5],[4,6],[6,0],[6,1],[6,2],[6,3],[6,4],[6,6]]),
- mk(55,[18,12,16,14,26,8],[14,4,1,13,17,15],"マスター工場・生産設計",["sub","mul","div","square","add","mod"],{"sub":1,"mul":1,"div":1,"square":1,"add":1,"mod":1},6,39,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[3,0],[3,2],[3,3],[3,4],[3,5],[3,6],[6,0],[6,1],[6,2],[6,3],[6,4],[6,6]]),
- mk(56,[14,17,10,6,21],[108,300,147,192,243],"マスター工場・高度な計算",["sub","mul","mod","add","square","div"],{"sub":1,"mul":1,"mod":1,"add":1,"square":1,"div":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[3,0],[3,1],[3,2],[3,3],[3,4],[3,6],[6,0],[6,2],[6,3],[6,4],[6,5],[6,6]]),
- mk(57,[13,6,33,4,22],[4,null,null,0,16],"マスター工場・製品検査",["sub","mul","mod","div","square","even"],{"sub":1,"mul":1,"mod":1,"div":1,"square":1,"even":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,1],[4,2],[4,3],[4,4],[4,6],[7,0],[7,2],[7,3],[7,4],[7,5],[7,6]]),
- mk(58,[5,9,3,11,4,10],[16,1,0,25,4,9],"マスター工場・設備最適化",["mul","add","sub","mod","div","square"],{"mul":1,"add":1,"sub":1,"mod":1,"div":1,"square":1},6,39,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,2],[4,3],[4,4],[4,5],[4,6],[7,0],[7,1],[7,2],[7,3],[7,4],[7,6]]),
- mk(59,[10,22,30,36,18],[22,118,222,321,78],"マスター工場・注文達成",["mul","div","mod","square","add","sub"],{"mul":1,"div":1,"mod":1,"square":1,"add":1,"sub":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,2],[4,3],[4,4],[4,5],[4,6],[7,0],[7,1],[7,2],[7,3],[7,4],[7,6]]),
- mk(60,[3,25,11,10,16],[22,null,10,18,null],"マスター工場・配管の迂回",["mul","div","square","mod","add","even"],{"mul":1,"div":1,"square":1,"mod":1,"add":1,"even":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,1],[4,2],[4,3],[4,4],[4,6],[6,0],[6,2],[6,3],[6,4],[6,5],[6,6]]),
- mk(61,[15,13,10,14,12,11],[0,18,24,6,3,27],"マスター工場・検品付き製造",["sub","square","add","mod","mul","div"],{"sub":1,"square":1,"add":1,"mod":1,"mul":1,"div":1},6,39,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[3,0],[3,1],[3,2],[3,3],[3,4],[3,6],[6,0],[6,2],[6,3],[6,4],[6,5],[6,6]]),
- mk(62,[10,6,12,4,8],[1,16,17,9,7],"マスター工場・工程の順序",["add","sub","mul","div","square","mod"],{"add":1,"sub":1,"mul":1,"div":1,"square":1,"mod":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,2],[4,3],[4,4],[4,5],[4,6],[7,0],[7,1],[7,2],[7,3],[7,4],[7,6]]),
- mk(63,[11,14,4,6,39],[64,null,324,784,null],"マスター工場・複数材料の調整",["mod","sub","mul","add","square","even"],{"mod":1,"sub":1,"mul":1,"add":1,"square":1,"even":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,2],[4,3],[4,4],[4,5],[4,6],[6,0],[6,1],[6,2],[6,3],[6,4],[6,6]]),
- mk(64,[17,19,16,12,14,8],[1,11,641,361,491,161],"マスター工場・精密ロット",["mod","square","mul","add","div","sub"],{"mod":1,"square":1,"mul":1,"add":1,"div":1,"sub":1},6,39,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,1],[4,2],[4,3],[4,4],[4,6],[6,0],[6,2],[6,3],[6,4],[6,5],[6,6]]),
- mk(65,[21,13,19,7,15],[2413,453,1776,12,796],"マスター工場・生産設計",["sub","mod","mul","square","div","add"],{"sub":1,"mod":1,"mul":1,"square":1,"div":1,"add":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,1],[4,2],[4,3],[4,4],[4,6],[7,0],[7,2],[7,3],[7,4],[7,5],[7,6]]),
- mk(66,[28,43,34,13,25],[4,null,12,null,0],"マスター工場・高度な計算",["add","mul","sub","div","mod","even"],{"add":1,"mul":1,"sub":1,"div":1,"mod":1,"even":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[3,0],[3,2],[3,3],[3,4],[3,5],[3,6],[6,0],[6,1],[6,2],[6,3],[6,4],[6,6]]),
- mk(67,[15,17,11,13,5,3],[2,11,6,13,10,7],"マスター工場・製品検査",["add","square","sub","mul","div","mod"],{"add":1,"square":1,"sub":1,"mul":1,"div":1,"mod":1},6,39,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,2],[4,3],[4,4],[4,5],[4,6],[7,0],[7,1],[7,2],[7,3],[7,4],[7,6]]),
- mk(68,[45,6,15,21,24],[121,144,100,1,64],"マスター工場・設備最適化",["mul","div","sub","add","mod","square"],{"mul":1,"div":1,"sub":1,"add":1,"mod":1,"square":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[3,0],[3,1],[3,2],[3,3],[3,4],[3,6],[6,0],[6,2],[6,3],[6,4],[6,5],[6,6]]),
- mk(69,[30,22,20,32,18],[22,18,null,null,16],"マスター工場・注文達成",["sub","mod","mul","div","add","even"],{"sub":1,"mod":1,"mul":1,"div":1,"add":1,"even":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[3,0],[3,1],[3,2],[3,3],[3,4],[3,6],[7,0],[7,2],[7,3],[7,4],[7,5],[7,6]]),
- mk(70,[15,9,12,23,18,6],[576,256,400,16,784,144],"マスター工場・配管の迂回",["sub","add","mod","mul","div","square"],{"sub":1,"add":1,"mod":1,"mul":1,"div":1,"square":1},6,39,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[3,0],[3,2],[3,3],[3,4],[3,5],[3,6],[6,0],[6,1],[6,2],[6,3],[6,4],[6,6]]),
- mk(71,[8,10,6,4,19],[1681,2116,1296,961,441],"マスター工場・検品付き製造",["mod","add","mul","sub","square","div"],{"mod":1,"add":1,"mul":1,"sub":1,"square":1,"div":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,2],[4,3],[4,4],[4,5],[4,6],[6,0],[6,1],[6,2],[6,3],[6,4],[6,6]]),
- mk(72,[6,7,10,14,3],[630,null,1302,2198,null],"マスター工場・工程の順序",["add","mod","square","sub","mul","even"],{"add":1,"mod":1,"square":1,"sub":1,"mul":1,"even":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[3,0],[3,1],[3,2],[3,3],[3,4],[3,6],[7,0],[7,2],[7,3],[7,4],[7,5],[7,6]]),
- mk(73,[9,3,15,12,8,11],[8,32,0,2,128,98],"マスター工場・複数材料の調整",["add","sub","mul","mod","square","div"],{"add":1,"sub":1,"mul":1,"mod":1,"square":1,"div":1},6,39,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,1],[4,2],[4,3],[4,4],[4,6],[7,0],[7,2],[7,3],[7,4],[7,5],[7,6]]),
- mk(74,[14,6,12,4,8],[2410,450,1773,205,793],"マスター工場・精密ロット",["mod","mul","square","sub","div","add"],{"mod":1,"mul":1,"square":1,"sub":1,"div":1,"add":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[3,0],[3,2],[3,3],[3,4],[3,5],[3,6],[6,0],[6,1],[6,2],[6,3],[6,4],[6,6]]),
- mk(75,[36,12,6,30,42],[12,20,16,null,null],"マスター工場・生産設計",["sub","square","div","mod","add","even"],{"sub":1,"square":1,"div":1,"mod":1,"add":1,"even":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[3,0],[3,2],[3,3],[3,4],[3,5],[3,6],[7,0],[7,1],[7,2],[7,3],[7,4],[7,6]]),
- mk(76,[9,11,10,13,21,12],[1462,2182,1804,3046,76,2596],"マスター工場・高度な計算",["mod","mul","square","div","sub","add"],{"mod":1,"mul":1,"square":1,"div":1,"sub":1,"add":1},6,39,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,1],[4,2],[4,3],[4,4],[4,6],[6,0],[6,2],[6,3],[6,4],[6,5],[6,6]]),
- mk(77,[3,5,10,8,6],[25,81,361,225,121],"マスター工場・製品検査",["sub","mod","mul","add","div","square"],{"sub":1,"mod":1,"mul":1,"add":1,"div":1,"square":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[3,0],[3,1],[3,2],[3,3],[3,4],[3,6],[6,0],[6,2],[6,3],[6,4],[6,5],[6,6]]),
- mk(78,[20,11,23,38,14],[790,null,null,4906,202],"マスター工場・設備最適化",["sub","mul","div","square","add","even"],{"sub":1,"mul":1,"div":1,"square":1,"add":1,"even":1},6,35,"上下の通路へベルトを回して工場をつなごう。平方と四則演算の順番を考えよう。", [[3,0],[3,2],[3,3],[3,4],[3,5],[3,6],[7,0],[7,1],[7,2],[7,3],[7,4],[7,6]]),
- mk(79,[7,16,10,4,20,13],[4,25,9,1,0,16],"マスター工場・注文達成",["mul","mod","add","div","sub","square"],{"mul":1,"mod":1,"add":1,"div":1,"sub":1,"square":1},6,39,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[3,0],[3,2],[3,3],[3,4],[3,5],[3,6],[6,0],[6,1],[6,2],[6,3],[6,4],[6,6]]),
- mk(80,[11,6,13,19,5],[24,143,80,15,99],"マスター工場・配管の迂回",["mul","div","mod","square","sub","add"],{"mul":1,"div":1,"mod":1,"square":1,"sub":1,"add":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,1],[4,2],[4,3],[4,4],[4,6],[6,0],[6,2],[6,3],[6,4],[6,5],[6,6]]),
- mk(81,[10,16,32,18,34],[4,20,null,14,null],"マスター工場・検品付き製造",["square","sub","add","div","mod","even"],{"square":1,"sub":1,"add":1,"div":1,"mod":1,"even":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[3,0],[3,1],[3,2],[3,3],[3,4],[3,6],[6,0],[6,2],[6,3],[6,4],[6,5],[6,6]]),
- mk(82,[8,12,20,40,16,36],[15,14,11,16,20,12],"マスター工場・工程の順序",["mul","div","sub","square","mod","add"],{"mul":1,"div":1,"sub":1,"square":1,"mod":1,"add":1},6,39,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,2],[4,3],[4,4],[4,5],[4,6],[7,0],[7,1],[7,2],[7,3],[7,4],[7,6]]),
- mk(83,[19,6,14,24,15],[37,12,48,28,16],"マスター工場・複数材料の調整",["sub","mul","mod","div","square","add"],{"sub":1,"mul":1,"mod":1,"div":1,"square":1,"add":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[3,0],[3,2],[3,3],[3,4],[3,5],[3,6],[6,0],[6,1],[6,2],[6,3],[6,4],[6,6]]),
- mk(84,[14,4,3,7,5],[null,4,0,null,2],"マスター工場・精密ロット",["sub","mul","square","div","mod","even"],{"sub":1,"mul":1,"square":1,"div":1,"mod":1,"even":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[3,0],[3,1],[3,2],[3,3],[3,4],[3,6],[7,0],[7,2],[7,3],[7,4],[7,5],[7,6]]),
- mk(85,[35,30,15,25,20,10],[7,15,10,9,11,6],"マスター工場・生産設計",["sub","mul","div","square","mod","add"],{"sub":1,"mul":1,"div":1,"square":1,"mod":1,"add":1},6,39,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,1],[4,2],[4,3],[4,4],[4,6],[7,0],[7,2],[7,3],[7,4],[7,5],[7,6]]),
- mk(86,[7,22,8,4,11],[10,9,6,5,0],"マスター工場・高度な計算",["square","sub","add","mod","mul","div"],{"square":1,"sub":1,"add":1,"mod":1,"mul":1,"div":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[3,0],[3,2],[3,3],[3,4],[3,5],[3,6],[6,0],[6,1],[6,2],[6,3],[6,4],[6,6]]),
- mk(87,[25,23,35,33,37],[16,null,null,64,100],"マスター工場・製品検査",["mul","add","div","sub","square","even"],{"mul":1,"add":1,"div":1,"sub":1,"square":1,"even":1},6,35,"上下の通路へベルトを回して工場をつなごう。平方と四則演算の順番を考えよう。", [[3,0],[3,2],[3,3],[3,4],[3,5],[3,6],[7,0],[7,1],[7,2],[7,3],[7,4],[7,6]]),
- mk(88,[11,14,8,17,19,22],[36,64,16,100,0,4],"マスター工場・設備最適化",["sub","add","mod","mul","div","square"],{"sub":1,"add":1,"mod":1,"mul":1,"div":1,"square":1},6,39,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,1],[4,2],[4,3],[4,4],[4,6],[7,0],[7,2],[7,3],[7,4],[7,5],[7,6]]),
- mk(89,[14,23,29,26,5],[25,26,20,30,12],"マスター工場・注文達成",["sub","square","mul","div","mod","add"],{"sub":1,"square":1,"mul":1,"div":1,"mod":1,"add":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[3,0],[3,1],[3,2],[3,3],[3,4],[3,6],[6,0],[6,2],[6,3],[6,4],[6,5],[6,6]]),
- mk(90,[33,42,18,6,21],[0,null,null,22,10],"マスター工場・配管の迂回",["square","mul","div","sub","mod","even"],{"square":1,"mul":1,"div":1,"sub":1,"mod":1,"even":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,2],[4,3],[4,4],[4,5],[4,6],[7,0],[7,1],[7,2],[7,3],[7,4],[7,6]]),
- mk(91,[24,4,32,40,8,28],[14,10,154,494,35,59],"マスター工場・検品付き製造",["mul","div","sub","mod","square","add"],{"mul":1,"div":1,"sub":1,"mod":1,"square":1,"add":1},6,39,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[3,0],[3,2],[3,3],[3,4],[3,5],[3,6],[7,0],[7,1],[7,2],[7,3],[7,4],[7,6]]),
- mk(92,[18,19,4,9,5],[298,361,505,1,586],"マスター工場・工程の順序",["add","mod","square","mul","div","sub"],{"add":1,"mod":1,"square":1,"mul":1,"div":1,"sub":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[3,0],[3,1],[3,2],[3,3],[3,4],[3,6],[7,0],[7,2],[7,3],[7,4],[7,5],[7,6]]),
- mk(93,[11,20,5,17,14],[972,null,192,2352,null],"マスター工場・複数材料の調整",["mul","add","sub","square","div","even"],{"mul":1,"add":1,"sub":1,"square":1,"div":1,"even":1},6,35,"上下の通路へベルトを回して工場をつなごう。平方と四則演算の順番を考えよう。", [[3,0],[3,1],[3,2],[3,3],[3,4],[3,6],[7,0],[7,2],[7,3],[7,4],[7,5],[7,6]]),
- mk(94,[20,11,8,9,24,19],[12,67,7,19,124,4],"マスター工場・精密ロット",["mul","sub","mod","div","square","add"],{"mul":1,"sub":1,"mod":1,"div":1,"square":1,"add":1},6,39,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,2],[4,3],[4,4],[4,5],[4,6],[7,0],[7,1],[7,2],[7,3],[7,4],[7,6]]),
- mk(95,[10,3,8,11,4],[101,293,5,185,425],"マスター工場・生産設計",["add","mod","mul","square","div","sub"],{"add":1,"mod":1,"mul":1,"square":1,"div":1,"sub":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,2],[4,3],[4,4],[4,5],[4,6],[6,0],[6,1],[6,2],[6,3],[6,4],[6,6]]),
- mk(96,[11,4,10,9,8],[null,4,0,null,8],"マスター工場・高度な計算",["mul","add","square","mod","sub","even"],{"mul":1,"add":1,"square":1,"mod":1,"sub":1,"even":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,1],[4,2],[4,3],[4,4],[4,6],[6,0],[6,2],[6,3],[6,4],[6,5],[6,6]]),
- mk(97,[10,4,8,5,9,3],[36,22,4,54,12,6],"マスター工場・製品検査",["mul","sub","mod","square","div","add"],{"mul":1,"sub":1,"mod":1,"square":1,"div":1,"add":1},6,39,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,1],[4,2],[4,3],[4,4],[4,6],[6,0],[6,2],[6,3],[6,4],[6,5],[6,6]]),
- mk(98,[10,4,8,7,5],[9,5,14,6,8],"マスター工場・設備最適化",["sub","square","mul","div","mod","add"],{"sub":1,"square":1,"mul":1,"div":1,"mod":1,"add":1},6,35,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[3,0],[3,2],[3,3],[3,4],[3,5],[3,6],[6,0],[6,1],[6,2],[6,3],[6,4],[6,6]]),
- mk(99,[45,9,37,21,33],[4900,null,3136,784,null],"マスター工場・注文達成",["sub","mul","add","div","square","even"],{"sub":1,"mul":1,"add":1,"div":1,"square":1,"even":1},6,35,"上下の通路へベルトを回して工場をつなごう。平方と四則演算の順番を考えよう。", [[4,0],[4,2],[4,3],[4,4],[4,5],[4,6],[7,0],[7,1],[7,2],[7,3],[7,4],[7,6]]),
- mk(100,[4,10,12,8,14,6],[2,7,8,0,3,4],"マスター工場・配管の迂回",["square","mul","div","add","mod","sub"],{"square":1,"mul":1,"div":1,"add":1,"mod":1,"sub":1},6,39,"固定設備の間を通すには上段・下段の両方を使おう。余りの計算をどの順序に置くかが鍵。", [[4,0],[4,1],[4,2],[4,3],[4,4],[4,6],[7,0],[7,2],[7,3],[7,4],[7,5],[7,6]]),
+ mk(1,[2],[5],"はじめての注文",["add"],{"add":1},1,16,"まずは材料と商品の数字を見比べよう。",[]),
+ mk(2,[8],[6],"少なくする装置",["sub"],{"sub":1},1,16,"装置は1台だけ。左で選んで、工場のベルトに置こう。",[]),
+ mk(3,[4],[8],"倍にする装置",["mul"],{"mul":1},1,16,"数字を何倍にすれば商品になるか考えよう。",[]),
+ mk(4,[2,5],[6,9],"注文が2件になった！",["add"],{"add":1},1,20,"どちらの材料にも、同じ設定の装置が使われるよ。",[]),
+ mk(5,[2,4],[6,12],"まとめて加工",["mul"],{"mul":1},1,20,"2件の商品の変化を比べてみよう。",[]),
+ mk(6,[6,10],[3,5],"ベルトを曲げてみよう",["div"],{"div":1},1,22,"固定設備を避ければOK。計算自体は1台でできるよ。",[[4,3]]),
+ mk(7,[2,3,5],[8,12,20],"3件のまとめ注文",["mul"],{"mul":1},1,26,"同じ倍率で3件とも完成させよう。",[[4,3],[5,3]]),
+ mk(8,[7,9,11],[4,6,8],"ひとつの装置で量産",["sub"],{"sub":1},1,26,"迂回しながら3件の注文を達成しよう。",[[5,3]]),
+ mk(9,[6,9,12],[2,3,4],"第1工場の検定",["div"],{"div":1},1,24,"材料が3件でも、すべて同じ1台で加工できるよ。",[]),
+ mk(10,[4],[11],"2工程はじめの一歩",["mul","add"],{"mul":1,"add":1},2,18,"今日は注文1件。2台を順に試してみよう。",[[4,3]]),
+ mk(11,[5],[12],"装置を2台つなごう",["sub","mul"],{"sub":1,"mul":1},2,16,"装置の配置順序を変えると、完成品が変化するよ。",[]),
+ mk(12,[12],[10],"2工程を確かめよう",["div","add"],{"div":1,"add":1},2,18,"1件の注文で、設定を少しずつ試してみよう。",[[4,3],[5,3]]),
+ mk(13,[3,5],[7,13],"同じ2工程で2件",["mul","sub"],{"mul":1,"sub":1},2,20,"異なる材料を同じ加工ラインに流そう。",[]),
+ mk(14,[2,4],[12,18],"工程の順番",["add","mul"],{"add":1,"mul":1},2,22,"先に足すのか、先に掛けるのかで結果が変わる。",[[5,3]]),
+ mk(15,[3,4],[4,9],"平方装置の研究",["sub","square"],{"sub":1,"square":1},2,20,"平方機は入ってきた数字を2乗する。",[]),
+ mk(16,[2,4],[5,17],"平方から仕上げ加工",["square","add"],{"square":1,"add":1},2,22,"装置の順番と、2件の変化に注目しよう。",[[4,3],[5,3]]),
+ mk(17,[6,9],[4,3],"余りを使う工場",["mod","add"],{"mod":1,"add":1},2,22,"余り機は、割ったあとの余りを出す装置だよ。",[[5,3]]),
+ mk(18,[3,4],[4,null],"偶数だけを出荷",["add","even"],{"add":1,"even":1},2,22,"偶数は商品、奇数は自動的に選別除外されるよ。",[[3,3],[4,3]]),
+ mk(19,[7,8,9],[6,null,8],"検品工場の仕上げ",["sub","even"],{"sub":1,"even":1},2,26,"出荷と除外が両方正しくできればクリアだよ。",[[6,3]]),
+ mk(20,[2],[12],"3工程の練習・1",["square","add","mul"],{"square":1,"add":1,"mul":1},3,18,"注文1件から、3台の使い方を練習しよう。",[[4,3]]),
+ mk(21,[4],[13],"3工程の練習・2",["add","mul","sub"],{"add":1,"mul":1,"sub":1},3,18,"一度に全部考えず、途中の数をメモしてみよう。",[[4,3],[5,3]]),
+ mk(22,[7],[5],"3工程の練習・3",["mod","mul","add"],{"mod":1,"mul":1,"add":1},3,18,"小さい数字にしてから加工する方法も考えよう。",[[5,3]]),
+ mk(23,[2,3],[9,25],"3工程・注文2件",["mul","sub","square"],{"mul":1,"sub":1,"square":1},3,22,"同じ3台の設定で2件をつくろう。",[[3,3],[4,3]]),
+ mk(24,[6,10],[12,16],"2件の3工程",["div","add","mul"],{"div":1,"add":1,"mul":1},3,22,"材料の増え方と商品の増え方を比べよう。",[[6,3]]),
+ mk(25,[7,9],[9,15],"余りと3工程",["mod","add","mul"],{"mod":1,"add":1,"mul":1},3,22,"余りを使うと、数字が小さくなってから加工できる。",[[4,3]]),
+ mk(26,[2,4],[1,7],"3工程の仕上げ",["square","sub","div"],{"square":1,"sub":1,"div":1},3,22,"一度に2件を加工できたら次の工程数へ。",[[4,3],[5,3]]),
+ mk(27,[10],[14],"加工工程を増やしすぎない練習",["div","mul","sub"],{"mul":1,"sub":1,"div":1},3,24,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3]]),
+ mk(28,[4],[3],"加工工程を増やしすぎない練習",["mul","mod","add"],{"mul":1,"mod":1,"add":1},3,24,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3],[5,3]]),
+ mk(29,[8],[21],"加工工程を増やしすぎない練習",["square","sub","div"],{"square":1,"sub":1,"div":1},3,24,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[6,3]]),
+ mk(30,[3],[9],"加工工程を増やしすぎない練習",["mul","mod"],{"mod":1,"mul":1},2,20,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
+ mk(31,[5,11],[7,3],"3工程で複数の注文",["add","mul","mod"],{"add":1,"mul":1,"mod":1},3,24,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
+ mk(32,[2,5],[7,1],"3工程で複数の注文",["add","mul","mod"],{"mod":1,"mul":1,"add":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3]]),
+ mk(33,[8,10],[5,0],"3工程で複数の注文",["mul","mod","add"],{"add":1,"mul":1,"mod":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3],[5,3]]),
+ mk(34,[2,26],[3,627],"3工程で複数の注文",["add","square","sub"],{"sub":1,"square":1,"add":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[6,3]]),
+ mk(35,[2,6],[4,3],"3工程で複数の注文",["add","mod"],{"add":1,"mod":1},2,24,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
+ mk(36,[24,27],[76,85],"3工程で複数の注文",["mul","sub","add"],{"add":1,"mul":1,"sub":1},3,24,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
+ mk(37,[5,8],[1,0],"3工程で複数の注文",["sub","mod","mul"],{"sub":1,"mul":1,"mod":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3]]),
+ mk(38,[3,30],[8,62],"3工程で複数の注文",["add","mul","sub"],{"mul":1,"add":1,"sub":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3],[5,3]]),
+ mk(39,[2,7],[5,1],"3工程で複数の注文",["add","square","mod"],{"square":1,"mod":1,"add":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[6,3]]),
+ mk(40,[14,28],[30,58],"3工程で複数の注文",["mul","sub","add"],{"mul":1,"add":1,"sub":1},3,24,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
+ mk(41,[2,7],[5,1],"3工程の応用工場",["add","square","mod"],{"square":1,"mod":1,"add":1},3,24,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
+ mk(42,[5,8],[49,9],"3工程の応用工場",["mod","square","add"],{"mod":1,"add":1,"square":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3]]),
+ mk(43,[12,22],[19,34],"3工程の応用工場",["add","div","mul"],{"div":1,"mul":1,"add":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3],[5,3]]),
+ mk(44,[12,21,28],[29,47,61],"3工程の応用工場",["mul","add"],{"add":2,"mul":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[6,3]]),
+ mk(45,[12,24],[165,621],"3工程の応用工場",["sub","add","square"],{"add":1,"square":1,"sub":1},3,24,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
+ mk(46,[18,20],[26,29],"3工程の応用工場",["mul","sub","div"],{"mul":1,"sub":1,"div":1},3,24,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
+ mk(47,[2,4],[6,3],"3工程の応用工場",["mod","add","mul"],{"mul":1,"mod":1,"add":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3]]),
+ mk(48,[14,16,28],[20,23,41],"3工程の応用工場",["div","mul","sub"],{"mul":1,"sub":1,"div":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3],[5,3]]),
+ mk(49,[4,8],[3,4],"3工程の応用工場",["mul","add","mod"],{"mul":1,"mod":1,"add":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[6,3]]),
+ mk(50,[19,29],[120,280],"3工程の応用工場",["div","square","sub"],{"square":1,"sub":1,"div":1},3,24,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
+ mk(51,[2,3,5],[7,10,1],"マスター注文 01",["add","mul","mod"],{"mod":1,"mul":1,"add":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
+ mk(52,[2,3,6],[9,1,10],"マスター注文 02",["mod","add","mul"],{"add":1,"mul":1,"mod":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3]]),
+ mk(53,[23,29,31],[486,786,902],"マスター注文 03",["square","add","sub"],{"sub":1,"square":1,"add":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3],[5,3]]),
+ mk(54,[2,4,5],[16,1,4],"マスター注文 04",["add","square","mod"],{"add":1,"mod":1,"square":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[6,3]]),
+ mk(55,[10,16,26],[34,52,82],"マスター注文 05",["sub","mul","add"],{"add":1,"mul":1,"sub":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
+ mk(56,[2,5,6],[16,4,9],"マスター注文 06",["add","mod","square"],{"add":1,"mod":1,"square":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
+ mk(57,[20,21,23],[64,67,73],"マスター注文 07",["mul","add","sub"],{"add":1,"mul":1,"sub":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3]]),
+ mk(58,[2,4,7],[2,6,5],"マスター注文 08",["sub","mul","mod"],{"sub":1,"mul":1,"mod":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3],[5,3]]),
+ mk(59,[4,8,28],[10,18,58],"マスター注文 09",["sub","add","mul"],{"mul":1,"add":1,"sub":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[6,3]]),
+ mk(60,[3,6,7],[3,2,1],"マスター注文 10",["square","add","mod"],{"square":1,"mod":1,"add":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
+ mk(61,[3,5,6],[25,49,64],"マスター注文 11",["add","mod","square"],{"mod":1,"add":1,"square":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
+ mk(62,[6,8,30],[10,13,46],"マスター注文 12",["add","mul","div"],{"div":1,"mul":1,"add":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3]]),
+ mk(63,[10,24,25],[25,53,55],"マスター注文 13",["add","mul"],{"add":2,"mul":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3],[5,3]]),
+ mk(64,[6,16,28],[10,25,43],"マスター注文 14",["add","div","mul"],{"div":1,"mul":1,"add":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[6,3]]),
+ mk(65,[3,12,14],[11,29,33],"マスター注文 15",["mul","add"],{"add":2,"mul":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
+ mk(66,[2,18,25],[5,357,672],"マスター注文 16",["sub","add","square"],{"add":1,"square":1,"sub":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
+ mk(67,[22,26,34],[32,38,50],"マスター注文 17",["mul","div","sub"],{"mul":1,"sub":1,"div":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3]]),
+ mk(68,[2,4,6],[6,3,7],"マスター注文 18",["mod","add","mul"],{"mul":1,"mod":1,"add":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3],[5,3]]),
+ mk(69,[4,17,22],[5,96,161],"マスター注文 19",["sub","div","square"],{"square":1,"sub":1,"div":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[6,3]]),
+ mk(70,[2,5,6],[7,1,4],"マスター注文 20",["mod","mul","add"],{"mod":1,"mul":1,"add":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
+ mk(71,[8,10,11],[5,0,3],"マスター注文 21",["mul","mod","add"],{"add":1,"mul":1,"mod":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
+ mk(72,[3,5,6],[10,1,4],"マスター注文 22",["mul","mod","add"],{"mod":1,"mul":1,"add":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3]]),
+ mk(73,[2,4,6],[9,4,10],"マスター注文 23",["mod","add","mul"],{"add":1,"mul":1,"mod":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3],[5,3]]),
+ mk(74,[12,28,31],[123,731,902],"マスター注文 24",["sub","add","square"],{"sub":1,"square":1,"add":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[6,3]]),
+ mk(75,[2,3,5],[16,0,4],"マスター注文 25",["add","mod","square"],{"add":1,"mod":1,"square":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
+ mk(76,[6,13,17],[22,43,55],"マスター注文 26",["mul","add","sub"],{"add":1,"mul":1,"sub":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
+ mk(77,[3,6,8],[4,3,0],"マスター注文 27",["mod","mul","sub"],{"sub":1,"mul":1,"mod":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3]]),
+ mk(78,[3,7,30],[8,16,62],"マスター注文 28",["add","mul","sub"],{"mul":1,"add":1,"sub":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3],[5,3]]),
+ mk(79,[2,3,6],[5,3,2],"マスター注文 29",["add","square","mod"],{"square":1,"mod":1,"add":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[6,3]]),
+ mk(80,[12,25,28],[26,52,58],"マスター注文 30",["add","mul","sub"],{"mul":1,"add":1,"sub":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
+ mk(81,[2,3,7],[5,3,1],"マスター注文 31",["mod","square","add"],{"square":1,"mod":1,"add":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
+ mk(82,[2,5,7],[16,49,4],"マスター注文 32",["mod","add","square"],{"mod":1,"add":1,"square":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3]]),
+ mk(83,[6,24,28],[10,37,43],"マスター注文 33",["div","mul","add"],{"div":1,"mul":1,"add":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3],[5,3]]),
+ mk(84,[6,21,26],[17,47,57],"マスター注文 34",["add","mul"],{"add":2,"mul":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[6,3]]),
+ mk(85,[10,15,23],[117,252,572],"マスター注文 35",["square","sub","add"],{"add":1,"square":1,"sub":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
+ mk(86,[8,22,26],[11,32,38],"マスター注文 36",["sub","div","mul"],{"mul":1,"sub":1,"div":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
+ mk(87,[2,4,5],[6,3,5],"マスター注文 37",["mod","mul","add"],{"mul":1,"mod":1,"add":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3]]),
+ mk(88,[8,12,26],[11,17,38],"マスター注文 38",["mul","div","sub"],{"mul":1,"sub":1,"div":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3],[5,3]]),
+ mk(89,[4,5,6],[3,5,7],"マスター注文 39",["add","mul","mod"],{"mul":1,"mod":1,"add":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[6,3]]),
+ mk(90,[7,16,17],[16,85,96],"マスター注文 40",["sub","div","square"],{"square":1,"sub":1,"div":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
+ mk(91,[2,5,6],[7,1,4],"マスター注文 41",["add","mod","mul"],{"mod":1,"mul":1,"add":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
+ mk(92,[4,7,8],[4,2,5],"マスター注文 42",["mod","mul","add"],{"add":1,"mul":1,"mod":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3]]),
+ mk(93,[4,7,11],[11,38,102],"マスター注文 43",["square","sub","add"],{"sub":1,"square":1,"add":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3],[5,3]]),
+ mk(94,[3,4,5],[0,1,4],"マスター注文 44",["add","mod","square"],{"add":1,"mod":1,"square":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[6,3]]),
+ mk(95,[3,5,8],[13,19,28],"マスター注文 45",["add","sub","mul"],{"add":1,"mul":1,"sub":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
+ mk(96,[3,5,6],[0,4,9],"マスター注文 46",["mod","add","square"],{"add":1,"mod":1,"square":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
+ mk(97,[4,7,31],[16,25,97],"マスター注文 47",["sub","add","mul"],{"add":1,"mul":1,"sub":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3]]),
+ mk(98,[2,3,8],[2,4,0],"マスター注文 48",["sub","mod","mul"],{"sub":1,"mul":1,"mod":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[4,3],[5,3]]),
+ mk(99,[4,8,10],[10,18,22],"マスター注文 49",["mul","sub","add"],{"mul":1,"add":1,"sub":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[6,3]]),
+ mk(100,[2,3,6],[5,3,2],"マスター注文 50",["square","mod","add"],{"square":1,"mod":1,"add":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
 ];
+const DUAL_STAGES=[{"type":"dual","id":101,"challenge":1,"inputs":[5,8],"outputs":[5,8],"desc":"2入口で順番納品 01","required":[],"requiredByLine":[[],[]],"stock":{},"limit":0,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":false,"initialRoute":"simple","starBelts":22},{"type":"dual","id":102,"challenge":2,"inputs":[2,7],"outputs":[2,7],"desc":"2入口で同時納品 02","required":[],"requiredByLine":[[],[]],"stock":{},"limit":0,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"simple","starBelts":22},{"type":"dual","id":103,"challenge":3,"inputs":[5,6],"outputs":[8,18],"desc":"2入口で順番納品 03","required":["add","mul"],"requiredByLine":[["add"],["mul"]],"stock":{"add":1,"mul":1},"limit":2,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":false,"initialRoute":"simple","starBelts":22},{"type":"dual","id":104,"challenge":4,"inputs":[2,5],"outputs":[4,10],"desc":"2入口で同時納品 04","required":["mul"],"requiredByLine":[["mul"],["mul"]],"stock":{"mul":2},"limit":2,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"delayB","starBelts":22},{"type":"dual","id":105,"challenge":5,"inputs":[5,4],"outputs":[7,3],"desc":"2入口で順番納品 05","required":["add","sub"],"requiredByLine":[["add"],["sub"]],"stock":{"add":1,"sub":1},"limit":2,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"order","first":1,"crossRequired":false,"initialRoute":"simple","starBelts":22},{"type":"dual","id":106,"challenge":6,"inputs":[2,3],"outputs":[4,5],"desc":"2入口で同時納品 06","required":["mul","add"],"requiredByLine":[["mul"],["add"]],"stock":{"mul":1,"add":1},"limit":2,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"delayB","starBelts":22},{"type":"dual","id":107,"challenge":7,"inputs":[5,8],"outputs":[7,16],"desc":"2入口で順番納品 07","required":["add","mul"],"requiredByLine":[["add"],["mul"]],"stock":{"add":1,"mul":1},"limit":2,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":false,"initialRoute":"simple","starBelts":22},{"type":"dual","id":108,"challenge":8,"inputs":[2,7],"outputs":[6,6],"desc":"2入口で順番納品 08","required":["mul","sub"],"requiredByLine":[["mul"],["sub"]],"stock":{"mul":1,"sub":1},"limit":2,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":false,"initialRoute":"delayB","starBelts":22},{"type":"dual","id":109,"challenge":9,"inputs":[5,6],"outputs":[25,9],"desc":"2入口で順番納品 09","required":["square","add"],"requiredByLine":[["square"],["add"]],"stock":{"square":1,"add":1},"limit":2,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"order","first":1,"crossRequired":false,"initialRoute":"simple","starBelts":22},{"type":"dual","id":110,"challenge":10,"inputs":[2,5],"outputs":[2,10],"desc":"2入口で順番納品 10","required":["mod","mul"],"requiredByLine":[["mod"],["mul"]],"stock":{"mod":1,"mul":1},"limit":2,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":false,"initialRoute":"simple","starBelts":22},{"type":"dual","id":111,"challenge":11,"inputs":[5,4],"outputs":[4,16],"desc":"2入口で同時納品 11","required":["sub","square"],"requiredByLine":[["sub"],["square"]],"stock":{"sub":1,"square":1},"limit":2,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"delayB","starBelts":22},{"type":"dual","id":112,"challenge":12,"inputs":[2,3],"outputs":[4,3],"desc":"2入口で同時納品 12","required":["mul","mod"],"requiredByLine":[["mul"],["mod"]],"stock":{"mul":1,"mod":1},"limit":2,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"delayB","starBelts":22},{"type":"dual","id":113,"challenge":13,"inputs":[5,8],"outputs":[7,16],"desc":"2入口で順番納品 13","required":["add","mul"],"requiredByLine":[["add"],["mul"]],"stock":{"add":1,"mul":1},"limit":2,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"order","first":1,"crossRequired":false,"initialRoute":"simple","starBelts":22},{"type":"dual","id":114,"challenge":14,"inputs":[2,7],"outputs":[6,6],"desc":"2入口で同時納品 14","required":["mul","sub"],"requiredByLine":[["mul"],["sub"]],"stock":{"mul":1,"sub":1},"limit":2,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"delayB","starBelts":22},{"type":"dual","id":115,"challenge":15,"inputs":[5,6],"outputs":[25,9],"desc":"2入口で同時納品 15","required":["square","add"],"requiredByLine":[["square"],["add"]],"stock":{"square":1,"add":1},"limit":2,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"delayB","starBelts":22},{"type":"dual","id":116,"challenge":16,"inputs":[2,5],"outputs":[8,4],"desc":"2入口で順番納品 16","required":["add","mul","sub"],"requiredByLine":[["add","mul"],["sub"]],"stock":{"add":1,"mul":1,"sub":1},"limit":3,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":false,"initialRoute":"delayB","starBelts":22},{"type":"dual","id":117,"challenge":17,"inputs":[5,4],"outputs":[10,6],"desc":"2入口で順番納品 17","required":["mul","add","sub"],"requiredByLine":[["mul"],["add","sub"]],"stock":{"mul":1,"add":1,"sub":1},"limit":3,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"order","first":1,"crossRequired":false,"initialRoute":"simple","starBelts":22},{"type":"dual","id":118,"challenge":18,"inputs":[2,3],"outputs":[4,6],"desc":"2入口で同時納品 18","required":["mod","add","mul"],"requiredByLine":[["mod","add"],["mul"]],"stock":{"mod":1,"add":1,"mul":1},"limit":3,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"delayB","starBelts":22},{"type":"dual","id":119,"challenge":19,"inputs":[5,8],"outputs":[25,14],"desc":"2入口で順番納品 19","required":["square","sub","mul"],"requiredByLine":[["square"],["sub","mul"]],"stock":{"square":1,"sub":1,"mul":1},"limit":3,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":false,"initialRoute":"delayB","starBelts":22},{"type":"dual","id":120,"challenge":20,"inputs":[2,7],"outputs":[1,9],"desc":"2入口で同時納品 20","required":["sub","square","add"],"requiredByLine":[["sub","square"],["add"]],"stock":{"sub":1,"square":1,"add":1},"limit":3,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"delayB","starBelts":22},{"type":"dual","id":121,"challenge":21,"inputs":[5,6],"outputs":[6,16],"desc":"交差コンベアで順番納品 21","required":["add","mul","sub"],"requiredByLine":[["add"],["mul","sub"]],"stock":{"add":1,"mul":1,"sub":1,"cross":1},"limit":3,"time":34,"hint":"交差コンベアで縦と横の流れを分離しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":true,"initialRoute":"cross","starBelts":26},{"type":"dual","id":122,"challenge":22,"inputs":[2,5],"outputs":[8,4],"desc":"交差コンベアで同時納品 22","required":["add","mul","sub"],"requiredByLine":[["add","mul"],["sub"]],"stock":{"add":1,"mul":1,"sub":1,"cross":1},"limit":3,"time":34,"hint":"交差コンベアで縦と横の流れを分離しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":true,"initialRoute":"cross","starBelts":26},{"type":"dual","id":123,"challenge":23,"inputs":[5,4],"outputs":[10,6],"desc":"交差コンベアで順番納品 23","required":["mul","add","sub"],"requiredByLine":[["mul"],["add","sub"]],"stock":{"mul":1,"add":1,"sub":1,"cross":1},"limit":3,"time":34,"hint":"交差コンベアで縦と横の流れを分離しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":true,"initialRoute":"cross","starBelts":26},{"type":"dual","id":124,"challenge":24,"inputs":[2,3],"outputs":[4,6],"desc":"交差コンベアで同時納品 24","required":["mod","add","mul"],"requiredByLine":[["mod","add"],["mul"]],"stock":{"mod":1,"add":1,"mul":1,"cross":1},"limit":3,"time":34,"hint":"交差コンベアで縦と横の流れを分離しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":true,"initialRoute":"cross","starBelts":26},{"type":"dual","id":125,"challenge":25,"inputs":[5,8],"outputs":[25,14],"desc":"交差コンベアで順番納品 25","required":["square","sub","mul"],"requiredByLine":[["square"],["sub","mul"]],"stock":{"square":1,"sub":1,"mul":1,"cross":1},"limit":3,"time":34,"hint":"交差コンベアで縦と横の流れを分離しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":true,"initialRoute":"cross","starBelts":26},{"type":"dual","id":126,"challenge":26,"inputs":[2,7],"outputs":[1,9],"desc":"交差コンベアで同時納品 26","required":["sub","square","add"],"requiredByLine":[["sub","square"],["add"]],"stock":{"sub":1,"square":1,"add":1,"cross":1},"limit":3,"time":34,"hint":"交差コンベアで縦と横の流れを分離しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":true,"initialRoute":"cross","starBelts":26},{"type":"dual","id":127,"challenge":27,"inputs":[5,6],"outputs":[6,16],"desc":"交差コンベアで順番納品 27","required":["add","mul","sub"],"requiredByLine":[["add"],["mul","sub"]],"stock":{"add":1,"mul":1,"sub":1,"cross":1},"limit":3,"time":34,"hint":"交差コンベアで縦と横の流れを分離しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":true,"initialRoute":"cross","starBelts":26},{"type":"dual","id":128,"challenge":28,"inputs":[2,5],"outputs":[8,4],"desc":"交差コンベアで同時納品 28","required":["add","mul","sub"],"requiredByLine":[["add","mul"],["sub"]],"stock":{"add":1,"mul":1,"sub":1,"cross":1},"limit":3,"time":34,"hint":"交差コンベアで縦と横の流れを分離しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":true,"initialRoute":"cross","starBelts":26},{"type":"dual","id":129,"challenge":29,"inputs":[5,4],"outputs":[10,6],"desc":"交差コンベアで順番納品 29","required":["mul","add","sub"],"requiredByLine":[["mul"],["add","sub"]],"stock":{"mul":1,"add":1,"sub":1,"cross":1},"limit":3,"time":34,"hint":"交差コンベアで縦と横の流れを分離しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":true,"initialRoute":"cross","starBelts":26},{"type":"dual","id":130,"challenge":30,"inputs":[2,3],"outputs":[4,6],"desc":"交差コンベアで同時納品 30","required":["mod","add","mul"],"requiredByLine":[["mod","add"],["mul"]],"stock":{"mod":1,"add":1,"mul":1,"cross":1},"limit":3,"time":34,"hint":"交差コンベアで縦と横の流れを分離しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":true,"initialRoute":"cross","starBelts":26}];
+STAGES.push(...DUAL_STAGES);
 const TYPES={
- select:{sym:'◎',name:'選択',short:'選ぶ',color:'#526b76'},
- erase:{sym:'⌫',name:'撤去',short:'消す',color:'#915761'},
+ select:{sym:'◎',name:'選択・設定',short:'選ぶ',sub:'置いた装置を調べる',color:'#526b76'},
+ erase:{sym:'⌫',name:'除去モード',short:'消す',sub:'装置やベルトを消す',color:'#a8565b'},
+ cross:{sym:'✣',name:'交差コンベア',short:'交差',sub:'縦と横が独立',color:'#5c9a9b'},
  belt:{sym:'➜',name:'コンベア',short:'ベルト',sub:'数字を運ぶ',color:'#556e7e'},
  add:{sym:'＋',name:'加算機',short:'加算',sub:'数字を足す',color:'#267cae'},
  sub:{sym:'−',name:'減算機',short:'減算',sub:'数字を引く',color:'#ba6959'},
@@ -235,40 +386,74 @@ const TYPES={
  merge:{sym:'∑',name:'合流機',short:'合流',color:'#598f6b'},
  trash:{sym:'▤',name:'廃棄機',short:'廃棄',color:'#955d68'}
 };
-const TOTAL_STAGES=STAGES.length;
-const RESEARCH=[
- {id:'square',name:'平方機',cost:12,need:11,desc:'2乗する装置を解放'},
- {id:'mod',name:'余り計算機',cost:18,need:13,desc:'剰余を求める装置を解放'},
- {id:'even',name:'偶数判定機',cost:24,need:17,desc:'偶数だけを通す検品装置'},
- {id:'split',name:'分岐コンベア',cost:30,need:999,desc:'フリーファクトリー用（準備中）'},
- {id:'merge',name:'合流装置',cost:35,need:999,desc:'フリーファクトリー用（準備中）'},
- {id:'trash',name:'廃棄シュート',cost:10,need:999,desc:'フリーファクトリー用（準備中）'}
-];
+const NORMAL_STAGES=100,DUAL_COUNT=30,TOTAL_STAGES=STAGES.length;
 const $=id=>document.getElementById(id);
 const idx=(x,y)=>y*W+x,vec=[[0,-1],[1,0],[0,1],[-1,0]],arrows=['↑','→','↓','←'];
 const current=()=>STAGES[stage-1];
 const at=(x,y)=>x>=0&&y>=0&&x<W&&y<H?grid[idx(x,y)]:null;
 function readStore(k){try{return JSON.parse(localStorage.getItem(k))||{}}catch{return {}}}
 const save=readStore(SAVE),previous=readStore(OLD_SAVE),legacy=Object.keys(save).length?save:previous;
-let progress={unlocked:Math.max(1,Math.min(TOTAL_STAGES,legacy.unlocked||1)),cleared:save.cleared||{},rp:Number(legacy.rp)||0,research:legacy.research||{},lastStage:Math.max(1,Math.min(Number(legacy.lastStage)||1,Number(legacy.unlocked)||1,TOTAL_STAGES))};
-let stage=1,grid=[],tokens=[],tool='mul',selected=null,playing=false,timer=null,runStarted=false,ticks=0,delivered=0,rejected=0,waste=0,spawned=0,finished=false,failed=false,serial=0,lotState=[];
+let progress={unlocked:Math.max(1,Math.min(NORMAL_STAGES,legacy.unlocked||1)),cleared:save.cleared||{},lastStage:Number(legacy.lastStage)||1,dualCleared:save.dualCleared||{},dualUnlocked:Math.max(1,Math.min(30,save.dualUnlocked||1))};
+const isDual=()=>current()?.type==='dual';
+const dualIndex=()=>stage-100;
+function dualRequiredNormal(t){return t<=6?10:t<=12?20:t<=18?30:t<=24?40:50}
+function dualAccessible(t){return t>0&&t<=DUAL_COUNT&&progress.dualUnlocked>=t&&progress.unlocked>dualRequiredNormal(t)}
+let stageTab='normal',crossPass={};
+let stage=1,grid=[],tokens=[],tool='select',selected=null,playing=false,timer=null,runStarted=false,ticks=0,delivered=0,rejected=0,waste=0,spawned=0,finished=false,failed=false,serial=0,lotState=[];
 let dragging=false,lastDrag=null,ignoreNextClick=false;
+let usedRoutes=new Set();
 function persist(){try{localStorage.setItem(SAVE,JSON.stringify(progress))}catch{}}
 function status(s,isWarning=false){$('status').textContent=s;$('status').parentElement.classList.toggle('warn',isWarning)}
-function used(){return grid.filter(c=>c&&!['input','output','belt','trash','wall'].includes(c.type)).length}
+function used(){return grid.filter(c=>c&&!['input','output','belt','trash','wall','cross'].includes(c.type)).length}
 function countType(k){return grid.filter(c=>c?.type===k).length}
 function available(k){return ['select','erase','belt'].includes(k)||(current().stock[k]||0)>0}
-function initGrid(){grid=Array.from({length:W*H},()=>null);grid[idx(0,3)]={type:'input',dir:1};grid[idx(9,3)]={type:'output',dir:1};for(let x=1;x<9;x++)grid[idx(x,3)]={type:'belt',dir:1};for(const [x,y] of current().walls||[]){grid[idx(x,y)]={type:'wall',dir:1}}}
+function pathToGrid(path,overrides={}){
+ for(let i=1;i<path.length-1;i++){
+  const [x,y]=path[i],next=path[i+1],dx=next[0]-x,dy=next[1]-y;
+  const dir=dx===1?1:dx===-1?3:dy===1?2:0;
+  grid[idx(x,y)]={type:'belt',dir};
+ }
+}
+function dualPaths(mode){
+ const A=[[0,1]];
+ if(mode==='cross'){
+  A.push([1,1],[1,2],[1,3]);for(let x=2;x<=9;x++)A.push([x,3]);
+  const B=[[0,5]];for(let x=1;x<=5;x++)B.push([x,5]);
+  B.push([5,4],[5,3],[5,2],[5,1]);for(let x=6;x<=9;x++)B.push([x,1]);B.push([9,2],[9,3]);
+  return [A,B];
+ }
+ for(let x=1;x<=9;x++)A.push([x,1]);A.push([9,2],[9,3]);
+ const B=[[0,5]];
+ if(mode==='delayB'){
+  B.push([1,5],[1,6],[2,6],[3,6],[3,5]);for(let x=4;x<=9;x++)B.push([x,5]);
+ }else for(let x=1;x<=9;x++)B.push([x,5]);
+ B.push([9,4],[9,3]);return [A,B];
+}
+function initGrid(){
+ grid=Array.from({length:W*H},()=>null);
+ if(isDual()){
+  grid[idx(0,1)]={type:'input',dir:1,line:0};grid[idx(0,5)]={type:'input',dir:1,line:1};
+  grid[idx(9,3)]={type:'output',dir:1};
+  const [a,b]=dualPaths(current().initialRoute);
+  pathToGrid(a);pathToGrid(b);
+  // At the intersection, a normal belt cannot carry both paths; install ✣ here.
+  if(current().initialRoute==='cross')grid[idx(5,3)]={type:'belt',dir:1};
+ }else{
+  grid[idx(0,3)]={type:'input',dir:1};grid[idx(9,3)]={type:'output',dir:1};
+  for(let x=1;x<9;x++)grid[idx(x,3)]={type:'belt',dir:1};
+  for(const [x,y] of current().walls||[])grid[idx(x,y)]={type:'wall',dir:1};
+ }
+}
 function stop(){playing=false;if(timer){clearInterval(timer);timer=null}}
 function loadStage(n){
- stop();stage=n;initGrid();progress.lastStage=stage;persist();tokens=[];ticks=0;delivered=0;rejected=0;waste=0;spawned=0;serial=0;finished=false;failed=false;runStarted=false;selected=null;lotState=current().inputs.map(()=>'pending');
- tool=current().required[0];$('modal').classList.add('hidden');$('failModal').classList.add('hidden');
- $('stageId').textContent='ORDER '+String(stage).padStart(2,'0')+' / '+TOTAL_STAGES;
- $('stageTitle').textContent=current().desc;$('stageDesc').textContent=`材料${current().inputs.length}種類をまとめて加工。${current().walls.length?'固定設備を迂回して、上下の通路も使おう。':'下の注文カードの数字を確認して工場を作ろう。'}`;
- $('inputValue').textContent=current().inputs.length+'種類';$('target').textContent=current().qty+'商品';
- $('limit').textContent=current().limit;$('timeLimit').textContent=current().time+' tick';
- $('requiredTypes').textContent=[...current().required].sort((a,b)=>['add','sub','mul','div','square','mod','even'].indexOf(a)-['add','sub','mul','div','square','mod','even'].indexOf(b)).map(k=>TYPES[k].sym+' '+TYPES[k].short).join(' ・ ');
- status('💡 '+current().hint);renderAll();
+ stop();stage=n;if(stage>100&&!dualAccessible(stage-100))stage=Math.min(NORMAL_STAGES,progress.unlocked);stageTab=stage>100?'dual':'normal';initGrid();progress.lastStage=stage;persist();tokens=[];ticks=0;delivered=0;rejected=0;waste=0;spawned=0;serial=0;finished=false;failed=false;runStarted=false;selected=null;lotState=current().inputs.map(()=>'pending');crossPass={};usedRoutes=new Set();
+ tool='select';$('modal').classList.add('hidden');$('failModal').classList.add('hidden');
+ $('stageName').textContent=current().desc;
+ renderStageScreen();
+ $('requiredTypes').textContent=[...current().required].sort((a,b)=>['add','sub','mul','div','square','mod','even'].indexOf(a)-['add','sub','mul','div','square','mod','even'].indexOf(b)).map(k=>TYPES[k].sym+' '+TYPES[k].short).join(' ・ ')||'なし';
+ if(isDual())$('requiredTypes').textContent=['A','B'].map((label,i)=>label+'：'+(current().requiredByLine[i].map(k=>TYPES[k].short).join('・')||'なし')).join('　');
+ const rule=$('deliveryRule');rule.hidden=!isDual();if(isDual())rule.textContent=current().rule==='same'?'⏱ 2つの商品を同時に納品':`📦 納品順：注文${current().first+1} → 注文${2-current().first}`;
+ status('🧩 まず自分で使う装置を選びましょう。💡 '+current().hint);renderAll();
 }
 function renderLot(){
  const root=$('batchSamples');root.replaceChildren();current().inputs.forEach((value,i)=>{
@@ -277,81 +462,115 @@ function renderLot(){
   el.className='batch-item '+(lotState[i]==='done'?'done':lotState[i]==='removed'?'removed':moving?'active':'');
   const expected=current().outputs[i];
   const productMarkup=expected===null?'<strong class="reject">除外</strong>':`<strong class="batch-value ${String(expected).length>=4?'long-number':''}">${expected}</strong>`;
-  el.innerHTML=`<div class="batch-top"><span class="batch-number">注文 ${i+1}</span></div><div class="batch-main"><div class="batch-side"><small>材料</small><strong class="batch-value">${value}</strong></div><span class="output-arrow" aria-hidden="true">➜</span><div class="batch-side out"><small>商品</small>${productMarkup}</div></div>`;
+  el.innerHTML=`<div class="batch-top"><span class="batch-number">注文 ${i+1}${isDual()?' ／ 入口'+(i===0?'A':'B'):''}</span></div><div class="batch-main"><div class="batch-side"><small>材料</small><strong class="batch-value">${value}</strong></div><span class="output-arrow" aria-hidden="true">➜</span><div class="batch-side out"><small>商品</small>${productMarkup}</div></div>`;
   if(lotState[i]==='done')el.title='納品済み';else if(lotState[i]==='removed')el.title='検品で正しく除外';else if(moving)el.title='現在搬送中';else el.title='未完了';
   root.appendChild(el);
  });
 }
 function renderBoard(){
- const board=$('board');board.innerHTML='';board.classList.toggle('belt-mode',tool==='belt');board.classList.toggle('is-running',playing);
+ const board=$('board');board.innerHTML='';board.classList.toggle('belt-mode',tool==='belt');board.classList.toggle('erase-mode',tool==='erase');board.classList.toggle('is-running',playing);
  const frag=document.createDocumentFragment();
  for(let y=0;y<H;y++)for(let x=0;x<W;x++){
   const i=idx(x,y),c=grid[i];let el=document.createElement('div');el.className='cell '+(c?c.type:'is-empty')+(selected===i?' selected':'');el.dataset.x=x;el.dataset.y=y;
   let name=c?(c.type==='input'?'材料投入機':c.type==='output'?'製品納品機':c.type==='wall'?'移動できない固定設備':TYPES[c.type].name):'空きマス';
   el.title=`${x+1}列${y+1}行：${name}${c&&!['input','output'].includes(c.type)?' '+arrows[c.dir]:''}`;
   if(c){if(c.type==='wall'){el.innerHTML='<span class="wall-icon">▦</span><span class="wall-label">固定設備</span>';}else if(c.type==='input'||c.type==='output'){
-    el.innerHTML=`<span class="io-mark">${c.type==='input'?'IN':'OUT'}</span><strong class="io-num">${c.type==='input'?'📥':'📦'}</strong>`;
+    el.innerHTML=`<span class="io-mark">${c.type==='input'?(isDual()?'IN '+(c.line===0?'A':'B'):'IN'):'OUT'}</span><strong class="io-num">${c.type==='input'?'📥':'📦'}</strong>`;
    }else{if(c.type==='belt'){let track=document.createElement('span');track.className='belttrack';track.style.setProperty('--belt-angle',c.dir%2?'0deg':'90deg');el.appendChild(track)}
     else{let label=document.createElement('span');label.className='machine-name';label.textContent=TYPES[c.type].short;el.appendChild(label)}
     let sym=document.createElement('span');sym.className='sym';sym.textContent=c.type==='belt'?arrows[c.dir]:TYPES[c.type].sym;el.appendChild(sym);
-    if(c.type!=='belt'){let d=document.createElement('span');d.className='direction';d.textContent=arrows[c.dir];el.appendChild(d)}
+    if(c.type!=='belt'&&c.type!=='cross'){let d=document.createElement('span');d.className='direction';d.textContent=arrows[c.dir];el.appendChild(d)}
     if(['add','sub','mul','div','mod'].includes(c.type)){let mini=document.createElement('span');mini.className='mini';mini.textContent='n='+c.value;el.appendChild(mini)}
    }}
-  for(const t of tokens){if(t.x===x&&t.y===y){let a=document.createElement('div');a.className='token';a.textContent=t.v;el.appendChild(a)}}
+  for(const t of tokens){if(t.x===x&&t.y===y){let a=document.createElement('div');a.className='token';a.textContent=t.v;if(isDual())a.classList.add(t.order===0?'token-a':'token-b');el.appendChild(a)}}
   frag.appendChild(el);
  }
  board.appendChild(frag);
 }
 function makeTool(k){
- const d=TYPES[k],btn=document.createElement('button');btn.type='button';btn.className='tool-card'+(tool===k?' active':'')+(!available(k)?' locked':'');btn.style.setProperty('--tool-color',d.color);
+ const d=TYPES[k],btn=document.createElement('button');btn.type='button';btn.className='tool-card'+(tool===k?' active':'')+(!available(k)?' locked':'')+(k==='erase'?' mode-erase':'');btn.style.setProperty('--tool-color',d.color);
  const left=current().stock[k]||0,spent=countType(k);
- btn.disabled=!available(k)||runStarted||finished||failed;btn.title=!available(k)?'この注文の装置在庫にはありません':`${d.name}（${spent}/${left}台使用中）`;
+ btn.disabled=!available(k)||runStarted||finished||failed;btn.title=!available(k)?'この注文の装置在庫にはありません':k==='erase'?'クリックした装置・ベルトを除去する（入口・出口・固定設備は不可）':['select','belt'].includes(k)?d.name:`${d.name}（${spent}/${left}台使用中）`;
  btn.innerHTML=`<span class="tool-icon">${d.sym}</span><span class="tool-txt"><b>${d.name}</b>${d.sub?`<small>${d.sub}</small>`:''}</span>${!['belt','select','erase'].includes(k)?`<span class="tool-count">${spent}/${left}</span>`:''}`;
  btn.setAttribute('aria-pressed',tool===k?'true':'false');
- btn.onclick=()=>{ignoreNextClick=false;tool=k;selected=null;renderAll();status(k==='belt'?'空きマスをドラッグしてコンベアを敷こう。':`${d.name}を選択しました。装置の上から押すと交換できます。`)};
+ btn.onclick=()=>{ignoreNextClick=false;tool=k;selected=null;renderAll();status(k==='select'?'選択・設定モードです。配置済みの装置をクリックすると設定できます。':k==='erase'?'除去モードです。消したい装置やベルトをクリックしてください。入口・出口・固定設備は消せません。':k==='belt'?'空きマスをドラッグしてコンベアを敷こう。':`${d.name}を選択しました。装置の上から押すと交換できます。`)};
  return btn;
 }
-function renderTools(){const basic=$('basicTools'),advanced=$('advancedTools');basic.replaceChildren();advanced.replaceChildren();for(const k of ['belt','add','sub','mul','div'])basic.appendChild(makeTool(k));for(const k of ['square','mod','even','split','merge','trash'])advanced.appendChild(makeTool(k))}
+function renderTools(){
+ const modes=$('modeTools'),basic=$('basicTools'),advanced=$('advancedTools');modes.replaceChildren();basic.replaceChildren();advanced.replaceChildren();
+ for(const k of ['select','erase'])modes.appendChild(makeTool(k));
+ for(const k of ['belt','add','sub','mul','div'])if(available(k))basic.appendChild(makeTool(k));
+ const specials=['square','mod','even','cross'].filter(available);
+ $('advancedSection').hidden=specials.length===0;
+ for(const k of specials)advanced.appendChild(makeTool(k));
+}
 function attachInputValue(c){
  const v=$('insValue');if(!v)return;
  function update(n){if(runStarted||finished||failed)return;c.value=Math.max(1,Math.min(100,Math.round(Number(n)||1)));v.value=c.value;renderBoard()}
  v.onchange=()=>update(v.value);$('valueMinus').onclick=()=>update(c.value-1);$('valuePlus').onclick=()=>update(c.value+1);
 }
 function renderInspector(){
- const el=$('inspector');if(selected===null||!grid[selected]||grid[selected].type==='wall'){el.innerHTML='<div class="inspector-empty"><span class="big">⚙️</span><b>ここで数値を設定</b><p class="small" style="margin:6px 0 0">装置を設置するか、置いた装置を選ぶと設定が表示されます。</p></div>';return}
+ const el=$('inspector');if(selected===null||!grid[selected]||grid[selected].type==='wall'){el.innerHTML='<div class="inspector-empty"><span class="big">⚙️</span><b>ここで数値を設定</b><p class="small" style="margin:6px 0 0">工場に置いた装置をクリックして設定。</p></div>';return}
  const c=grid[selected],d=TYPES[c.type],name=c.type==='input'?'材料投入機':c.type==='output'?'製品納品機':d.name;
  let html=`<div class="inspect-title"><b>${name}</b><small>${selected%W+1}列 ${Math.floor(selected/W)+1}行</small></div>`;
  if(['add','sub','mul','div','mod'].includes(c.type)){
   html+=`<div class="inspect-unit"><label class="inspector-label" for="insValue">計算する数</label><div class="number-line"><button id="valueMinus" type="button" aria-label="1減らす" ${runStarted?'disabled':''}>−</button><input id="insValue" type="number" min="1" max="100" step="1" value="${c.value}" ${runStarted?'disabled':''}><button id="valuePlus" type="button" aria-label="1増やす" ${runStarted?'disabled':''}>＋</button></div><div class="small" style="margin-top:7px">全素材に同じ設定が適用されます。${runStarted?' 生産開始後は固定されます。':''}</div></div>`;
  }
- if(c.type!=='input'&&c.type!=='output'){
+ if(c.type!=='input'&&c.type!=='output'&&c.type!=='cross'){
   html+=`<div style="margin-top:13px"><label class="inspector-label">数字を流す向き</label><div class="direction-pad">${arrows.map((a,i)=>`<button type="button" data-dir="${i}" class="${c.dir===i?'on':''}" ${runStarted?'disabled':''} aria-label="${['上','右','下','左'][i]}向き">${a}</button>`).join('')}</div></div><button id="deleteSelected" type="button" class="inspect-delete" ${runStarted?'disabled':''}>🗑 この装置を撤去</button>`;
  }
  if(c.type==='even')html+='<p class="small">偶数は通過し、奇数は正しく選別・除外されます。</p>';
  if(c.type==='square')html+='<p class="small">投入された数字を2乗します。</p>';
+ if(c.type==='cross')html+='<p class="small">左右の数字は横へ、上下の数字は縦へ直進します。上下2層のため縦横の同時通過は衝突しません。</p><button id="deleteSelected" type="button" class="inspect-delete" '+(runStarted?'disabled':'')+'>🗑 交差装置を除去</button>';
  el.innerHTML=html;attachInputValue(c);
  el.querySelectorAll('[data-dir]').forEach(b=>b.onclick=()=>{if(runStarted||finished||failed)return;c.dir=Number(b.dataset.dir);renderAll()});
  const del=$('deleteSelected');if(del)del.onclick=()=>{if(runStarted||finished||failed)return;grid[selected]=null;selected=null;renderAll();status('装置を撤去しました。')};
 }
-function renderStages(){const el=$('stageList');el.replaceChildren();STAGES.forEach(s=>{if((s.id-1)%10===0){const title=document.createElement('div');title.className='stage-chapter';title.textContent=s.id<=20?'初級 '+s.id+'〜'+Math.min(s.id+9,20):s.id<=30?'応用 '+s.id+'〜'+(s.id+9):s.id<=40?'迂回 '+s.id+'〜'+(s.id+9):s.id<=50?'上級 '+s.id+'〜'+(s.id+9):'熟練 '+s.id+'〜'+(s.id+9);el.appendChild(title)}let b=document.createElement('button');b.textContent=s.id;b.className=(s.id===stage?'active ':'')+(progress.cleared[s.id]?'cleared ':'');b.disabled=s.id>progress.unlocked;b.title=s.id>progress.unlocked?'前のステージをクリアすると解放':s.desc;b.onclick=()=>loadStage(s.id);el.appendChild(b)})}
-function renderResearch(){const el=$('research');el.replaceChildren();RESEARCH.forEach(r=>{let b=document.createElement('button');let owned=!!progress.research[r.id],beyond=['split','merge','trash'].includes(r.id),automatic=stage>=r.need&&!beyond;b.disabled=beyond||owned||automatic||progress.rp<r.cost||runStarted;b.innerHTML=`<b>${owned?'✅':automatic?'🔓':'🔬'} ${r.name} — ${beyond?'準備中':owned?'研究済':automatic?'自動解放':r.cost+' RP'}</b><small>${r.desc}${beyond?'':' / ST'+r.need+'で自動解放'}</small>`;b.onclick=()=>{if(progress.rp<r.cost)return;progress.rp-=r.cost;progress.research[r.id]=true;persist();renderAll();status(r.name+'の研究が完了しました！')};el.appendChild(b)})}
+function renderStageScreen(){
+ const gridEl=$('stageGrid');gridEl.replaceChildren();
+ $('normalTab').classList.toggle('active',stageTab==='normal');$('dualTab').classList.toggle('active',stageTab==='dual');
+ $('stageScreenTitle').textContent=stageTab==='normal'?'🗺 通常ステージ（100）':'🔀 2入口チャレンジ（30）';
+ $('stageScreenIntro').textContent=stageTab==='normal'?'注文と装置は最大3件・3台。クリアで次のステージが解放されます。':'通常ST10クリアで挑戦可能。条件付きでT07、T13、T19、T25が解放されます。';
+ const total=stageTab==='normal'?100:30;
+ for(let section=0;section<Math.ceil(total/10);section++){
+  const heading=document.createElement('h3');heading.className='stage-chapter-heading';
+  const first=section*10+1,last=Math.min(first+9,total);
+  heading.textContent=stageTab==='normal'?`通常 ${first}〜${last}`:`2入口 T${String(first).padStart(2,'0')}〜T${String(last).padStart(2,'0')}`;
+  gridEl.appendChild(heading);
+  for(let n=first;n<=last;n++){
+   const abs=stageTab==='normal'?n:n+100;
+   const score=Number(stageTab==='normal'?progress.cleared[n]||0:progress.dualCleared[n]||0);
+   const locked=stageTab==='normal'?n>progress.unlocked:!dualAccessible(n);
+   const button=document.createElement('button');button.type='button';
+   button.className='stage-choice'+(abs===stage?' active':'')+(locked?' locked':'')+(score?' cleared':'');
+   button.disabled=locked;
+   button.setAttribute('aria-label',`${stageTab==='normal'?'ステージ':'チャレンジ'}${n}${locked?'（未解放）':score?'（星'+score+'個）':''}`);
+   button.innerHTML=`<span>${stageTab==='normal'?n:'T'+String(n).padStart(2,'0')}</span><small>${score?'★'.repeat(score):locked?'🔒 未解放':abs===stage?'プレイ中':'挑戦'}</small>`;
+   if(!locked)button.onclick=()=>{closeStageScreen();loadStage(abs)};
+   gridEl.appendChild(button);
+  }
+ }
+}
+function openStageScreen(){renderStageScreen();$('stageScreen').hidden=false;$('closeStageScreen').focus()}
+function closeStageScreen(){$('stageScreen').hidden=true;$('stageButton').focus()}
+
 function renderStats(){
- $('rp').textContent=progress.rp;$('level').textContent=Math.max(1,Math.ceil(progress.unlocked/2));$('stars').textContent=Object.values(progress.cleared).reduce((a,b)=>a+Number(b||0),0);
- $('ticks').textContent=ticks;$('used').textContent=used()+' / '+current().limit;$('waste').textContent=waste;$('activeTokens').textContent=tokens.length;
- const processed=delivered+rejected;$('delivery').textContent=`良品${delivered}/${current().qty}個${rejected?'・選別'+rejected+'個':''}`;
- $('progress').style.width=Math.min(100,100*processed/current().inputs.length)+'%';
- $('runState').className='live '+(playing?'running':finished?'completed':'');$('runText').textContent=playing?'稼働中':finished?'出荷完了':failed?'検品停止':runStarted?'一時停止':'設計中';
- $('run').textContent=playing?'⏸ 一時停止':runStarted?'▶ 生産再開':'▶ 生産開始';$('run').disabled=finished||failed;$('step').disabled=playing||finished||failed;$('rotate').disabled=runStarted||finished||failed;$('straight').disabled=runStarted||finished||failed;
+ $('level').textContent=Math.max(1,Math.ceil(progress.unlocked/2));$('stars').textContent=Object.values(progress.cleared).reduce((a,b)=>a+Number(b||0),0);
+ $('run').textContent=playing?'⏸ 一時停止':runStarted?'▶ 生産再開':'▶ 生産開始';$('run').disabled=finished||failed;$('rotate').disabled=runStarted||finished||failed||selected!==null&&grid[selected]?.type==='cross';
  renderLot();
 }
-function renderAll(){renderBoard();renderTools();renderInspector();renderStages();renderResearch();renderStats()}
+function renderAll(){renderBoard();renderTools();renderInspector();renderStats()}
 function defaultValue(k){return k==='mul'||k==='div'||k==='mod'?2:1}
 function cellClick(x,y){
  const i=idx(x,y),c=grid[i];
  if(runStarted||finished||failed){selected=i;renderInspector();status('生産開始後は設計を固定しています。編集するには「やり直す」を押してください。');return}
+ if(tool==='erase'){
+  if(c?.type==='wall'||c?.type==='input'||c?.type==='output'){status('入口・出口・固定設備は除去できません。',true);return}
+  if(!c){status('空きマスです。除去する装置やベルトをクリックしてください。');return}
+  grid[i]=null;selected=null;renderAll();status('装置またはベルトを除去しました。');return;
+ }
  if(c?.type==='wall'){status('ここは固定設備です。上・下の空いた通路にベルトを通してください。',true);return}if(c&&['input','output'].includes(c.type)){selected=i;renderAll();return}
  if(tool==='select'){selected=i;renderAll();return}
- if(tool==='erase'){grid[i]=null;selected=null;renderAll();status('装置を撤去しました。');return}
  if(tool==='belt'){grid[i]={type:'belt',dir:c?.dir??1};selected=i;renderAll();status('ベルトを設置しました。');return}
  if(!available(tool))return;
  if(c?.type===tool){selected=i;renderAll();return}
@@ -361,62 +580,104 @@ function cellClick(x,y){
  grid[i]={type:tool,dir:c?.dir??1,value:defaultValue(tool)};selected=i;renderAll();
  status(`${TYPES[tool].name}に${c&&c.type!=='belt'?'交換':'設置'}しました。右側で${['add','sub','mul','div','mod'].includes(tool)?'計算する数を設定':'向きを確認'}してください。`);
 }
-function reset(){stop();tokens=[];ticks=0;delivered=0;rejected=0;waste=0;spawned=0;serial=0;finished=false;failed=false;runStarted=false;lotState=current().inputs.map(()=>'pending');$('failModal').classList.add('hidden');for(const c of grid)if(c?.type==='split')c.flip=0;status('設計を編集できます。装置はそのまま残っています。');renderAll()}
+function reset(){stop();tokens=[];ticks=0;delivered=0;rejected=0;waste=0;spawned=0;serial=0;finished=false;failed=false;runStarted=false;crossPass={};usedRoutes=new Set();lotState=current().inputs.map(()=>'pending');$('failModal').classList.add('hidden');for(const c of grid)if(c?.type==='split')c.flip=0;status('設計を編集できます。装置はそのまま残っています。');renderAll()}
 function process(v,c){switch(c.type){case 'add':v+=c.value;break;case 'sub':v-=c.value;break;case 'mul':v*=c.value;break;case 'div':if(v%c.value!==0)return null;v/=c.value;break;case 'mod':v%=c.value;break;case 'square':v*=v;break;case 'even':if(v%2)return null;break;}if(!Number.isSafeInteger(v)||Math.abs(v)>1000000)return null;return v}
 function fail(reason){stop();failed=true;waste++;$('failText').textContent=reason+'\nすべての材料を仕様どおり加工する必要があります。配置や装置の設定を見直してください。';$('failModal').classList.remove('hidden');status('⚠ 検品不合格：'+reason,true);renderAll()}
 function tick(){
  if(finished||failed)return;
- const justStarted=!runStarted;runStarted=true;ticks++;if(justStarted){renderTools();renderInspector()}let next=[],occupied=new Set();
+ const justStarted=!runStarted;runStarted=true;ticks++;if(justStarted){renderTools();renderInspector()}
+ const moving=[],destinations=new Map(),arrival=[];
  for(const t of tokens){
   const here=at(t.x,t.y);if(!here){fail('材料がベルトから外れました。');return}
-  let direction=here.dir;
+  let direction=here.type==='cross'?t.heading:here.dir;
   if(here.type==='split'){direction=(here.dir+(here.flip||0))%4;here.flip=1-(here.flip||0)}
   const [dx,dy]=vec[direction],nx=t.x+dx,ny=t.y+dy,n=at(nx,ny);
-  if(!n||n.type==='input'||n.type==='wall'){fail(`素材 #${t.order+1} (${current().inputs[t.order]}) が搬送経路から外れました。`);return}
+  if(!n||n.type==='input'||n.type==='wall'){fail(`素材 #${t.order+1} が搬送経路から外れました。`);return}
   const expected=current().outputs[t.order];
   if(n.type==='output'){
-   if(expected===null){fail(`素材 #${t.order+1} は選別除外が必要ですが出荷口に届きました。`);return}
-   if(t.v!==expected){fail(`素材 #${t.order+1} の製品は ${t.v} でした。注文票の ${expected} と異なります。`);return}
-   const missing=current().required.filter(k=>!t.trace.includes(k));
-   if(missing.length){fail(`素材 #${t.order+1} は必須工程「${missing.map(k=>TYPES[k].name).join('・')}」を通っていません。`);return}
-   lotState[t.order]='done';delivered++;continue;
+   if(expected===null){fail(`素材 #${t.order+1} は選別除外が必要です。`);return}
+   if(t.v!==expected){fail(`素材 #${t.order+1} は ${t.v} でした。正しい商品は ${expected} です。`);return}
+   const required=isDual()?current().requiredByLine[t.order]:current().required;
+   const missing=required.filter(k=>!t.trace.includes(k));
+   if(missing.length){fail(`注文${t.order+1}が必要な工程「${missing.map(k=>TYPES[k].name).join('・')}」を通っていません。`);return}
+   if(isDual()&&current().crossRequired&&!t.trace.includes('cross')){fail('交差コンベアを通る必要があります。');return}
+   arrival.push(t.order);
+   continue;
   }
   if(n.type==='trash'){fail(`素材 #${t.order+1} は検品機を通らず廃棄されました。`);return}
-  const trace=(n.type==='belt'||n.type==='merge'||n.type==='split')?t.trace:[...t.trace,n.type];
+  const trace=(['belt','merge','split'].includes(n.type))?t.trace:[...t.trace,n.type];
   const v=process(t.v,n);
   if(v===null){
-    if(n.type==='even'&&expected===null){lotState[t.order]='removed';rejected++;continue}
-    fail(`素材 #${t.order+1} は「${TYPES[n.type].name}」で加工できませんでした。`);return;
+   if(n.type==='even'&&expected===null){lotState[t.order]='removed';rejected++;continue}
+   fail(`素材 #${t.order+1} は「${TYPES[n.type].name}」で加工できませんでした。`);return;
   }
-  const key=idx(nx,ny);if(occupied.has(key)){fail('ベルト上で素材が衝突しました。');return}
-  occupied.add(key);next.push({x:nx,y:ny,v,order:t.order,id:t.id,trace});
+  const key=idx(nx,ny),axis=direction%2; // 0 vertical, 1 horizontal
+  const holders=destinations.get(key)||[];
+  if(holders.length){
+   const safeCross=n.type==='cross'&&holders.length===1&&holders[0].axis!==axis;
+   if(!safeCross){fail('商品がコンベア上で衝突して壊れました。');return}
+  }
+  holders.push({order:t.order,axis});destinations.set(key,holders);
+  if(n.type==='cross')crossPass[t.order]=axis;
+  if(isDual()&&['belt','cross'].includes(n.type))usedRoutes.add(key);
+  moving.push({x:nx,y:ny,v,order:t.order,id:t.id,trace,heading:direction,oldX:t.x,oldY:t.y});
  }
- tokens=next;
- if((ticks-1)%4===0&&spawned<current().inputs.length){const order=spawned;tokens.push({x:0,y:3,v:current().inputs[order],order,id:++serial,trace:[]});spawned++}
+ // Opposing items may not swap their positions in one tick on a normal conveyor.
+ for(let i=0;i<moving.length;i++)for(let j=i+1;j<moving.length;j++){
+  const a=moving[i],b=moving[j];
+  if(a.x===b.oldX&&a.y===b.oldY&&b.x===a.oldX&&b.y===a.oldY){fail('商品が正面衝突して壊れました。');return}
+ }
+ if(isDual()){
+  if(current().rule==='same'){
+   if(arrival.length===1){fail('同時納品ではありません。2つの商品を同じタイミングで納品機へ入れてください。');return}
+   if(arrival.length===2&&current().crossRequired&&crossPass[0]===crossPass[1]){fail('交差装置では縦と横の2経路を通してください。');return}
+  }else{
+   if(arrival.length===2){fail('順番納品では同時到着できません。指定された順で届けてください。');return}
+   if(arrival.length===1){const want=delivered===0?current().first:1-current().first;
+    if(arrival[0]!==want){fail(`納品順が違います。注文${want+1}を先に届けてください。`);return}
+   }
+  }
+ }
+ for(const i of arrival){lotState[i]='done';delivered++}
+ tokens=moving.map(({oldX,oldY,...t})=>t);
+ if(isDual()){
+  if(ticks===1){
+   for(let order=0;order<2;order++){const y=order===0?1:5;tokens.push({x:0,y,v:current().inputs[order],order,id:++serial,trace:[],heading:1});spawned++}
+  }
+ }else if((ticks-1)%4===0&&spawned<current().inputs.length){
+  const order=spawned;tokens.push({x:0,y:3,v:current().inputs[order],order,id:++serial,trace:[],heading:1});spawned++;
+ }
  if(delivered+rejected===current().inputs.length){complete();return}
- if(ticks>=160){fail('生産が160 tickを超えました。矢印や搬送ルートを調べてください。');return}
+ if(ticks>=180){fail('生産が180 tickを超えました。矢印や搬送ルートを確認してください。');return}
  renderBoard();renderStats();
 }
 function complete(){
- stop();finished=true;let score=1;if(used()<=current().limit)score++;if(ticks<=current().time)score++;
- const old=Number(progress.cleared[stage]||0),gain=score>old?(score-old)*5:0;progress.cleared[stage]=Math.max(old,score);
- progress.rp+=gain;progress.unlocked=Math.max(progress.unlocked,Math.min(TOTAL_STAGES,stage+1));persist();
+ stop();finished=true;let score=1;if(used()<=current().limit)score++;
+ if(isDual()){
+  // The third star is for an economical number of placed conveyor/crossing tiles.
+  if(usedRoutes.size<=current().starBelts)score++;
+  const n=dualIndex(),old=Number(progress.dualCleared[n]||0);progress.dualCleared[n]=Math.max(old,score);
+  progress.dualUnlocked=Math.max(progress.dualUnlocked,Math.min(30,n+1));
+ }else{
+  if(ticks<=current().time)score++;
+  const old=Number(progress.cleared[stage]||0);progress.cleared[stage]=Math.max(old,score);
+  progress.unlocked=Math.max(progress.unlocked,Math.min(NORMAL_STAGES,stage+1));
+ }
+ persist();renderStageScreen();
  $('modalStars').textContent='★'.repeat(score)+'☆'.repeat(3-score);
- $('modalText').textContent=`全${current().inputs.length}素材を正しく処理！ 良品${delivered}個・検品除外${rejected}個。\n経過 ${ticks} tick ・ 装置 ${used()}台 ・ 研究ポイント +${gain}`;
- $('next').style.display=stage<TOTAL_STAGES?'inline-block':'none';$('modal').classList.remove('hidden');
- status(`注文達成！ 全ロット検品合格。${score}★、研究ポイント +${gain}`);renderAll();
+ $('modalText').textContent=isDual()?`2つの商品を${current().rule==='same'?'同時':'指定順'}に納品！
+装置 ${used()}台・搬送 ${ticks} tick`:`全${current().inputs.length}素材を正しく処理！ 良品${delivered}個・検品除外${rejected}個。
+経過 ${ticks} tick ・ 装置 ${used()}台`;
+ const canNext=isDual()?dualIndex()<30&&dualAccessible(dualIndex()+1):stage<NORMAL_STAGES;
+ $('next').style.display=canNext?'inline-block':'none';$('modal').classList.remove('hidden');
+ status(`注文達成！ ${score}★`);renderAll();
 }
 function toggleRun(){
  if(finished||failed)return;
  if(playing){stop();status('一時停止。生産中の工場は固定されています。修正には「やり直す」を押してください。');renderAll();return}
- playing=true;runStarted=true;status('工場が稼働中！ 注文票の素材が順番に搬入されます。');timer=setInterval(tick,Number($('speed').value));renderAll();
+ playing=true;runStarted=true;status(isDual()?'工場が稼働中！ AとBが同時に出発します。':'工場が稼働中！ 数字を順番に搬入します。');timer=setInterval(tick,Number($('speed').value));renderAll();
 }
-function rotateSelected(){if(runStarted||finished||failed){status('設計変更には「やり直す」を押してください。');return}if(selected!==null&&grid[selected]&&!['input','output','wall'].includes(grid[selected].type)){grid[selected].dir=(grid[selected].dir+1)%4;renderAll();status('矢印の向きを変えました。')}else status('向きを変更したい装置を先に押してください。')}
-function straightBelt(){
- if(runStarted||finished||failed)return;let count=0;
- for(let x=1;x<9;x++){const c=at(x,3);if(!c||c.type==='belt'){grid[idx(x,3)]={type:'belt',dir:1};count++}}
- selected=null;renderAll();status(count?'入口から出口までの空きマスに右向きベルトを敷きました。':'ベルトを敷ける空きマスがありません。');
-}
+function rotateSelected(){if(runStarted||finished||failed){status('設計変更には「やり直す」を押してください。');return}if(selected!==null&&grid[selected]&&!['input','output','wall','cross'].includes(grid[selected].type)){grid[selected].dir=(grid[selected].dir+1)%4;renderAll();status('矢印の向きを変えました。')}else status('向きを変更したい装置を先に押してください。')}
 function cellFromPoint(event){const hit=document.elementFromPoint(event.clientX,event.clientY)?.closest('.cell');if(!hit||!$('board').contains(hit))return null;return {x:Number(hit.dataset.x),y:Number(hit.dataset.y)}}
 function paintBelt(x,y){const c=at(x,y);if(!c||c.type==='belt'){grid[idx(x,y)]={type:'belt',dir:c?.dir??1};return true}return false}
 function stepDragCell(p){
@@ -444,13 +705,13 @@ board.addEventListener('pointermove',e=>{if(!dragging)return;const p=cellFromPoi
 function endDrag(){if(dragging){dragging=false;lastDrag=null;selected=null;renderAll();status('ベルトを敷きました。');setTimeout(()=>{ignoreNextClick=false},70)}}
 board.addEventListener('pointerup',endDrag);board.addEventListener('pointercancel',endDrag);
 board.addEventListener('click',e=>{if(ignoreNextClick){ignoreNextClick=false;return}const cell=e.target.closest('.cell');if(!cell||!board.contains(cell))return;cellClick(Number(cell.dataset.x),Number(cell.dataset.y))});
-board.addEventListener('contextmenu',e=>{e.preventDefault();if(runStarted||finished||failed)return;const c=e.target.closest('.cell');if(!c)return;const x=Number(c.dataset.x),y=Number(c.dataset.y),data=at(x,y);if(data&&!['input','output','wall'].includes(data.type)){data.dir=(data.dir+1)%4;selected=idx(x,y);renderAll();status('右クリックで向きを変更しました。')}});
-$('run').onclick=toggleRun;$('step').onclick=()=>{if(!playing&&!finished&&!failed)tick()};$('reset').onclick=reset;$('rotate').onclick=rotateSelected;$('straight').onclick=straightBelt;
+board.addEventListener('contextmenu',e=>{e.preventDefault();if(runStarted||finished||failed)return;const c=e.target.closest('.cell');if(!c)return;const x=Number(c.dataset.x),y=Number(c.dataset.y),data=at(x,y);if(data&&!['input','output','wall','cross'].includes(data.type)){data.dir=(data.dir+1)%4;selected=idx(x,y);renderAll();status('右クリックで向きを変更しました。')}});
+$('run').onclick=toggleRun;$('reset').onclick=reset;$('rotate').onclick=rotateSelected;
 $('speed').onchange=()=>{try{localStorage.setItem('math_factory_speed',String($('speed').value))}catch{}if(playing){stop();toggleRun()}};
 try{const speed=localStorage.getItem('math_factory_speed');if(['800','400','180'].includes(speed))$('speed').value=speed}catch{}
-$('replay').onclick=()=>loadStage(stage);$('next').onclick=()=>loadStage(Math.min(TOTAL_STAGES,stage+1));$('retryDesign').onclick=reset;
-for(const key of ['stage','research']){const toggle=$(key+'Toggle'),panel=$(key+'Panel'),chevron=$(key+'Chevron');toggle.onclick=()=>{panel.hidden=!panel.hidden;toggle.setAttribute('aria-expanded',String(!panel.hidden));chevron.textContent=panel.hidden?'＋':'−'}}
-document.addEventListener('keydown',e=>{if(e.target.matches('input,select,textarea'))return;if(e.code==='KeyR')rotateSelected();if(e.code==='Space'){e.preventDefault();toggleRun()}if(e.code==='Escape'&&selected!==null){selected=null;renderAll()}if(e.code==='Delete'&&selected!==null&&grid[selected]&&!['input','output','wall'].includes(grid[selected].type)&&!runStarted&&!finished&&!failed){grid[selected]=null;selected=null;renderAll()}});
+$('replay').onclick=()=>loadStage(stage);$('next').onclick=()=>loadStage(isDual()?Math.min(130,stage+1):Math.min(100,stage+1));$('retryDesign').onclick=reset;
+$('stageButton').onclick=openStageScreen;$('normalTab').onclick=()=>{stageTab='normal';renderStageScreen()};$('dualTab').onclick=()=>{stageTab='dual';renderStageScreen()};$('closeStageScreen').onclick=closeStageScreen;$('stageScreen').addEventListener('click',e=>{if(e.target===$('stageScreen'))closeStageScreen()});
+document.addEventListener('keydown',e=>{if(!$('stageScreen').hidden){if(e.code==='Escape')closeStageScreen();return}if(e.target.matches('input,select,textarea'))return;if(e.code==='KeyR')rotateSelected();if(e.code==='Space'){e.preventDefault();toggleRun()}if(e.code==='Escape'&&selected!==null){selected=null;renderAll()}if(e.code==='Delete'&&selected!==null&&grid[selected]&&!['input','output','wall','cross'].includes(grid[selected].type)&&!runStarted&&!finished&&!failed){grid[selected]=null;selected=null;renderAll()}});
 loadStage(progress.lastStage||1);
 </script>
 </body>
