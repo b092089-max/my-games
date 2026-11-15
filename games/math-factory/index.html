@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#10202b">
-<title>MATH FACTORY — 数学ファクトリー v1.5.0</title>
+<title>MATH FACTORY — 数学ファクトリー v1.6.0</title>
 <style>
 :root{--bg:#0d1a22;--panel:#172831;--panel2:#20343d;--line:#36515b;--text:#f2f7f6;--muted:#a5bec4;--mint:#4fe0bc;--amber:#ffbf62;--steel:#304951;--red:#ff8582;--tile:58px}
 *{box-sizing:border-box}
@@ -64,7 +64,7 @@ button,input,select{font:inherit}button{border:1px solid #46616b;border-radius:1
 .batch-value.long-number{font-size:clamp(25px,3vw,39px);letter-spacing:-.055em;overflow-wrap:anywhere}
 @media(max-width:740px){.batch-value.long-number{font-size:clamp(28px,9vw,43px)}}
 
-/* v1.5.0 - compact game-first layout */
+/* v1.6.0 - compact game-first layout */
 .app{width:min(1560px,100%)}
 .batch-ticket{padding:13px 17px 15px;margin:0 0 12px;border-width:1px;border-radius:13px}
 .batch-ticket:before{height:4px}
@@ -140,7 +140,7 @@ button,input,select{font:inherit}button{border:1px solid #46616b;border-radius:1
  .inspector-empty{padding:11px}
 }
 
-/* v1.5.0 - order beside tools, dedicated stage selection screen */
+/* v1.6.0 - order beside tools, dedicated stage selection screen */
 .app{width:min(1560px,100%)}
 .headright{align-items:center}
 .stage-nav-button{min-height:47px;padding:10px 17px;font-size:14px;font-weight:850;border:1px solid #e1b66b;color:#ffdf9d;background:linear-gradient(135deg,#57462c,#2a4650);box-shadow:0 3px 10px #0003;white-space:nowrap}
@@ -189,7 +189,7 @@ button,input,select{font:inherit}button{border:1px solid #46616b;border-radius:1
 @media(max-width:1190px){.layout{grid-template-columns:minmax(220px,.95fr) minmax(225px,1.05fr)}.workspace{grid-column:1/-1;grid-row:2}}
 @media(max-width:740px){.layout{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:9px}.workspace{grid-column:1/-1;grid-row:auto}.headright{width:100%;align-items:stretch}.stage-nav-button{flex:1}.statpill{flex:1;min-width:0}.stage-screen-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}.stage-screen-wrap{padding:14px}}
 @media(max-width:550px){.layout{grid-template-columns:minmax(0,1fr)}.workspace{grid-column:auto}.order-summary .batch-list{grid-template-columns:repeat(auto-fit,minmax(185px,1fr))}.order-summary .batch-item{min-width:0}.stage-choice{min-height:54px}.stage-choice span{font-size:16px}}
-/* v1.5.0 — choose/select and erase modes side by side */
+/* v1.6.0 — choose/select and erase modes side by side */
 .mode-tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:0 0 12px}
 .mode-tools .tool-card{min-width:0;min-height:65px;padding:6px 5px;flex-direction:column;justify-content:center;gap:5px;text-align:center}
 .mode-tools .tool-icon{width:35px;height:31px;font-size:19px}
@@ -199,7 +199,7 @@ button,input,select{font:inherit}button{border:1px solid #46616b;border-radius:1
 .board.erase-mode .cell:not(.input):not(.output):not(.wall):not(.is-empty):hover{outline:3px solid #ff8e8a;outline-offset:-3px}
 @media(max-width:550px){.mode-tools{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
-/* v1.5.0: two-inlet challenge and accessible stage tabs */
+/* v1.6.0: two-inlet challenge and accessible stage tabs */
 .delivery-rule{background:#28515a;border:1px solid #80c9c9;color:#e0fffd;font-size:14px;font-weight:900;text-align:center;border-radius:10px;margin-top:10px;padding:10px 7px}
 .delivery-rule[hidden]{display:none!important}
 .stage-tabs{display:flex;gap:9px;margin-top:16px;flex-wrap:wrap}
@@ -210,6 +210,15 @@ button,input,select{font:inherit}button{border:1px solid #46616b;border-radius:1
 .token-a{border-color:#74cfff!important;background:linear-gradient(#d5eeff,#76c6fa)!important}
 .token-b{border-color:#ffdf86!important;background:linear-gradient(#fff0be,#ffce6a)!important}
 @media(max-width:550px){.stage-tabs button{min-width:0;font-size:12px}}
+/* v1.6.0: simplify the three controls, fixed one-row arrangement */
+.main-controls{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr) minmax(0,1fr);gap:8px;align-items:stretch}
+.main-controls>*{min-width:0;width:100%;margin:0}
+.main-controls .runbtn,.main-controls .subbtn{min-height:49px;padding:8px 5px;white-space:nowrap}
+.main-controls .speedlabel{display:flex;align-items:center;justify-content:center;gap:6px;background:#253e4c;border:1px solid #4c6975;border-radius:9px;padding:4px 6px;font-size:12px;font-weight:850;color:#e2f3f6}
+.main-controls .speedlabel select{min-width:0;max-width:100%;width:100%;flex:1;padding:5px 4px;font-size:13px;border-radius:6px}
+.stage-choice.dual-stage{border-color:#5eb9ae;background:#28504d}
+.stage-choice.dual-stage.active{background:#765933;border-color:#ffd28b}
+@media(max-width:550px){.main-controls{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr) minmax(0,1fr);gap:5px}.main-controls .runbtn,.main-controls .subbtn{font-size:12px;padding:8px 2px}.main-controls .speedlabel{font-size:10px;padding:3px;gap:3px}.main-controls .speedlabel select{font-size:11px}}
 </style>
 </head>
 <body>
@@ -217,7 +226,7 @@ button,input,select{font:inherit}button{border:1px solid #46616b;border-radius:1
   <header class="head">
     <div class="identity">
       <div class="logo" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="M5 40V23l12 7V20l12 9V13h6v12l8 5v10H5Z" fill="#f0bd69" stroke="#ffe1a1" stroke-width="2" stroke-linejoin="round"/><path d="M12 34h5m7 0h5m6 0h4" stroke="#31535a" stroke-width="3" stroke-linecap="round"/><path d="M31 13V5h4v8" fill="#c4dcdf" stroke="#c4dcdf" stroke-width="2"/></svg></div>
-      <div><div class="eyebrow">Build · Calculate · Automate</div><div class="brand">MATH <span>FACTORY</span><span class="version">v1.5.0</span></div><div class="small">数字をつくる、ちいさな工場。</div></div>
+      <div><div class="eyebrow">Build · Calculate · Automate</div><div class="brand">MATH <span>FACTORY</span><span class="version">v1.6.0</span></div><div class="small">数字をつくる、ちいさな工場。</div></div>
     </div>
     <div class="headright"><button type="button" id="stageButton" class="stage-nav-button">🗺 ステージ選択</button><div class="statpill"><small>🏭 工場レベル</small><strong id="level">1</strong></div><div class="statpill"><small>⭐ 獲得スター</small><strong id="stars">0</strong></div></div>
   </header>
@@ -243,8 +252,7 @@ button,input,select{font:inherit}button{border:1px solid #46616b;border-radius:1
       <div class="workhead"><h2>🏭 工場フロア</h2></div>
       <div class="board-shell"><div class="board-outer"><div class="board" id="board" role="group" aria-label="工場マス目。装置を選んでマスを押すと配置します"></div></div></div>
       <div class="workbottom">
-        <div class="control-bar"><button class="runbtn" id="run">▶ 生産開始</button><button class="subbtn" id="reset">↺ やり直す</button></div>
-        <div class="quick-actions"><button id="rotate" title="選択中の装置を時計回りに回す">⟳ 向きを回す</button><label class="speedlabel">速度 <select id="speed"><option value="800">ゆっくり</option><option value="400" selected>標準</option><option value="180">速い</option></select></label></div>
+        <div class="control-bar main-controls"><button class="runbtn" id="run">▶ 生産開始</button><button class="subbtn" id="reset">↺ やり直す</button><label class="speedlabel">速度 <select id="speed"><option value="800">ゆっくり</option><option value="400" selected>標準</option><option value="180">速い</option></select></label></div>
         <div class="message" role="status" aria-live="polite"><span id="status">左から装置を選んでください。</span></div>
       </div>
     </section>
@@ -257,14 +265,14 @@ button,input,select{font:inherit}button{border:1px solid #46616b;border-radius:1
       <div><div class="eyebrow">PRODUCTION ORDERS</div><h2 id="stageScreenTitle">🗺 ステージ選択</h2><p id="stageScreenIntro">挑戦したいステージを選んでください。</p></div>
       <button id="closeStageScreen" type="button">✕ 工場に戻る</button>
     </header>
-    <div class="stage-tabs"><button id="normalTab" type="button">🏭 通常ステージ（100）</button><button id="dualTab" type="button">🔀 2入口チャレンジ（30）</button></div><div id="stageGrid" class="stage-screen-grid"></div>
+    <div id="stageGrid" class="stage-screen-grid"></div>
   </div>
 </section>
 <div class="modal hidden" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modalbox"><div class="eyebrow">ORDER COMPLETE</div><h2 id="modalTitle">📦 注文達成！</h2><div class="stars-big" id="modalStars">★★★</div><p id="modalText"></p><div class="modal-actions"><button id="replay">↺ もう一度</button><button class="primary" id="next">次の注文へ ➜</button></div></div></div>
 <div class="modal hidden" id="failModal" role="dialog" aria-modal="true" aria-labelledby="failTitle"><div class="modalbox failbox"><div class="eyebrow">QUALITY CHECK FAILED</div><h2 id="failTitle">⚠ 検品で問題を発見</h2><p id="failText"></p><div class="modal-actions"><button class="primary" id="retryDesign">↺ 配置を直して再挑戦</button></div></div></div>
 <script>
 'use strict';
-const W=10,H=7,SAVE='math_factory_v1_2_save',OLD_SAVE='math_factory_v1_save';
+const W=10,H=7,SAVE='math_factory_v1_6_save',OLD_SAVE='math_factory_v1_2_save';
 const mk=(id,inputs,outputs,desc,required,stock,limit,time,hint,walls=[])=>({id,inputs,outputs,desc,required,stock,limit,time,hint,walls,qty:outputs.filter(v=>v!==null).length});
 const STAGES=[
  mk(1,[2],[5],"はじめての注文",["add"],{"add":1},1,16,"まずは材料と商品の数字を見比べよう。",[]),
@@ -368,8 +376,17 @@ const STAGES=[
  mk(99,[4,8,10],[10,18,22],"マスター注文 49",["mul","sub","add"],{"mul":1,"add":1,"sub":1},3,32,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[[6,3]]),
  mk(100,[2,3,6],[5,3,2],"マスター注文 50",["square","mod","add"],{"square":1,"mod":1,"add":1},3,28,"必要な装置は最大3台。順番と設定を考えて、同じ生産ラインで注文を完成させよう。",[]),
 ];
-const DUAL_STAGES=[{"type":"dual","id":101,"challenge":1,"inputs":[5,8],"outputs":[5,8],"desc":"2入口で順番納品 01","required":[],"requiredByLine":[[],[]],"stock":{},"limit":0,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":false,"initialRoute":"simple","starBelts":22},{"type":"dual","id":102,"challenge":2,"inputs":[2,7],"outputs":[2,7],"desc":"2入口で同時納品 02","required":[],"requiredByLine":[[],[]],"stock":{},"limit":0,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"simple","starBelts":22},{"type":"dual","id":103,"challenge":3,"inputs":[5,6],"outputs":[8,18],"desc":"2入口で順番納品 03","required":["add","mul"],"requiredByLine":[["add"],["mul"]],"stock":{"add":1,"mul":1},"limit":2,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":false,"initialRoute":"simple","starBelts":22},{"type":"dual","id":104,"challenge":4,"inputs":[2,5],"outputs":[4,10],"desc":"2入口で同時納品 04","required":["mul"],"requiredByLine":[["mul"],["mul"]],"stock":{"mul":2},"limit":2,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"delayB","starBelts":22},{"type":"dual","id":105,"challenge":5,"inputs":[5,4],"outputs":[7,3],"desc":"2入口で順番納品 05","required":["add","sub"],"requiredByLine":[["add"],["sub"]],"stock":{"add":1,"sub":1},"limit":2,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"order","first":1,"crossRequired":false,"initialRoute":"simple","starBelts":22},{"type":"dual","id":106,"challenge":6,"inputs":[2,3],"outputs":[4,5],"desc":"2入口で同時納品 06","required":["mul","add"],"requiredByLine":[["mul"],["add"]],"stock":{"mul":1,"add":1},"limit":2,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"delayB","starBelts":22},{"type":"dual","id":107,"challenge":7,"inputs":[5,8],"outputs":[7,16],"desc":"2入口で順番納品 07","required":["add","mul"],"requiredByLine":[["add"],["mul"]],"stock":{"add":1,"mul":1},"limit":2,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":false,"initialRoute":"simple","starBelts":22},{"type":"dual","id":108,"challenge":8,"inputs":[2,7],"outputs":[6,6],"desc":"2入口で順番納品 08","required":["mul","sub"],"requiredByLine":[["mul"],["sub"]],"stock":{"mul":1,"sub":1},"limit":2,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":false,"initialRoute":"delayB","starBelts":22},{"type":"dual","id":109,"challenge":9,"inputs":[5,6],"outputs":[25,9],"desc":"2入口で順番納品 09","required":["square","add"],"requiredByLine":[["square"],["add"]],"stock":{"square":1,"add":1},"limit":2,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"order","first":1,"crossRequired":false,"initialRoute":"simple","starBelts":22},{"type":"dual","id":110,"challenge":10,"inputs":[2,5],"outputs":[2,10],"desc":"2入口で順番納品 10","required":["mod","mul"],"requiredByLine":[["mod"],["mul"]],"stock":{"mod":1,"mul":1},"limit":2,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":false,"initialRoute":"simple","starBelts":22},{"type":"dual","id":111,"challenge":11,"inputs":[5,4],"outputs":[4,16],"desc":"2入口で同時納品 11","required":["sub","square"],"requiredByLine":[["sub"],["square"]],"stock":{"sub":1,"square":1},"limit":2,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"delayB","starBelts":22},{"type":"dual","id":112,"challenge":12,"inputs":[2,3],"outputs":[4,3],"desc":"2入口で同時納品 12","required":["mul","mod"],"requiredByLine":[["mul"],["mod"]],"stock":{"mul":1,"mod":1},"limit":2,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"delayB","starBelts":22},{"type":"dual","id":113,"challenge":13,"inputs":[5,8],"outputs":[7,16],"desc":"2入口で順番納品 13","required":["add","mul"],"requiredByLine":[["add"],["mul"]],"stock":{"add":1,"mul":1},"limit":2,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"order","first":1,"crossRequired":false,"initialRoute":"simple","starBelts":22},{"type":"dual","id":114,"challenge":14,"inputs":[2,7],"outputs":[6,6],"desc":"2入口で同時納品 14","required":["mul","sub"],"requiredByLine":[["mul"],["sub"]],"stock":{"mul":1,"sub":1},"limit":2,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"delayB","starBelts":22},{"type":"dual","id":115,"challenge":15,"inputs":[5,6],"outputs":[25,9],"desc":"2入口で同時納品 15","required":["square","add"],"requiredByLine":[["square"],["add"]],"stock":{"square":1,"add":1},"limit":2,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"delayB","starBelts":22},{"type":"dual","id":116,"challenge":16,"inputs":[2,5],"outputs":[8,4],"desc":"2入口で順番納品 16","required":["add","mul","sub"],"requiredByLine":[["add","mul"],["sub"]],"stock":{"add":1,"mul":1,"sub":1},"limit":3,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":false,"initialRoute":"delayB","starBelts":22},{"type":"dual","id":117,"challenge":17,"inputs":[5,4],"outputs":[10,6],"desc":"2入口で順番納品 17","required":["mul","add","sub"],"requiredByLine":[["mul"],["add","sub"]],"stock":{"mul":1,"add":1,"sub":1},"limit":3,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"order","first":1,"crossRequired":false,"initialRoute":"simple","starBelts":22},{"type":"dual","id":118,"challenge":18,"inputs":[2,3],"outputs":[4,6],"desc":"2入口で同時納品 18","required":["mod","add","mul"],"requiredByLine":[["mod","add"],["mul"]],"stock":{"mod":1,"add":1,"mul":1},"limit":3,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"delayB","starBelts":22},{"type":"dual","id":119,"challenge":19,"inputs":[5,8],"outputs":[25,14],"desc":"2入口で順番納品 19","required":["square","sub","mul"],"requiredByLine":[["square"],["sub","mul"]],"stock":{"square":1,"sub":1,"mul":1},"limit":3,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":false,"initialRoute":"delayB","starBelts":22},{"type":"dual","id":120,"challenge":20,"inputs":[2,7],"outputs":[1,9],"desc":"2入口で同時納品 20","required":["sub","square","add"],"requiredByLine":[["sub","square"],["add"]],"stock":{"sub":1,"square":1,"add":1},"limit":3,"time":34,"hint":"装置と経路を調整して納品しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"delayB","starBelts":22},{"type":"dual","id":121,"challenge":21,"inputs":[5,6],"outputs":[6,16],"desc":"交差コンベアで順番納品 21","required":["add","mul","sub"],"requiredByLine":[["add"],["mul","sub"]],"stock":{"add":1,"mul":1,"sub":1,"cross":1},"limit":3,"time":34,"hint":"交差コンベアで縦と横の流れを分離しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":true,"initialRoute":"cross","starBelts":26},{"type":"dual","id":122,"challenge":22,"inputs":[2,5],"outputs":[8,4],"desc":"交差コンベアで同時納品 22","required":["add","mul","sub"],"requiredByLine":[["add","mul"],["sub"]],"stock":{"add":1,"mul":1,"sub":1,"cross":1},"limit":3,"time":34,"hint":"交差コンベアで縦と横の流れを分離しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":true,"initialRoute":"cross","starBelts":26},{"type":"dual","id":123,"challenge":23,"inputs":[5,4],"outputs":[10,6],"desc":"交差コンベアで順番納品 23","required":["mul","add","sub"],"requiredByLine":[["mul"],["add","sub"]],"stock":{"mul":1,"add":1,"sub":1,"cross":1},"limit":3,"time":34,"hint":"交差コンベアで縦と横の流れを分離しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":true,"initialRoute":"cross","starBelts":26},{"type":"dual","id":124,"challenge":24,"inputs":[2,3],"outputs":[4,6],"desc":"交差コンベアで同時納品 24","required":["mod","add","mul"],"requiredByLine":[["mod","add"],["mul"]],"stock":{"mod":1,"add":1,"mul":1,"cross":1},"limit":3,"time":34,"hint":"交差コンベアで縦と横の流れを分離しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":true,"initialRoute":"cross","starBelts":26},{"type":"dual","id":125,"challenge":25,"inputs":[5,8],"outputs":[25,14],"desc":"交差コンベアで順番納品 25","required":["square","sub","mul"],"requiredByLine":[["square"],["sub","mul"]],"stock":{"square":1,"sub":1,"mul":1,"cross":1},"limit":3,"time":34,"hint":"交差コンベアで縦と横の流れを分離しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":true,"initialRoute":"cross","starBelts":26},{"type":"dual","id":126,"challenge":26,"inputs":[2,7],"outputs":[1,9],"desc":"交差コンベアで同時納品 26","required":["sub","square","add"],"requiredByLine":[["sub","square"],["add"]],"stock":{"sub":1,"square":1,"add":1,"cross":1},"limit":3,"time":34,"hint":"交差コンベアで縦と横の流れを分離しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":true,"initialRoute":"cross","starBelts":26},{"type":"dual","id":127,"challenge":27,"inputs":[5,6],"outputs":[6,16],"desc":"交差コンベアで順番納品 27","required":["add","mul","sub"],"requiredByLine":[["add"],["mul","sub"]],"stock":{"add":1,"mul":1,"sub":1,"cross":1},"limit":3,"time":34,"hint":"交差コンベアで縦と横の流れを分離しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":true,"initialRoute":"cross","starBelts":26},{"type":"dual","id":128,"challenge":28,"inputs":[2,5],"outputs":[8,4],"desc":"交差コンベアで同時納品 28","required":["add","mul","sub"],"requiredByLine":[["add","mul"],["sub"]],"stock":{"add":1,"mul":1,"sub":1,"cross":1},"limit":3,"time":34,"hint":"交差コンベアで縦と横の流れを分離しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":true,"initialRoute":"cross","starBelts":26},{"type":"dual","id":129,"challenge":29,"inputs":[5,4],"outputs":[10,6],"desc":"交差コンベアで順番納品 29","required":["mul","add","sub"],"requiredByLine":[["mul"],["add","sub"]],"stock":{"mul":1,"add":1,"sub":1,"cross":1},"limit":3,"time":34,"hint":"交差コンベアで縦と横の流れを分離しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":true,"initialRoute":"cross","starBelts":26},{"type":"dual","id":130,"challenge":30,"inputs":[2,3],"outputs":[4,6],"desc":"交差コンベアで同時納品 30","required":["mod","add","mul"],"requiredByLine":[["mod","add"],["mul"]],"stock":{"mod":1,"add":1,"mul":1,"cross":1},"limit":3,"time":34,"hint":"交差コンベアで縦と横の流れを分離しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":true,"initialRoute":"cross","starBelts":26}];
-STAGES.push(...DUAL_STAGES);
+const DUAL_STAGES=[{"inputs":[2,3],"outputs":[2,3],"required":[],"requiredByLine":[[],[]],"stock":{},"limit":0,"time":60,"hint":"計算は不要。AとBの到着順を変えよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":false,"initialRoute":"simple","solutionRoute":"delayB","starBelts":36,"desc":"2入口：Aを先に届けよう","type":"dual","id":101,"challenge":1},{"inputs":[4,7],"outputs":[4,7],"required":[],"requiredByLine":[[],[]],"stock":{},"limit":0,"time":60,"hint":"計算は不要。2つの経路の長さをそろえよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"delayB","solutionRoute":"simple","starBelts":36,"desc":"2入口：同時に届けよう","type":"dual","id":102,"challenge":2},{"inputs":[5,2],"outputs":[5,2],"required":[],"requiredByLine":[[],[]],"stock":{},"limit":0,"time":60,"hint":"材料A・Bは同時に出発します。数字と納品順を確認し、経路の長さを工夫しよう。","qty":2,"walls":[],"rule":"order","first":1,"crossRequired":false,"initialRoute":"simple","solutionRoute":"delayA","starBelts":36,"desc":"2入口：Bを先に届けよう","type":"dual","id":103,"challenge":3},{"inputs":[3,6],"outputs":[3,6],"required":[],"requiredByLine":[[],[]],"stock":{},"limit":0,"time":60,"hint":"材料A・Bは同時に出発します。数字と納品順を確認し、経路の長さを工夫しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"delayA","solutionRoute":"simple","starBelts":36,"desc":"2入口：同時到着に再挑戦","type":"dual","id":104,"challenge":4},{"inputs":[8,1],"outputs":[8,1],"required":[],"requiredByLine":[[],[]],"stock":{},"limit":0,"time":60,"hint":"材料A・Bは同時に出発します。数字と納品順を確認し、経路の長さを工夫しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":false,"initialRoute":"delayA","solutionRoute":"delayB","starBelts":36,"desc":"2入口：Aを先に届ける","type":"dual","id":105,"challenge":5},{"inputs":[7,4],"outputs":[7,4],"required":[],"requiredByLine":[[],[]],"stock":{},"limit":0,"time":60,"hint":"材料A・Bは同時に出発します。数字と納品順を確認し、経路の長さを工夫しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"delayB","solutionRoute":"simple","starBelts":36,"desc":"2入口：経路をそろえる","type":"dual","id":106,"challenge":6},{"inputs":[6,9],"outputs":[6,9],"required":[],"requiredByLine":[[],[]],"stock":{},"limit":0,"time":60,"hint":"材料A・Bは同時に出発します。数字と納品順を確認し、経路の長さを工夫しよう。","qty":2,"walls":[],"rule":"order","first":1,"crossRequired":false,"initialRoute":"delayB","solutionRoute":"delayA","starBelts":36,"desc":"2入口：Bを先に届ける","type":"dual","id":107,"challenge":7},{"inputs":[2,8],"outputs":[2,8],"required":[],"requiredByLine":[[],[]],"stock":{},"limit":0,"time":60,"hint":"材料A・Bは同時に出発します。数字と納品順を確認し、経路の長さを工夫しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"delayA","solutionRoute":"simple","starBelts":36,"desc":"2入口：搬送時間を合わせる","type":"dual","id":108,"challenge":8},{"inputs":[2,3],"outputs":[5,3],"required":["add"],"requiredByLine":[["add"],[]],"stock":{"add":1},"limit":1,"time":60,"hint":"Aの数字を5にして先に届けよう。Bは計算不要。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":false,"initialRoute":"simple","solutionRoute":"delayB","starBelts":36,"desc":"Aの数字を加工して先着","type":"dual","id":109,"challenge":9},{"inputs":[3,4],"outputs":[3,8],"required":["mul"],"requiredByLine":[[],["mul"]],"stock":{"mul":1},"limit":1,"time":60,"hint":"材料A・Bは同時に出発します。数字と納品順を確認し、経路の長さを工夫しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"delayB","solutionRoute":"simple","starBelts":36,"desc":"Bの数字を加工して同時納品","type":"dual","id":110,"challenge":10},{"inputs":[7,5],"outputs":[6,5],"required":["sub"],"requiredByLine":[["sub"],[]],"stock":{"sub":1},"limit":1,"time":60,"hint":"材料A・Bは同時に出発します。数字と納品順を確認し、経路の長さを工夫しよう。","qty":2,"walls":[],"rule":"order","first":1,"crossRequired":false,"initialRoute":"simple","solutionRoute":"delayA","starBelts":36,"desc":"Bを先に、Aを計算","type":"dual","id":111,"challenge":11},{"inputs":[4,8],"outputs":[12,8],"required":["mul"],"requiredByLine":[["mul"],[]],"stock":{"mul":1},"limit":1,"time":60,"hint":"材料A・Bは同時に出発します。数字と納品順を確認し、経路の長さを工夫しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"delayA","solutionRoute":"simple","starBelts":36,"desc":"1台の乗算機で同時納品","type":"dual","id":112,"challenge":12},{"inputs":[5,3],"outputs":[5,7],"required":["add"],"requiredByLine":[[],["add"]],"stock":{"add":1},"limit":1,"time":60,"hint":"材料A・Bは同時に出発します。数字と納品順を確認し、経路の長さを工夫しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":false,"initialRoute":"simple","solutionRoute":"delayB","starBelts":36,"desc":"Bを加工して後から納品","type":"dual","id":113,"challenge":13},{"inputs":[8,4],"outputs":[8,2],"required":["div"],"requiredByLine":[[],["div"]],"stock":{"div":1},"limit":1,"time":60,"hint":"材料A・Bは同時に出発します。数字と納品順を確認し、経路の長さを工夫しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"delayB","solutionRoute":"simple","starBelts":36,"desc":"Bを割って同時に納品","type":"dual","id":114,"challenge":14},{"inputs":[2,3],"outputs":[4,6],"required":["mul"],"requiredByLine":[["mul"],["mul"]],"stock":{"mul":2},"limit":2,"time":60,"hint":"材料A・Bは同時に出発します。数字と納品順を確認し、経路の長さを工夫しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":false,"initialRoute":"simple","solutionRoute":"delayB","starBelts":36,"desc":"それぞれ1台で順番納品","type":"dual","id":115,"challenge":15},{"inputs":[3,7],"outputs":[6,5],"required":["mul","sub"],"requiredByLine":[["mul"],["sub"]],"stock":{"mul":1,"sub":1},"limit":2,"time":60,"hint":"材料A・Bは同時に出発します。数字と納品順を確認し、経路の長さを工夫しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"delayB","solutionRoute":"simple","starBelts":36,"desc":"2つの計算装置で同時納品","type":"dual","id":116,"challenge":16},{"inputs":[4,5],"outputs":[6,10],"required":["add","mul"],"requiredByLine":[["add"],["mul"]],"stock":{"add":1,"mul":1},"limit":2,"time":60,"hint":"材料A・Bは同時に出発します。数字と納品順を確認し、経路の長さを工夫しよう。","qty":2,"walls":[],"rule":"order","first":1,"crossRequired":false,"initialRoute":"simple","solutionRoute":"delayA","starBelts":36,"desc":"加工後にBを先に納品","type":"dual","id":117,"challenge":17},{"inputs":[2,6],"outputs":[8,4],"required":["mul","sub"],"requiredByLine":[["mul"],["sub"]],"stock":{"mul":1,"sub":1},"limit":2,"time":60,"hint":"材料A・Bは同時に出発します。数字と納品順を確認し、経路の長さを工夫しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"delayA","solutionRoute":"simple","starBelts":36,"desc":"違う計算で同時に納品","type":"dual","id":118,"challenge":18},{"inputs":[3,4],"outputs":[9,8],"required":["mul"],"requiredByLine":[["mul"],["mul"]],"stock":{"mul":2},"limit":2,"time":60,"hint":"材料A・Bは同時に出発します。数字と納品順を確認し、経路の長さを工夫しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":false,"initialRoute":"simple","solutionRoute":"delayB","starBelts":36,"desc":"2種類の倍率を調整","type":"dual","id":119,"challenge":19},{"inputs":[5,8],"outputs":[4,10],"required":["sub","add"],"requiredByLine":[["sub"],["add"]],"stock":{"sub":1,"add":1},"limit":2,"time":60,"hint":"材料A・Bは同時に出発します。数字と納品順を確認し、経路の長さを工夫しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"delayB","solutionRoute":"simple","starBelts":36,"desc":"加算と減算で同時に納品","type":"dual","id":120,"challenge":20},{"inputs":[3,7],"outputs":[8,7],"required":["mul","add"],"requiredByLine":[["mul","add"],[]],"stock":{"mul":1,"add":1},"limit":2,"time":60,"hint":"材料A・Bは同時に出発します。数字と納品順を確認し、経路の長さを工夫しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":false,"initialRoute":"simple","solutionRoute":"delayB","starBelts":36,"desc":"Aだけ2工程の順番納品","type":"dual","id":121,"challenge":21},{"inputs":[4,6],"outputs":[10,6],"required":["add","mul"],"requiredByLine":[["add","mul"],[]],"stock":{"add":1,"mul":1},"limit":2,"time":60,"hint":"材料A・Bは同時に出発します。数字と納品順を確認し、経路の長さを工夫しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"delayB","solutionRoute":"simple","starBelts":36,"desc":"Aの2工程と同時納品","type":"dual","id":122,"challenge":22},{"inputs":[2,5],"outputs":[2,9],"required":["mul","sub"],"requiredByLine":[[],["mul","sub"]],"stock":{"mul":1,"sub":1},"limit":2,"time":60,"hint":"材料A・Bは同時に出発します。数字と納品順を確認し、経路の長さを工夫しよう。","qty":2,"walls":[],"rule":"order","first":1,"crossRequired":false,"initialRoute":"simple","solutionRoute":"delayA","starBelts":36,"desc":"Bを2工程で加工して先着","type":"dual","id":123,"challenge":23},{"inputs":[3,7],"outputs":[3,15],"required":["add","mul"],"requiredByLine":[[],["add","mul"]],"stock":{"add":1,"mul":1},"limit":2,"time":60,"hint":"材料A・Bは同時に出発します。数字と納品順を確認し、経路の長さを工夫しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":false,"initialRoute":"delayA","solutionRoute":"simple","starBelts":36,"desc":"Bの2工程と同時納品","type":"dual","id":124,"challenge":24},{"inputs":[2,5],"outputs":[2,5],"required":[],"requiredByLine":[[],[]],"stock":{"cross":1},"limit":0,"time":60,"hint":"新しい「✣」を交差点に置こう。2つの数字を安全に直進させよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":true,"initialRoute":"cross","solutionRoute":"cross","starBelts":36,"desc":"交差コンベアの入門","type":"dual","id":125,"challenge":25},{"inputs":[4,6],"outputs":[4,6],"required":[],"requiredByLine":[[],[]],"stock":{"cross":1},"limit":0,"time":60,"hint":"交差コンベアを使い、2つの商品を同時に納品しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":true,"initialRoute":"cross","solutionRoute":"crossSync","starBelts":36,"desc":"交差しながら同時に納品","type":"dual","id":126,"challenge":26},{"inputs":[3,5],"outputs":[6,5],"required":["mul"],"requiredByLine":[["mul"],[]],"stock":{"mul":1,"cross":1},"limit":1,"time":60,"hint":"材料A・Bは同時に出発します。数字と納品順を確認し、経路の長さを工夫しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":true,"initialRoute":"cross","solutionRoute":"cross","starBelts":36,"desc":"交差＋Aの加工","type":"dual","id":127,"challenge":27},{"inputs":[6,4],"outputs":[6,5],"required":["add"],"requiredByLine":[[],["add"]],"stock":{"add":1,"cross":1},"limit":1,"time":60,"hint":"材料A・Bは同時に出発します。数字と納品順を確認し、経路の長さを工夫しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":true,"initialRoute":"cross","solutionRoute":"crossSync","starBelts":36,"desc":"交差＋Bの加工＋同時納品","type":"dual","id":128,"challenge":28},{"inputs":[2,3],"outputs":[5,6],"required":["add","mul"],"requiredByLine":[["add"],["mul"]],"stock":{"add":1,"mul":1,"cross":1},"limit":2,"time":60,"hint":"材料A・Bは同時に出発します。数字と納品順を確認し、経路の長さを工夫しよう。","qty":2,"walls":[],"rule":"order","first":0,"crossRequired":true,"initialRoute":"cross","solutionRoute":"cross","starBelts":36,"desc":"交差と2台の加工装置","type":"dual","id":129,"challenge":29},{"inputs":[3,8],"outputs":[6,6],"required":["mul","sub"],"requiredByLine":[["mul"],["sub"]],"stock":{"mul":1,"sub":1,"cross":1},"limit":2,"time":60,"hint":"材料A・Bは同時に出発します。数字と納品順を確認し、経路の長さを工夫しよう。","qty":2,"walls":[],"rule":"same","first":0,"crossRequired":true,"initialRoute":"cross","solutionRoute":"crossSync","starBelts":36,"desc":"交差しながら同時納品に挑戦","type":"dual","id":130,"challenge":30}];
+// 100 traditional orders + 30 two-inlet orders form ONE sequential, 130-stage campaign.
+// Two-inlet stages enter after regular stages 10,20,30,40,50; the final 50 are regular.
+const ORIGINAL_NORMAL_STAGES=STAGES.slice();
+const STAGE_SEQUENCE=[];
+for(let n=1;n<=100;n++){
+ STAGE_SEQUENCE.push(ORIGINAL_NORMAL_STAGES[n-1]);
+ if(n<=50&&n%10===0)for(let t=(n/10-1)*6;t<(n/10)*6;t++)STAGE_SEQUENCE.push(DUAL_STAGES[t]);
+}
+STAGES.length=0;STAGES.push(...STAGE_SEQUENCE);
+const STAGE_POSITION_BY_ID=Object.fromEntries(STAGES.map((s,i)=>[s.id,i+1]));
 const TYPES={
  select:{sym:'◎',name:'選択・設定',short:'選ぶ',sub:'置いた装置を調べる',color:'#526b76'},
  erase:{sym:'⌫',name:'除去モード',short:'消す',sub:'装置やベルトを消す',color:'#a8565b'},
@@ -392,13 +409,29 @@ const idx=(x,y)=>y*W+x,vec=[[0,-1],[1,0],[0,1],[-1,0]],arrows=['↑','→','↓'
 const current=()=>STAGES[stage-1];
 const at=(x,y)=>x>=0&&y>=0&&x<W&&y<H?grid[idx(x,y)]:null;
 function readStore(k){try{return JSON.parse(localStorage.getItem(k))||{}}catch{return {}}}
-const save=readStore(SAVE),previous=readStore(OLD_SAVE),legacy=Object.keys(save).length?save:previous;
-let progress={unlocked:Math.max(1,Math.min(NORMAL_STAGES,legacy.unlocked||1)),cleared:save.cleared||{},lastStage:Number(legacy.lastStage)||1,dualCleared:save.dualCleared||{},dualUnlocked:Math.max(1,Math.min(30,save.dualUnlocked||1))};
+const saved=readStore(SAVE),prior=readStore(OLD_SAVE),veryOld=readStore('math_factory_v1_save');
+const hasUnifiedSave=Object.keys(saved).length>0;
+const legacy=hasUnifiedSave?saved:Object.keys(prior).length?prior:veryOld;
+const clampStage=n=>Math.max(1,Math.min(TOTAL_STAGES,Math.trunc(Number(n)||1)));
+let progress;
+if(hasUnifiedSave){
+ progress={unlocked:clampStage(saved.unlocked),cleared:saved.cleared||{},lastStage:clampStage(saved.lastStage)};
+}else{
+ const cleared={};
+ for(const [oldId,score] of Object.entries(legacy.cleared||{})){
+  const n=STAGE_POSITION_BY_ID[Number(oldId)];if(n)cleared[n]=Number(score)||0;
+ }
+ for(const [challenge,score] of Object.entries(legacy.dualCleared||{})){
+  const n=STAGE_POSITION_BY_ID[100+Number(challenge)];if(n)cleared[n]=Number(score)||0;
+ }
+ // When importing progress, keep every previously reached normal stage accessible;
+ // the newly inserted two-inlet levels can still be replayed freely.
+ const unlocked=STAGE_POSITION_BY_ID[Math.min(100,Math.max(1,Number(legacy.unlocked)||1))]||1;
+ const lastStage=STAGE_POSITION_BY_ID[Math.max(1,Math.min(130,Number(legacy.lastStage)||1))]||1;
+ progress={unlocked,cleared,lastStage};
+}
 const isDual=()=>current()?.type==='dual';
-const dualIndex=()=>stage-100;
-function dualRequiredNormal(t){return t<=6?10:t<=12?20:t<=18?30:t<=24?40:50}
-function dualAccessible(t){return t>0&&t<=DUAL_COUNT&&progress.dualUnlocked>=t&&progress.unlocked>dualRequiredNormal(t)}
-let stageTab='normal',crossPass={};
+let crossPass={};
 let stage=1,grid=[],tokens=[],tool='select',selected=null,playing=false,timer=null,runStarted=false,ticks=0,delivered=0,rejected=0,waste=0,spawned=0,finished=false,failed=false,serial=0,lotState=[];
 let dragging=false,lastDrag=null,ignoreNextClick=false;
 let usedRoutes=new Set();
@@ -415,15 +448,23 @@ function pathToGrid(path,overrides={}){
  }
 }
 function dualPaths(mode){
- const A=[[0,1]];
- if(mode==='cross'){
-  A.push([1,1],[1,2],[1,3]);for(let x=2;x<=9;x++)A.push([x,3]);
-  const B=[[0,5]];for(let x=1;x<=5;x++)B.push([x,5]);
+ const A=[[0,1]],B=[[0,5]];
+ if(mode==='cross'||mode==='crossSync'){
+  if(mode==='crossSync'){
+   A.push([1,1],[2,1],[2,2],[2,3],[1,3],[1,4],[2,4],[3,4],[3,3],[4,3],[5,3]);
+   for(let x=6;x<=9;x++)A.push([x,3]);
+  }else{
+   A.push([1,1],[1,2],[1,3]);for(let x=2;x<=9;x++)A.push([x,3]);
+  }
+  for(let x=1;x<=5;x++)B.push([x,5]);
   B.push([5,4],[5,3],[5,2],[5,1]);for(let x=6;x<=9;x++)B.push([x,1]);B.push([9,2],[9,3]);
   return [A,B];
  }
- for(let x=1;x<=9;x++)A.push([x,1]);A.push([9,2],[9,3]);
- const B=[[0,5]];
+ if(mode==='delayA'){
+  A.push([1,1],[1,0],[2,0],[3,0],[3,1]);
+  for(let x=4;x<=9;x++)A.push([x,1]);
+ }else for(let x=1;x<=9;x++)A.push([x,1]);
+ A.push([9,2],[9,3]);
  if(mode==='delayB'){
   B.push([1,5],[1,6],[2,6],[3,6],[3,5]);for(let x=4;x<=9;x++)B.push([x,5]);
  }else for(let x=1;x<=9;x++)B.push([x,5]);
@@ -446,7 +487,7 @@ function initGrid(){
 }
 function stop(){playing=false;if(timer){clearInterval(timer);timer=null}}
 function loadStage(n){
- stop();stage=n;if(stage>100&&!dualAccessible(stage-100))stage=Math.min(NORMAL_STAGES,progress.unlocked);stageTab=stage>100?'dual':'normal';initGrid();progress.lastStage=stage;persist();tokens=[];ticks=0;delivered=0;rejected=0;waste=0;spawned=0;serial=0;finished=false;failed=false;runStarted=false;selected=null;lotState=current().inputs.map(()=>'pending');crossPass={};usedRoutes=new Set();
+ stop();stage=clampStage(n);if(stage>progress.unlocked)stage=progress.unlocked;initGrid();progress.lastStage=stage;persist();tokens=[];ticks=0;delivered=0;rejected=0;waste=0;spawned=0;serial=0;finished=false;failed=false;runStarted=false;selected=null;lotState=current().inputs.map(()=>'pending');crossPass={};usedRoutes=new Set();
  tool='select';$('modal').classList.add('hidden');$('failModal').classList.add('hidden');
  $('stageName').textContent=current().desc;
  renderStageScreen();
@@ -517,36 +558,31 @@ function renderInspector(){
   html+=`<div class="inspect-unit"><label class="inspector-label" for="insValue">計算する数</label><div class="number-line"><button id="valueMinus" type="button" aria-label="1減らす" ${runStarted?'disabled':''}>−</button><input id="insValue" type="number" min="1" max="100" step="1" value="${c.value}" ${runStarted?'disabled':''}><button id="valuePlus" type="button" aria-label="1増やす" ${runStarted?'disabled':''}>＋</button></div><div class="small" style="margin-top:7px">全素材に同じ設定が適用されます。${runStarted?' 生産開始後は固定されます。':''}</div></div>`;
  }
  if(c.type!=='input'&&c.type!=='output'&&c.type!=='cross'){
-  html+=`<div style="margin-top:13px"><label class="inspector-label">数字を流す向き</label><div class="direction-pad">${arrows.map((a,i)=>`<button type="button" data-dir="${i}" class="${c.dir===i?'on':''}" ${runStarted?'disabled':''} aria-label="${['上','右','下','左'][i]}向き">${a}</button>`).join('')}</div></div><button id="deleteSelected" type="button" class="inspect-delete" ${runStarted?'disabled':''}>🗑 この装置を撤去</button>`;
+  html+=`<div style="margin-top:13px"><label class="inspector-label">数字を流す向き</label><div class="direction-pad">${arrows.map((a,i)=>`<button type="button" data-dir="${i}" class="${c.dir===i?'on':''}" ${runStarted?'disabled':''} aria-label="${['上','右','下','左'][i]}向き">${a}</button>`).join('')}</div></div>`;
  }
  if(c.type==='even')html+='<p class="small">偶数は通過し、奇数は正しく選別・除外されます。</p>';
  if(c.type==='square')html+='<p class="small">投入された数字を2乗します。</p>';
- if(c.type==='cross')html+='<p class="small">左右の数字は横へ、上下の数字は縦へ直進します。上下2層のため縦横の同時通過は衝突しません。</p><button id="deleteSelected" type="button" class="inspect-delete" '+(runStarted?'disabled':'')+'>🗑 交差装置を除去</button>';
+ if(c.type==='cross')html+='<p class="small">左右の数字は横へ、上下の数字は縦へ直進します。上下2層のため縦横の同時通過は衝突しません。</p>';
  el.innerHTML=html;attachInputValue(c);
  el.querySelectorAll('[data-dir]').forEach(b=>b.onclick=()=>{if(runStarted||finished||failed)return;c.dir=Number(b.dataset.dir);renderAll()});
  const del=$('deleteSelected');if(del)del.onclick=()=>{if(runStarted||finished||failed)return;grid[selected]=null;selected=null;renderAll();status('装置を撤去しました。')};
 }
 function renderStageScreen(){
  const gridEl=$('stageGrid');gridEl.replaceChildren();
- $('normalTab').classList.toggle('active',stageTab==='normal');$('dualTab').classList.toggle('active',stageTab==='dual');
- $('stageScreenTitle').textContent=stageTab==='normal'?'🗺 通常ステージ（100）':'🔀 2入口チャレンジ（30）';
- $('stageScreenIntro').textContent=stageTab==='normal'?'注文と装置は最大3件・3台。クリアで次のステージが解放されます。':'通常ST10クリアで挑戦可能。条件付きでT07、T13、T19、T25が解放されます。';
- const total=stageTab==='normal'?100:30;
- for(let section=0;section<Math.ceil(total/10);section++){
+ $('stageScreenTitle').textContent='🗺 ステージ選択（全130）';
+ $('stageScreenIntro').textContent='1入口と2入口のステージが順番に登場します。クリアすると次へ進めます。';
+ for(let section=0;section<Math.ceil(TOTAL_STAGES/10);section++){
   const heading=document.createElement('h3');heading.className='stage-chapter-heading';
-  const first=section*10+1,last=Math.min(first+9,total);
-  heading.textContent=stageTab==='normal'?`通常 ${first}〜${last}`:`2入口 T${String(first).padStart(2,'0')}〜T${String(last).padStart(2,'0')}`;
-  gridEl.appendChild(heading);
+  const first=section*10+1,last=Math.min(first+9,TOTAL_STAGES);
+  heading.textContent=`ステージ ${first}〜${last}`;gridEl.appendChild(heading);
   for(let n=first;n<=last;n++){
-   const abs=stageTab==='normal'?n:n+100;
-   const score=Number(stageTab==='normal'?progress.cleared[n]||0:progress.dualCleared[n]||0);
-   const locked=stageTab==='normal'?n>progress.unlocked:!dualAccessible(n);
+   const s=STAGES[n-1],score=Number(progress.cleared[n]||0),locked=n>progress.unlocked;
    const button=document.createElement('button');button.type='button';
-   button.className='stage-choice'+(abs===stage?' active':'')+(locked?' locked':'')+(score?' cleared':'');
+   button.className='stage-choice'+(n===stage?' active':'')+(locked?' locked':'')+(score?' cleared':'')+(s.type==='dual'?' dual-stage':'');
    button.disabled=locked;
-   button.setAttribute('aria-label',`${stageTab==='normal'?'ステージ':'チャレンジ'}${n}${locked?'（未解放）':score?'（星'+score+'個）':''}`);
-   button.innerHTML=`<span>${stageTab==='normal'?n:'T'+String(n).padStart(2,'0')}</span><small>${score?'★'.repeat(score):locked?'🔒 未解放':abs===stage?'プレイ中':'挑戦'}</small>`;
-   if(!locked)button.onclick=()=>{closeStageScreen();loadStage(abs)};
+   button.setAttribute('aria-label',`ステージ${n}${s.type==='dual'?'（2入口）':''}${locked?'（未解放）':score?'（星'+score+'個）':''}`);
+   button.innerHTML=`<span>${s.type==='dual'?'🔀 ':''}${n}</span><small>${score?'★'.repeat(score):locked?'🔒 未解放':n===stage?'プレイ中':s.type==='dual'?'2入口':'挑戦'}</small>`;
+   if(!locked)button.onclick=()=>{closeStageScreen();loadStage(n)};
    gridEl.appendChild(button);
   }
  }
@@ -556,7 +592,7 @@ function closeStageScreen(){$('stageScreen').hidden=true;$('stageButton').focus(
 
 function renderStats(){
  $('level').textContent=Math.max(1,Math.ceil(progress.unlocked/2));$('stars').textContent=Object.values(progress.cleared).reduce((a,b)=>a+Number(b||0),0);
- $('run').textContent=playing?'⏸ 一時停止':runStarted?'▶ 生産再開':'▶ 生産開始';$('run').disabled=finished||failed;$('rotate').disabled=runStarted||finished||failed||selected!==null&&grid[selected]?.type==='cross';
+ $('run').textContent=playing?'⏸ 一時停止':runStarted?'▶ 生産再開':'▶ 生産開始';$('run').disabled=finished||failed;
  renderLot();
 }
 function renderAll(){renderBoard();renderTools();renderInspector();renderStats()}
@@ -580,7 +616,10 @@ function cellClick(x,y){
  grid[i]={type:tool,dir:c?.dir??1,value:defaultValue(tool)};selected=i;renderAll();
  status(`${TYPES[tool].name}に${c&&c.type!=='belt'?'交換':'設置'}しました。右側で${['add','sub','mul','div','mod'].includes(tool)?'計算する数を設定':'向きを確認'}してください。`);
 }
-function reset(){stop();tokens=[];ticks=0;delivered=0;rejected=0;waste=0;spawned=0;serial=0;finished=false;failed=false;runStarted=false;crossPass={};usedRoutes=new Set();lotState=current().inputs.map(()=>'pending');$('failModal').classList.add('hidden');for(const c of grid)if(c?.type==='split')c.flip=0;status('設計を編集できます。装置はそのまま残っています。');renderAll()}
+function reset(){
+ loadStage(stage);
+ status('装置・コンベアの配置と設定をステージ開始時の状態に戻しました。');
+}
 function process(v,c){switch(c.type){case 'add':v+=c.value;break;case 'sub':v-=c.value;break;case 'mul':v*=c.value;break;case 'div':if(v%c.value!==0)return null;v/=c.value;break;case 'mod':v%=c.value;break;case 'square':v*=v;break;case 'even':if(v%2)return null;break;}if(!Number.isSafeInteger(v)||Math.abs(v)>1000000)return null;return v}
 function fail(reason){stop();failed=true;waste++;$('failText').textContent=reason+'\nすべての材料を仕様どおり加工する必要があります。配置や装置の設定を見直してください。';$('failModal').classList.remove('hidden');status('⚠ 検品不合格：'+reason,true);renderAll()}
 function tick(){
@@ -654,22 +693,16 @@ function tick(){
 function complete(){
  stop();finished=true;let score=1;if(used()<=current().limit)score++;
  if(isDual()){
-  // The third star is for an economical number of placed conveyor/crossing tiles.
   if(usedRoutes.size<=current().starBelts)score++;
-  const n=dualIndex(),old=Number(progress.dualCleared[n]||0);progress.dualCleared[n]=Math.max(old,score);
-  progress.dualUnlocked=Math.max(progress.dualUnlocked,Math.min(30,n+1));
- }else{
-  if(ticks<=current().time)score++;
-  const old=Number(progress.cleared[stage]||0);progress.cleared[stage]=Math.max(old,score);
-  progress.unlocked=Math.max(progress.unlocked,Math.min(NORMAL_STAGES,stage+1));
- }
+ }else if(ticks<=current().time)score++;
+ progress.cleared[stage]=Math.max(Number(progress.cleared[stage]||0),score);
+ progress.unlocked=Math.max(progress.unlocked,Math.min(TOTAL_STAGES,stage+1));
  persist();renderStageScreen();
  $('modalStars').textContent='★'.repeat(score)+'☆'.repeat(3-score);
  $('modalText').textContent=isDual()?`2つの商品を${current().rule==='same'?'同時':'指定順'}に納品！
 装置 ${used()}台・搬送 ${ticks} tick`:`全${current().inputs.length}素材を正しく処理！ 良品${delivered}個・検品除外${rejected}個。
 経過 ${ticks} tick ・ 装置 ${used()}台`;
- const canNext=isDual()?dualIndex()<30&&dualAccessible(dualIndex()+1):stage<NORMAL_STAGES;
- $('next').style.display=canNext?'inline-block':'none';$('modal').classList.remove('hidden');
+ $('next').style.display=stage<TOTAL_STAGES?'inline-block':'none';$('modal').classList.remove('hidden');
  status(`注文達成！ ${score}★`);renderAll();
 }
 function toggleRun(){
@@ -706,11 +739,11 @@ function endDrag(){if(dragging){dragging=false;lastDrag=null;selected=null;rende
 board.addEventListener('pointerup',endDrag);board.addEventListener('pointercancel',endDrag);
 board.addEventListener('click',e=>{if(ignoreNextClick){ignoreNextClick=false;return}const cell=e.target.closest('.cell');if(!cell||!board.contains(cell))return;cellClick(Number(cell.dataset.x),Number(cell.dataset.y))});
 board.addEventListener('contextmenu',e=>{e.preventDefault();if(runStarted||finished||failed)return;const c=e.target.closest('.cell');if(!c)return;const x=Number(c.dataset.x),y=Number(c.dataset.y),data=at(x,y);if(data&&!['input','output','wall','cross'].includes(data.type)){data.dir=(data.dir+1)%4;selected=idx(x,y);renderAll();status('右クリックで向きを変更しました。')}});
-$('run').onclick=toggleRun;$('reset').onclick=reset;$('rotate').onclick=rotateSelected;
+$('run').onclick=toggleRun;$('reset').onclick=reset;
 $('speed').onchange=()=>{try{localStorage.setItem('math_factory_speed',String($('speed').value))}catch{}if(playing){stop();toggleRun()}};
 try{const speed=localStorage.getItem('math_factory_speed');if(['800','400','180'].includes(speed))$('speed').value=speed}catch{}
-$('replay').onclick=()=>loadStage(stage);$('next').onclick=()=>loadStage(isDual()?Math.min(130,stage+1):Math.min(100,stage+1));$('retryDesign').onclick=reset;
-$('stageButton').onclick=openStageScreen;$('normalTab').onclick=()=>{stageTab='normal';renderStageScreen()};$('dualTab').onclick=()=>{stageTab='dual';renderStageScreen()};$('closeStageScreen').onclick=closeStageScreen;$('stageScreen').addEventListener('click',e=>{if(e.target===$('stageScreen'))closeStageScreen()});
+$('replay').onclick=()=>loadStage(stage);$('next').onclick=()=>loadStage(Math.min(TOTAL_STAGES,stage+1));$('retryDesign').onclick=reset;
+$('stageButton').onclick=openStageScreen;$('closeStageScreen').onclick=closeStageScreen;$('stageScreen').addEventListener('click',e=>{if(e.target===$('stageScreen'))closeStageScreen()});
 document.addEventListener('keydown',e=>{if(!$('stageScreen').hidden){if(e.code==='Escape')closeStageScreen();return}if(e.target.matches('input,select,textarea'))return;if(e.code==='KeyR')rotateSelected();if(e.code==='Space'){e.preventDefault();toggleRun()}if(e.code==='Escape'&&selected!==null){selected=null;renderAll()}if(e.code==='Delete'&&selected!==null&&grid[selected]&&!['input','output','wall','cross'].includes(grid[selected].type)&&!runStarted&&!finished&&!failed){grid[selected]=null;selected=null;renderAll()}});
 loadStage(progress.lastStage||1);
 </script>
