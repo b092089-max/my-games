@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#10202b">
-<title>MATH FACTORY — 数学ファクトリー v1.7.0</title>
+<title>MATH FACTORY — 数学ファクトリー v1.7.1</title>
 <style>
 :root{--bg:#0d1a22;--panel:#172831;--panel2:#20343d;--line:#36515b;--text:#f2f7f6;--muted:#a5bec4;--mint:#4fe0bc;--amber:#ffbf62;--steel:#304951;--red:#ff8582;--tile:58px}
 *{box-sizing:border-box}
@@ -64,7 +64,7 @@ button,input,select{font:inherit}button{border:1px solid #46616b;border-radius:1
 .batch-value.long-number{font-size:clamp(25px,3vw,39px);letter-spacing:-.055em;overflow-wrap:anywhere}
 @media(max-width:740px){.batch-value.long-number{font-size:clamp(28px,9vw,43px)}}
 
-/* v1.7.0 - compact game-first layout */
+/* v1.7.1 - compact game-first layout */
 .app{width:min(1560px,100%)}
 .batch-ticket{padding:13px 17px 15px;margin:0 0 12px;border-width:1px;border-radius:13px}
 .batch-ticket:before{height:4px}
@@ -140,7 +140,7 @@ button,input,select{font:inherit}button{border:1px solid #46616b;border-radius:1
  .inspector-empty{padding:11px}
 }
 
-/* v1.7.0 - order beside tools, dedicated stage selection screen */
+/* v1.7.1 - order beside tools, dedicated stage selection screen */
 .app{width:min(1560px,100%)}
 .headright{align-items:center}
 .stage-nav-button{min-height:47px;padding:10px 17px;font-size:14px;font-weight:850;border:1px solid #e1b66b;color:#ffdf9d;background:linear-gradient(135deg,#57462c,#2a4650);box-shadow:0 3px 10px #0003;white-space:nowrap}
@@ -189,7 +189,7 @@ button,input,select{font:inherit}button{border:1px solid #46616b;border-radius:1
 @media(max-width:1190px){.layout{grid-template-columns:minmax(220px,.95fr) minmax(225px,1.05fr)}.workspace{grid-column:1/-1;grid-row:2}}
 @media(max-width:740px){.layout{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:9px}.workspace{grid-column:1/-1;grid-row:auto}.headright{width:100%;align-items:stretch}.stage-nav-button{flex:1}.statpill{flex:1;min-width:0}.stage-screen-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}.stage-screen-wrap{padding:14px}}
 @media(max-width:550px){.layout{grid-template-columns:minmax(0,1fr)}.workspace{grid-column:auto}.order-summary .batch-list{grid-template-columns:repeat(auto-fit,minmax(185px,1fr))}.order-summary .batch-item{min-width:0}.stage-choice{min-height:54px}.stage-choice span{font-size:16px}}
-/* v1.7.0 — choose/select and erase modes side by side */
+/* v1.7.1 — choose/select and erase modes side by side */
 .mode-tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:0 0 12px}
 .mode-tools .tool-card{min-width:0;min-height:65px;padding:6px 5px;flex-direction:column;justify-content:center;gap:5px;text-align:center}
 .mode-tools .tool-icon{width:35px;height:31px;font-size:19px}
@@ -199,7 +199,7 @@ button,input,select{font:inherit}button{border:1px solid #46616b;border-radius:1
 .board.erase-mode .cell:not(.input):not(.output):not(.wall):not(.is-empty):hover{outline:3px solid #ff8e8a;outline-offset:-3px}
 @media(max-width:550px){.mode-tools{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
-/* v1.7.0: two-inlet challenge and accessible stage tabs */
+/* v1.7.1: two-inlet challenge and accessible stage tabs */
 .delivery-rule{background:#28515a;border:1px solid #80c9c9;color:#e0fffd;font-size:14px;font-weight:900;text-align:center;border-radius:10px;margin-top:10px;padding:10px 7px}
 .delivery-rule[hidden]{display:none!important}
 .stage-tabs{display:flex;gap:9px;margin-top:16px;flex-wrap:wrap}
@@ -210,7 +210,7 @@ button,input,select{font:inherit}button{border:1px solid #46616b;border-radius:1
 .token-a{border-color:#74cfff!important;background:linear-gradient(#d5eeff,#76c6fa)!important}
 .token-b{border-color:#ffdf86!important;background:linear-gradient(#fff0be,#ffce6a)!important}
 @media(max-width:550px){.stage-tabs button{min-width:0;font-size:12px}}
-/* v1.7.0: simplify the three controls, fixed one-row arrangement */
+/* v1.7.1: simplify the three controls, fixed one-row arrangement */
 .main-controls{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr) minmax(0,1fr);gap:8px;align-items:stretch}
 .main-controls>*{min-width:0;width:100%;margin:0}
 .main-controls .runbtn,.main-controls .subbtn{min-height:49px;padding:8px 5px;white-space:nowrap}
@@ -219,6 +219,130 @@ button,input,select{font:inherit}button{border:1px solid #46616b;border-radius:1
 .stage-choice.dual-stage{border-color:#5eb9ae;background:#28504d}
 .stage-choice.dual-stage.active{background:#765933;border-color:#ffd28b}
 @media(max-width:550px){.main-controls{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr) minmax(0,1fr);gap:5px}.main-controls .runbtn,.main-controls .subbtn{font-size:12px;padding:8px 2px}.main-controls .speedlabel{font-size:10px;padding:3px;gap:3px}.main-controls .speedlabel select{font-size:11px}}
+
+/* v1.7.1 — Industrial polish (CSS-only, compatible with future sprite assets) */
+:root {--factory-ink:#07151c;--factory-rim:#738d98;--factory-warm:#f0bc65;--factory-green:#68e3bc;}
+body{
+ background:
+  radial-gradient(ellipse at 72% -20%,#234b51b3 0%,transparent 43%),
+  linear-gradient(180deg,#071821 0%,#0c1e27 55%,#091720 100%);
+}
+.head{border-bottom:1px solid #5c7b854a;padding-bottom:14px;margin-bottom:15px}
+.logo{background:linear-gradient(145deg,#395e63,#1c3b45);border:1px solid #68878c;box-shadow:inset 0 1px 0 #ffffff50,inset 0 -4px 12px #03111f66,0 4px 12px #0006}
+.brand{letter-spacing:.013em;text-shadow:0 2px 10px #0005}
+.panel{border-color:#4b6972;background:linear-gradient(155deg,#203a43 0%,#13262f 90%);box-shadow:inset 0 1px #ffffff10,0 11px 24px #0005}
+.stage-nav-button{background:linear-gradient(165deg,#775832,#423f35);box-shadow:inset 0 1px #ffffff28,0 4px 14px #0006}
+.statpill{background:linear-gradient(#263f49,#1c343d);box-shadow:inset 0 1px #ffffff14}
+.order-summary{border-bottom-color:#54747d}
+.mini-order-title{color:#ffe0a5}
+.order-summary .batch-item{border:1px solid #6b8994;background:linear-gradient(155deg,#2f4c57,#1e3540);box-shadow:inset 0 1px #ffffff22,0 3px 8px #0005}
+.order-summary .batch-side{background:linear-gradient(170deg,#123547,#0b2331);box-shadow:inset 0 2px 4px #0004}
+.order-summary .batch-side.out{background:linear-gradient(165deg,#155e50,#0d3b35);border-color:#66bda2}
+.order-summary .batch-value{filter:drop-shadow(0 2px 4px #0007)}
+.delivery-rule{background:linear-gradient(120deg,#2d6064,#244b53);border-color:#83c4b5;box-shadow:inset 0 1px #ffffff20}
+.mini-required{background:linear-gradient(145deg,#3d423e,#303a3e);border-color:#9e8255}
+.tool-card{position:relative;overflow:hidden;background:linear-gradient(160deg,#2c4853,#203944);border-color:#526d79;box-shadow:inset 0 1px #ffffff16,0 2px 5px #0003;transition:background .15s,border-color .15s,box-shadow .15s}
+.tool-card:before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:3px;border-radius:2px;background:var(--tool-color,#7d9aa5);opacity:.7}
+.tool-card:not(:disabled):hover{border-color:#c9d9d1;box-shadow:inset 0 1px #ffffff28,0 3px 12px #0006}
+.tool-card.active{background:linear-gradient(145deg,#5a533d,#394a47);border-color:#ffd48a;box-shadow:0 0 0 1px #dba950,inset 0 1px #fff6d338,0 0 12px #f9c86b26}
+.tool-card.active:before{background:#ffd07e;opacity:1}
+.tool-card .tool-icon{background:linear-gradient(145deg,color-mix(in srgb,var(--tool-color,#49616c),#f3f7f4 18%),color-mix(in srgb,var(--tool-color,#49616c),#03131a 21%));border:1px solid #ffffff40;box-shadow:inset 0 1px #ffffff42,inset 0 -3px #00131c4a,0 2px 4px #00121c8c}
+.tool-card.mode-erase.active{background:linear-gradient(155deg,#744549,#472f39)}
+.pal-footer{border:1px solid #47616b;background:#213842}
+.settings-panel .inspector-empty{background:radial-gradient(circle at 50% 5%,#365966,#243b45 65%);border-color:#65828b;box-shadow:inset 0 1px #ffffff15}
+.inspect-unit{background:linear-gradient(150deg,#29434c,#1a333d);box-shadow:inset 0 1px #ffffff13}
+.number-line input{box-shadow:inset 0 2px 6px #0005}
+.direction-pad button.on{background:linear-gradient(#ffe09e,#e3ac5f);box-shadow:inset 0 1px #fff5d7,0 0 0 1px #ddaa58}
+.workspace{background:linear-gradient(160deg,#1c3540,#10252e)}
+.workhead{background:linear-gradient(95deg,#2a4852,#1b333e);border-bottom:1px solid #54707a;box-shadow:inset 0 1px #ffffff1b}
+.workhead h2{color:#e3f3f6;letter-spacing:.035em}
+.board-shell{background:linear-gradient(180deg,#1a323d,#142b34);border-bottom-color:#4a6772;padding:12px 12px 15px}
+.board-outer{
+ position:relative;
+ padding:14px;
+ border:2px solid #536f7c;
+ border-radius:13px;
+ background:linear-gradient(165deg,#132c35,#091c27);
+ box-shadow:inset 0 0 0 4px #0a1e2880,inset 0 9px 24px #0008,0 2px 0 #728d9450;
+ scrollbar-color:#557583 #17333d;
+}
+.board{gap:3px;filter:drop-shadow(0 4px 7px #0005)}
+/* Replace the flat board with deep steel panels and a restrained grid */
+.cell{
+ border:1px solid #506f78;
+ border-radius:6px;
+ background:linear-gradient(145deg,#2a454e 0%,#243a45 49%,#1c323d 100%);
+ box-shadow:inset 0 1px 0 #ffffff15,inset 0 -3px 0 #0819237a,0 1px 2px #030b11b3;
+ isolation:isolate;
+}
+.cell:before{background:
+ linear-gradient(145deg,#ffffff0c 0%,transparent 37%,#0000001f 100%);
+ z-index:0;
+}
+.cell.is-empty:after{content:"·";font-size:14px;color:#5a7e87;font-weight:700;opacity:.72;z-index:1}
+.cell:not(.input):not(.output):not(.wall):hover{outline:2px solid #ffd48b;outline-offset:-2px;filter:brightness(1.11)}
+.cell.selected{outline:3px solid #ffdc9b!important;outline-offset:-2px;box-shadow:inset 0 1px #ffffff4a,0 0 15px #ffcc7455;z-index:3}
+/* Rails and moving rollers: the arrows remain real directional information */
+.cell.belt{
+ border:2px solid #879da6;
+ background:
+  linear-gradient(0deg,#d5e3e833 0 2px,transparent 2px calc(100% - 3px),#d5e3e833 calc(100% - 3px)),
+  repeating-linear-gradient(90deg,#566a74 0 6px,#344956 6px 9px,#233844 9px 12px);
+ box-shadow:inset 0 2px #e8f2f540,inset 0 -4px #0c1a258c,0 2px 5px #0005;
+}
+.cell.belt .belttrack{inset:10px 2px;border-top:2px solid #abc2cc;border-bottom:2px solid #abc2cc;opacity:.82;background:repeating-linear-gradient(90deg,#c0d9de99 0px,#c0d9de99 4px,transparent 4px,transparent 12px);box-shadow:0 1px 3px #0a1923a8}
+.cell.belt .sym{font-size:20px;line-height:1;color:#fff6db;text-shadow:0 1px 2px #00121a,0 0 5px #0008;z-index:2}
+/* Mechanical units: beveled plates with a readable luminous mathematical face */
+.cell:not(.belt):not(.input):not(.output):not(.is-empty):not(.wall):not(.cross){
+ border:2px solid color-mix(in srgb,var(--machine) 58%,#bed0ce);
+ border-radius:7px;
+ background:
+  linear-gradient(180deg,#ffffff24 0%,transparent 22%,#00000022 80%,#010b1445 100%),
+  linear-gradient(145deg,color-mix(in srgb,var(--machine) 68%,#3a535b),color-mix(in srgb,var(--machine) 37%,#112932));
+ box-shadow:inset 0 2px #ffffff42,inset 0 -5px #00101980,0 2px 7px #0008;
+}
+.cell:not(.belt):not(.input):not(.output):not(.is-empty):not(.wall):not(.cross):after{
+ content:"";pointer-events:none;position:absolute;inset:7px 7px 12px;border-radius:5px;
+ background:linear-gradient(155deg,#021927b5,#102a3680);
+ border:1px solid #e8f7ff40;box-shadow:inset 0 2px 6px #0008;
+ z-index:0;
+}
+.cell .sym{z-index:2;text-shadow:0 2px 3px #001522,0 0 11px #09182055}
+.cell:not(.belt):not(.input):not(.output):not(.is-empty):not(.wall):not(.cross) .sym{font-size:25px;color:#fcf9e7;filter:drop-shadow(0 0 3px #ffffff4a)}
+.cell .machine-name{z-index:3;top:2px;left:3px;font-size:9px;color:#f1fbff;line-height:1.1;text-shadow:0 1px 3px #001722}
+.cell .mini{z-index:4;bottom:2px;left:3px;border:1px solid #ffffff45;background:#071b27df;color:#fff4ce;font-size:10px;line-height:1.1;padding:1px 3px}
+.cell .direction{z-index:3;font-size:17px;right:2px;bottom:2px;color:#ffe6a6;text-shadow:0 1px 3px #000}
+.cell.input,.cell.output{border-radius:7px;box-shadow:inset 0 2px #ffffff3e,inset 0 -5px #04172373,0 0 10px #67cbdf25}
+.cell.input{background:linear-gradient(145deg,#3287b8,#18517d 66%,#0a3558);border:2px solid #8cd2ff}
+.cell.output{background:linear-gradient(145deg,#35aa8d,#146a56 65%,#0c483d);border:2px solid #90f1cc}
+.cell .io-mark{z-index:3;font-size:10px;left:5px;top:3px;color:#f8ffff;text-shadow:0 2px 3px #0009}
+.cell .io-num{z-index:2;font-size:25px;filter:drop-shadow(0 2px 4px #0008)}
+.cell.wall{background:repeating-linear-gradient(135deg,#667179 0 8px,#333e46 8px 15px)!important;border:2px solid #e3b760!important;box-shadow:inset 0 0 0 3px #24343e,inset 0 2px #ffffff35,0 3px 6px #0008}
+.cell.wall .wall-icon{z-index:2;filter:drop-shadow(0 2px 2px #0009)}
+.cell.wall .wall-label{z-index:2}
+.cell.cross{background:linear-gradient(160deg,#386f77,#1d3b53)!important;border:2px solid #8ce6df!important;box-shadow:inset 0 2px #ffffff38,inset 0 -5px #071f29b3,0 0 9px #6bdddb3b!important}
+.cell.cross .sym{font-size:32px;color:#e5ffff;text-shadow:0 0 7px #9ce8ea}
+.token{z-index:5;border-radius:9px;box-shadow:inset 0 2px #fff8da9a,0 3px 8px #000b,0 0 12px #ffda7b70;min-width:33px;min-height:30px;font-size:16px;font-weight:950;font-variant-numeric:tabular-nums}
+.token-a{box-shadow:inset 0 2px #f8fdffa0,0 3px 8px #000b,0 0 12px #66c9ff99}
+.token-b{box-shadow:inset 0 2px #fffbe2a0,0 3px 8px #000b,0 0 12px #ffd26680}
+.board.is-running .cell.belt .belttrack{animation:factory-rollers .45s linear infinite}
+.board.is-running .cell:not(.belt):not(.input):not(.output):not(.wall):not(.is-empty):not(.cross) .sym{animation:factory-machine-light 1.4s ease-in-out infinite}
+.board.is-running .cell.output{animation:factory-output-ready 2.2s ease-in-out infinite}
+@keyframes factory-rollers{to{background-position:12px 0}}
+@keyframes factory-machine-light{50%{filter:drop-shadow(0 0 5px #ffe0a6)}}
+@keyframes factory-output-ready{50%{box-shadow:inset 0 2px #ffffff3e,inset 0 -5px #04172373,0 0 14px #69edc260}}
+.workbottom{background:linear-gradient(#1b3540,#142b35)}
+.main-controls .runbtn{background:linear-gradient(180deg,#53d0a5,#209176);border-color:#9dffdb;box-shadow:inset 0 1px #ffffff63,0 3px 0 #125947,0 6px 12px #0004}
+.main-controls .runbtn:hover:not(:disabled){background:linear-gradient(#66e2bb,#35a789)}
+.main-controls .subbtn{background:linear-gradient(#34505e,#263f4e);box-shadow:inset 0 1px #ffffff20}
+.main-controls .speedlabel{background:linear-gradient(#31505c,#213c47);box-shadow:inset 0 1px #ffffff20}
+.message{background:linear-gradient(110deg,#264753,#213942);border-color:#44666e;color:#e5f3f2}
+.message.warn{background:linear-gradient(120deg,#4a3539,#302a34);border-color:#b16d69}
+.modalbox{box-shadow:inset 0 1px #ffffff37,0 25px 90px #000c}
+.stage-screen-wrap{box-shadow:inset 0 1px #ffffff1f,0 22px 80px #000b}
+@media(max-width:740px){.board-shell{padding:8px 6px 11px}.board-outer{padding:9px}.head{margin-bottom:10px}}
+@media(prefers-reduced-motion:reduce){.board.is-running .cell.belt .belttrack,.board.is-running .cell.output,.board.is-running .cell .sym{animation:none!important}}
+
 </style>
 </head>
 <body>
@@ -226,7 +350,7 @@ button,input,select{font:inherit}button{border:1px solid #46616b;border-radius:1
   <header class="head">
     <div class="identity">
       <div class="logo" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="M5 40V23l12 7V20l12 9V13h6v12l8 5v10H5Z" fill="#f0bd69" stroke="#ffe1a1" stroke-width="2" stroke-linejoin="round"/><path d="M12 34h5m7 0h5m6 0h4" stroke="#31535a" stroke-width="3" stroke-linecap="round"/><path d="M31 13V5h4v8" fill="#c4dcdf" stroke="#c4dcdf" stroke-width="2"/></svg></div>
-      <div><div class="eyebrow">Build · Calculate · Automate</div><div class="brand">MATH <span>FACTORY</span><span class="version">v1.7.0</span></div><div class="small">数字をつくる、ちいさな工場。</div></div>
+      <div><div class="eyebrow">Build · Calculate · Automate</div><div class="brand">MATH <span>FACTORY</span><span class="version">v1.7.1</span></div><div class="small">数字をつくる、ちいさな工場。</div></div>
     </div>
     <div class="headright"><button type="button" id="stageButton" class="stage-nav-button">🗺 ステージ選択</button><div class="statpill"><small>🏭 工場レベル</small><strong id="level">1</strong></div><div class="statpill"><small>⭐ 獲得スター</small><strong id="stars">0</strong></div></div>
   </header>
@@ -285,7 +409,7 @@ const STAGES=[
  mk(8,[7,9,11],[4,6,8],"ひとつの装置で量産",["sub"],{"sub":1},1,26,"迂回しながら3件の注文を達成しよう。",[[5,3]]),
 ];
 
-// v1.7.0: Four kinds of factory stages; by stage 40 every kind has reached its difficulty ceiling.
+// v1.7.1: Four kinds of factory stages; by stage 40 every kind has reached its difficulty ceiling.
 // Each stage carries a verified recipe and layout for offline regression testing only;
 // the player interface never displays its recipe, solution order or transport route.
 const RECIPE_LIBRARY=[
