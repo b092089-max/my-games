@@ -451,12 +451,68 @@ button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,inpu
 }
 @media(prefers-reduced-motion:reduce){.game-setup .cell,.game-choice .handbtn{transition:none}}
 
+
+/* v0.1.28: restrained play, cinematic decisive moments */
+.janken-stage{position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(ellipse at 50% 48%,#263f6b 0%,#1a2948 47%,#0e1930 100%);border-color:#7896bf}
+.janken-stage:before{content:"";position:absolute;inset:-38%;z-index:-1;pointer-events:none;background:repeating-conic-gradient(from 0deg at 50% 50%,transparent 0deg 27deg,#64caff0b 28deg 29deg,transparent 30deg 60deg);animation:strategy-halo 28s linear infinite}
+.janken-stage:after{content:"";position:absolute;inset:9% 10%;z-index:-1;border:1px solid #68b6fc29;border-radius:50%;box-shadow:0 0 85px #34b8ed1b,inset 0 0 38px #34b8ed16;pointer-events:none}
+.janken-heading{position:relative;color:#ffefcb;text-shadow:0 4px 16px #050b1c,0 0 30px #ffd3838c;animation:strategy-anticipation 2.8s ease-in-out infinite}
+.janken-stage .pon-button{position:relative;isolation:isolate;background:linear-gradient(180deg,#fff2b9 0%,#f9cf74 44%,#dd8a37 100%);border-color:#fff2ce;box-shadow:0 9px 0 #81501e,0 16px 35px #0009,0 0 40px #efbd6570;animation:strategy-ready-pulse 2.35s ease-in-out infinite}
+.janken-stage .pon-button:active{animation:none}
+.result-panel{isolation:isolate}
+.reveal-cinematic:before{content:"";position:fixed;inset:0;background:#efffff;z-index:80;pointer-events:none;animation:strategy-screen-flash .72s ease-out forwards}
+.reveal-cinematic:after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 50% 7%,#ffdf9061,transparent 55%);animation:strategy-burst 1.3s ease-out forwards}
+.reveal-cinematic .reveal-impact{z-index:4;filter:drop-shadow(0 0 24px #ffd289);animation:pon-impact .9s cubic-bezier(.2,.7,.3,1) forwards}
+.reveal-player{position:relative;isolation:isolate;overflow:hidden}
+.reveal-player .reveal-hand{position:relative;z-index:1}
+.reveal-player.win{box-shadow:0 0 18px #4be4ad35,inset 0 0 24px #42db9e18}
+.reveal-player.lose{box-shadow:0 0 16px #e7787e33,inset 0 0 20px #e7787e15}
+.reveal-player.draw{box-shadow:0 0 16px #aaadff35}
+.reveal-cinematic .reveal-player.win .reveal-hand{animation:strategy-hand-win .8s 1.1s cubic-bezier(.18,.82,.25,1.13) both}
+.reveal-cinematic .reveal-player.lose .reveal-hand{animation:strategy-hand-lose .66s 1.12s ease both}
+.reveal-cinematic .reveal-player.draw .reveal-hand{animation:strategy-hand-draw .65s 1.1s ease both}
+.reveal-damage{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:7px;min-height:38px}
+.reveal-damage strong{font-size:clamp(1.38rem,3vw,2.05rem);font-variant-numeric:tabular-nums}
+.reveal-damage.critical strong{color:#ffd26f;text-shadow:0 0 16px #ff7f4b8c}
+.reveal-damage.blocked strong{color:#96eacb}
+.damage-callout{font-size:.75rem;border-radius:30px;border:1px solid #bd9c5d;padding:3px 8px;color:#fff2bc;background:#553927;font-weight:900}
+.reveal-damage.blocked .damage-callout{color:#b8ffe8;border-color:#4ba58d;background:#174638}
+.reveal-cinematic .reveal-damage.critical strong{animation:strategy-damage-burst .65s 1.55s both}
+.reveal-cinematic .damage-callout{animation:strategy-label-pop .5s 1.65s both}
+.battle-hp-track{height:11px;width:min(100%,265px);margin:8px auto 0;background:#2c3950;border-radius:20px;overflow:hidden;border:1px solid #405372}
+.battle-hp-fill{display:block;height:100%;border-radius:20px;background:linear-gradient(90deg,#3aaecf,#7cddad);width:var(--hp-after);transform-origin:left;transition:none}
+.battle-hp-fill.danger{background:linear-gradient(90deg,#d66b6b,#edb067)}
+.reveal-cinematic .battle-hp-fill{animation:strategy-hp-loss 1.13s 1.65s cubic-bezier(.25,.65,.24,1) backwards}
+.gameover-finale{position:relative;isolation:isolate;overflow:hidden;max-width:860px;margin:35px auto;padding:clamp(26px,5vw,55px);background:radial-gradient(ellipse at 50% 0%,#40517a,#192847 50%,#111b32 100%);border:2px solid #bba271}
+.gameover-finale:before{content:"";position:absolute;inset:-40%;z-index:-1;pointer-events:none;background:repeating-conic-gradient(from 0deg,transparent 0 26deg,#f8cf6610 27deg 29deg,transparent 30deg 60deg);animation:strategy-halo 32s linear infinite}
+.gameover-finale .symbol{filter:drop-shadow(0 0 18px #ffd57b9c);animation:strategy-trophy-in 1.2s cubic-bezier(.15,.8,.24,1.16) both}
+.gameover-finale h1{font-size:clamp(2rem,5vw,3.5rem);color:#ffedbf;text-shadow:0 3px 10px #000b,0 0 25px #f8c36569}
+.gameover-finale.tie{border-color:#729bc3;background:radial-gradient(ellipse at 50% 0%,#334c72,#17243b 70%)}
+.gameover-finale.tie h1{color:#daeaff}
+.finale-sparkles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.finale-sparkles i{position:absolute;left:var(--sx);top:var(--sy);color:#ffe6a4;font-size:clamp(12px,2vw,23px);opacity:0;animation:strategy-sparkle 3.2s var(--sd) ease-in-out infinite;font-style:normal}
+@keyframes strategy-halo{to{transform:rotate(360deg)}}
+@keyframes strategy-anticipation{0%,100%{transform:scale(1);filter:brightness(1)}50%{transform:scale(1.025);filter:brightness(1.16)}}
+@keyframes strategy-ready-pulse{0%,100%{box-shadow:0 9px 0 #81501e,0 16px 35px #0009,0 0 25px #f4bb6559}50%{box-shadow:0 9px 0 #81501e,0 16px 35px #0009,0 0 49px #f9cc8299}}
+@keyframes strategy-screen-flash{0%{opacity:.97}22%{opacity:.78}100%{opacity:0;visibility:hidden}}
+@keyframes strategy-burst{0%{opacity:.9;transform:scale(.75)}100%{opacity:0;transform:scale(1.3)}}
+@keyframes strategy-hand-win{0%{transform:scale(.6);filter:brightness(2)}70%{transform:scale(1.2);filter:brightness(1.65)}100%{transform:scale(1);filter:brightness(1)}}
+@keyframes strategy-hand-lose{0%{transform:rotate(-8deg) translateY(-12px);filter:brightness(1.2)}70%{transform:rotate(3deg) translateY(8px);filter:brightness(.8)}100%{transform:none;filter:none}}
+@keyframes strategy-hand-draw{0%{transform:scale(.85)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
+@keyframes strategy-damage-burst{0%{opacity:0;transform:scale(2.6)}60%{opacity:1;transform:scale(1.18)}100%{opacity:1;transform:scale(1)}}
+@keyframes strategy-label-pop{0%{opacity:0;transform:translateY(14px) scale(.7)}100%{opacity:1;transform:none}}
+@keyframes strategy-hp-loss{from{width:var(--hp-before)}to{width:var(--hp-after)}}
+@keyframes strategy-trophy-in{0%{opacity:0;transform:translateY(20px) scale(.5)}70%{opacity:1;transform:translateY(-7px) scale(1.13)}100%{transform:none;opacity:1}}
+@keyframes strategy-sparkle{0%,100%{opacity:0;transform:scale(.4) rotate(-25deg)}48%{opacity:.95;transform:scale(1.1) rotate(30deg)}}
+@media(max-width:600px){.janken-stage:after{inset:9% 0}.gameover-finale{margin:12px auto;padding:23px 13px}.reveal-damage{gap:4px}.damage-callout{font-size:.66rem;padding:2px 5px}}
+@media(prefers-reduced-motion:reduce){.janken-stage:before,.janken-heading,.janken-stage .pon-button,.gameover-finale:before,.gameover-finale .symbol,.finale-sparkles i{animation:none!important}.reveal-cinematic:before,.reveal-cinematic:after{display:none!important}.reveal-cinematic .reveal-player .reveal-hand,.reveal-cinematic .reveal-damage strong,.reveal-cinematic .damage-callout,.reveal-cinematic .battle-hp-fill{animation:none!important}}
+
 </style>
 </head>
 <body><main id="app" class="wrap"></main>
 <script>
 'use strict';
-const VERSION='0.1.27';
+const VERSION='0.1.28';
 const HANDS=[{label:'グー',emoji:'✊'},{label:'チョキ',emoji:'✌️'},{label:'パー',emoji:'✋'}];
 const RULES=[
  {id:'normal',name:'通常バトル',short:'通常',desc:'すべての数字をそのまま掛け算します。'},
@@ -685,7 +741,7 @@ function jankenScreen(){return `${pStatus()}<section class="janken-stage" aria-l
 function showJanken(){if(!state.choiceIds.length||!state.choiceIds.every(id=>player(id)?.choice!==null&&player(id)?.choice!==undefined))return;state.handSelection=null;state.screen='janken';render();}
 function computeBattle(){let a=state.choiceIds.map(id=>player(id)).filter(Boolean);let entries=a.map(p=>({id:p.id,name:p.name,hand:p.choice,attack:stat(p.board,state.rule).atk[p.choice],defense:stat(p.board,state.rule).def[p.choice],before:p.hp[p.choice],predictions:{...(p.predictions||{})}}));let out=[];for(let d of entries){let attacks=[];for(let s of entries){if(s.id===d.id)continue;let tie=s.hand===d.hand;let wins=(s.hand===0&&d.hand===1)||(s.hand===1&&d.hand===2)||(s.hand===2&&d.hand===0);if(tie||wins){let dmg=Math.max(0,s.attack-d.defense);attacks.push({from:s.name,sourceId:s.id,attack:s.attack,damage:dmg,hand:s.hand});}}let best=attacks.sort((a,b)=>b.damage-a.damage)[0]||null;let damage=best?best.damage:0;out.push({...d,attacks,damage,source:best?best.from:null,remaining:Math.max(0,d.before-damage)});}
  for(let x of out){let p=player(x.id);p.hp[x.hand]=x.remaining;p.used.push(x.hand);p.choice=null;p.totalDamage=(p.totalDamage||0)+x.damage;}
- state.result=out;state.screen='result';state.revealAnimating=!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);render();window.scrollTo(0,0);if(state.revealAnimating){clearTimeout(state.revealTimeout);state.revealTimeout=setTimeout(finishReveal,2850);}}
+ state.result=out;state.screen='result';state.revealAnimating=!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);render();window.scrollTo(0,0);if(state.revealAnimating){clearTimeout(state.revealTimeout);state.revealTimeout=setTimeout(finishReveal,3250);}}
 function playPonSound(){if(!state.soundOn)return;try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;const c=new C();const start=c.currentTime;[0,.105,.205].forEach((dt,i)=>{const o=c.createOscillator(),g=c.createGain();o.type=i===2?'triangle':'sine';o.frequency.setValueAtTime([370,470,660][i],start+dt);o.frequency.exponentialRampToValueAtTime([300,420,520][i],start+dt+.13);g.gain.setValueAtTime(.001,start+dt);g.gain.exponentialRampToValueAtTime(.09,start+dt+.014);g.gain.exponentialRampToValueAtTime(.001,start+dt+.145);o.connect(g).connect(c.destination);o.start(start+dt);o.stop(start+dt+.15);});setTimeout(()=>c.close().catch(()=>{}),1200);}catch(_e){/* muted when audio API is unavailable */}}
 function finishReveal(){clearTimeout(state.revealTimeout);state.revealTimeout=null;if(state.screen!=='result')return;state.revealAnimating=false;const panel=app.querySelector('.result-panel');if(panel)panel.classList.remove('reveal-cinematic');const next=app.querySelector('.result-next-button');if(next)next.disabled=false;const skip=app.querySelector('[data-action="skip-reveal"]');if(skip)skip.remove();const impact=app.querySelector('.reveal-impact');if(impact)impact.remove();}
 function outcomeFor(r,all){let wins=0,losses=0,ties=0;for(let other of all){if(other.id===r.id)continue;if(other.hand===r.hand)ties++;else if((r.hand+1)%3===other.hand)wins++;else losses++;}if(wins&&losses)return {label:'勝ち・負け',kind:'mixed',description:'勝ち負け両方の相手がいます'};if(wins)return {label:ties?'勝ち・あいこ':'勝ち！',kind:'win',description:ties?'勝利とあいこがあります':'じゃんけん勝利！'};if(losses)return {label:ties?'負け・あいこ':'負け',kind:'lose',description:ties?'敗北とあいこがあります':'じゃんけん敗北'};return {label:'あいこ！',kind:'draw',description:'同じ手で引き分け'};}
@@ -698,7 +754,7 @@ function resultScreen(){let remaining=alivePlayers().length;
    // The chosen hand's attack/defense are visible after the reveal, but not the 3x3 board.
    let hitBreakdown=r.attacks.length? r.attacks.map(a=>`<div class="reveal-calc-line ${r.attacks.length>1&&a.damage===r.damage?'top-hit':''}"><span>${esc(a.from)}さんの攻撃 ${a.attack} − 防御 ${r.defense}</span><strong>${a.attack<r.defense?'→':'＝'} ${a.damage}${a.attack<r.defense?'（防御成功）':''}</strong></div>`).join('') : '<div class="reveal-calc-line">この手への攻撃なし</div>';
    let maxTag=r.attacks.length>1?'<div class="reveal-calc-caption">※最大の1撃だけを適用</div>':'';
-   return `<div class="reveal-player ${o.kind}" style="--card-index:${i}"><div class="reveal-player-name">${esc(r.name)}さん</div><div class="reveal-hand" aria-label="${HANDS[r.hand].label}">${HANDS[r.hand].emoji}</div><div class="reveal-hand-label">${HANDS[r.hand].label}</div><div class="reveal-outcome">${o.label}</div><div class="reveal-combat-stats"><span>攻撃 <strong>${r.attack}</strong></span><span>防御 <strong>${r.defense}</strong></span></div><div class="reveal-calc"><div class="reveal-calc-title">ダメージ計算</div>${hitBreakdown}${maxTag}</div><div class="reveal-damage">被ダメージ <strong>${r.damage}</strong></div><div class="reveal-hp">HP ${r.before} → <strong>${r.remaining}</strong>${r.remaining===0?' 💀':''}</div>${predictionRows?`<div class="prediction-results">${predictionRows}</div>`:''}</div>`;
+   return `<div class="reveal-player ${o.kind}" style="--card-index:${i}"><div class="reveal-player-name">${esc(r.name)}さん</div><div class="reveal-hand" aria-label="${HANDS[r.hand].label}">${HANDS[r.hand].emoji}</div><div class="reveal-hand-label">${HANDS[r.hand].label}</div><div class="reveal-outcome">${o.label}</div><div class="reveal-combat-stats"><span>攻撃 <strong>${r.attack}</strong></span><span>防御 <strong>${r.defense}</strong></span></div><div class="reveal-calc"><div class="reveal-calc-title">ダメージ計算</div>${hitBreakdown}${maxTag}</div><div class="reveal-damage ${r.damage===0&&r.attacks.length?'blocked':r.damage>=Math.max(25,Math.ceil(state.hpMax*.35))?'critical':''}">被ダメージ <strong>${r.damage}</strong>${r.damage===0&&r.attacks.length?'<span class="damage-callout">完全防御！</span>':r.damage>=Math.max(25,Math.ceil(state.hpMax*.35))?'<span class="damage-callout">強烈な一撃！</span>':''}</div><div class="reveal-hp">HP ${r.before} → <strong>${r.remaining}</strong>${r.remaining===0?' 💀':''}</div><div class="battle-hp-track" role="progressbar" aria-label="${esc(r.name)}さんの${HANDS[r.hand].label}のHP" aria-valuemin="0" aria-valuemax="${state.hpMax}" aria-valuenow="${r.remaining}"><span class="battle-hp-fill ${r.remaining/state.hpMax<=.3?'danger':''}" style="--hp-before:${Math.min(100,r.before/state.hpMax*100)}%;--hp-after:${Math.min(100,r.remaining/state.hpMax*100)}%"></span></div>${predictionRows?`<div class="prediction-results">${predictionRows}</div>`:''}</div>`;
  }).join('');
  let battleDetails=state.result.map(r=>`<div class="logitem"><strong>${esc(r.name)}さん（${HANDS[r.hand].emoji}）</strong><div class="note">防御力 ${r.defense} / HP ${r.before} → ${r.remaining}</div>${r.attacks.length?r.attacks.map(a=>`<div class="attack-math">${esc(a.from)}さんの攻撃 ${a.attack} − ${esc(r.name)}さんの防御 ${r.defense} → <strong>${a.damage} ダメージ</strong></div>`).join(''):'<div class="attack-math">この勝負では攻撃を受けません</div>'}<div class="attack-final">採用ダメージ：<strong>${r.damage}</strong>（最大の1撃のみ）</div></div>`).join('');
  const anim=state.revealAnimating;return `<section class="panel result-panel ${anim?'reveal-cinematic':''}"><div class="reveal-impact" aria-hidden="true">ポン！</div><div class="reveal-hero"><div class="reveal-kicker">第${state.round}ラウンド · 第${state.clash}戦</div><h1 class="reveal-heading">じゃんけんの結果！</h1><div class="reveal-headline">${headline}</div></div><div class="reveal-grid count-${state.result.length}">${revelation}</div>${hasNextClash()?'':`<details class="result-details"><summary>魔法陣・攻撃の内訳を見る <span class="detail-chevron" aria-hidden="true">⌄</span></summary><div class="detail-content"><h3>全員の魔法陣</h3><div class="grid2">${state.players.map(p=>`<div><h3>${esc(p.name)}さんの配置</h3>${boardHtml(p.board)}</div>`).join('')}</div><h3 style="margin-top:23px">攻撃の計算内訳</h3><div class="battle-log">${battleDetails}</div></div></details>`}<h3 style="margin-top:24px">現在のHP</h3><div class="result-hp-grid">${state.players.map(p=>`<div class="player-card result-hp-card ${p.hp.every(h=>h<=0)?'dead':''}"><div class="playername">${esc(p.name)} ${p.hp.every(h=>h<=0)?'（脱落）':''}</div>${hpBarsResult(p)}</div>`).join('')}</div>${remaining<=1?`<div class="callout" style="margin-top:18px">${remaining===0?'全員の手が同時に尽きました。引き分けです。':`${esc(alivePlayers()[0].name)}さんが最後まで生き残りました！`}</div>`:''}<div class="reveal-utilities">${anim?'<button type="button" class="reveal-skip-button" data-action="skip-reveal">⏩ 演出をスキップ</button>':''}</div><button class="btn gold large wide result-next-button" style="margin-top:6px" data-action="result-next" ${anim?'disabled':''}>${remaining<=1?'最終結果を見る':remainingHandDecision()?'残りの手で決着判定へ':hasNextClash()?'次のじゃんけんへ':'次のラウンドへ（再配布）'}</button></section>`;}
@@ -710,7 +766,7 @@ function handDecisionScreen(){
  const final=alivePlayers().length===1;
  return `<section class="hand-decision-stage" aria-live="polite"><div class="eyebrow">LAST HAND · 最後の手で決着</div><h1>残りの手で勝敗判定！</h1><p class="hand-decision-lead">全員が残り1種類の手になりました。<br>じゃんけんの相性で、勝つ手と負ける手が決まりました。</p><div class="hand-decision-versus"><div class="hand-decision-team win"><span class="hand-decision-label">勝ち</span><div class="hand-decision-emoji">${HANDS[d.winningHand].emoji}</div><strong>${HANDS[d.winningHand].label}</strong><div class="hand-decision-names">${d.winners.map(x=>esc(x.name)+'さん').join('・')}</div></div><div class="hand-decision-vs">VS</div><div class="hand-decision-team lose"><span class="hand-decision-label">負け・脱落</span><div class="hand-decision-emoji">${HANDS[d.losingHand].emoji}</div><strong>${HANDS[d.losingHand].label}</strong><div class="hand-decision-names">${d.losers.map(x=>esc(x.name)+'さん').join('・')}</div></div></div><p class="note">この判定では攻撃力・防御力・残りHPによるダメージ計算は行いません。</p><p class="hand-decision-message">${final?`🏆 ${esc(d.winners[0].name)}さんの優勝が決定！`:'勝った手を持つプレイヤー同士はあいこなので、対戦を続けます。'}</p><button class="btn gold large wide" data-action="hand-decision-next">${final?'最終結果を見る':'残ったプレイヤーで対戦を続ける'}</button></section>`;
 }
-function gameover(){let survivors=alivePlayers();let winner=survivors.length===1?survivors[0]:null;return `<section class="private"><div class="symbol">${winner?'🏆':'🤝'}</div><div class="eyebrow">${winner&&state.handDecision?'最後の手で決着 · 対戦終了':'対戦終了'}</div><h1>${winner?`${esc(winner.name)}さんの勝利！`:'引き分け！'}</h1><p>${state.round}ラウンドの激戦、おつかれさまでした。</p><div class="grid2" style="text-align:left;margin:23px 0">${state.players.map(p=>`<div class="player-card"><strong>${esc(p.name)}</strong><div class="note">残りHP合計：${p.hp.reduce((s,h)=>s+h,0)}</div>${hpBars(p)}</div>`).join('')}</div><button class="btn gold large wide" data-action="home">トップページへ戻る</button></section>`;}
+function gameover(){let survivors=alivePlayers();let winner=survivors.length===1?survivors[0]:null;return `<section class="private gameover-finale ${winner?'winner':'tie'}"><div class="finale-sparkles" aria-hidden="true">${winner?Array.from({length:12},(_,i)=>`<i style="--sx:${8+(i*37)%84}%;--sy:${7+(i*23)%78}%;--sd:${(i%6)*.36}s">✦</i>`).join(''):''}</div><div class="symbol">${winner?'🏆':'🤝'}</div><div class="eyebrow">${winner&&state.handDecision?'最後の手で決着 · 対戦終了':'対戦終了'}</div><h1>${winner?`${esc(winner.name)}さんの勝利！`:'引き分け！'}</h1><p>${state.round}ラウンドの激戦、おつかれさまでした。</p><div class="grid2" style="text-align:left;margin:23px 0">${state.players.map(p=>`<div class="player-card"><strong>${esc(p.name)}</strong><div class="note">残りHP合計：${p.hp.reduce((s,h)=>s+h,0)}</div>${hpBars(p)}</div>`).join('')}</div><button class="btn gold large wide" data-action="home">トップページへ戻る</button></section>`;}
 function tutorial(){
  let step=state.tutorialStep;
  const titles=TUTORIAL_TITLES;
