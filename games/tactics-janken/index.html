@@ -507,12 +507,40 @@ button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,inpu
 @media(max-width:600px){.janken-stage:after{inset:9% 0}.gameover-finale{margin:12px auto;padding:23px 13px}.reveal-damage{gap:4px}.damage-callout{font-size:.66rem;padding:2px 5px}}
 @media(prefers-reduced-motion:reduce){.janken-stage:before,.janken-heading,.janken-stage .pon-button,.gameover-finale:before,.gameover-finale .symbol,.finale-sparkles i{animation:none!important}.reveal-cinematic:before,.reveal-cinematic:after{display:none!important}.reveal-cinematic .reveal-player .reveal-hand,.reveal-cinematic .reveal-damage strong,.reveal-cinematic .damage-callout,.reveal-cinematic .battle-hp-fill{animation:none!important}}
 
+/* v0.1.29: guided tutorial uses the actual match screens with a spotlight */
+.guided-tour{padding-bottom:225px}
+.tour-top{display:flex;align-items:center;gap:12px;justify-content:space-between;padding:10px 4px 15px;color:#d4e6ff;font-weight:900;position:relative;z-index:1}
+.tour-top .btn{min-height:37px;padding:7px 13px;font-size:.84rem}
+.guided-stage{position:relative}
+.guided-stage button{pointer-events:none}
+.guided-stage .tour-spotlight,.guided-stage .tour-spotlight button{pointer-events:auto}
+.tour-veil{position:fixed;inset:0;z-index:70;background:rgba(5,10,23,.68);pointer-events:none}
+.guided-stage .tour-spotlight{position:relative!important;z-index:72!important;isolation:isolate;outline:3px solid #f3d184;outline-offset:5px;border-radius:12px;box-shadow:0 0 0 5px #e2a9473b,0 0 28px #e8b9667d;animation:tour-glow 2.1s ease-in-out infinite}
+.guided-stage .tour-spotlight:is(button){cursor:pointer}
+.tour-coach{position:fixed;z-index:90;bottom:12px;left:50%;transform:translateX(-50%);width:min(720px,calc(100vw - 22px));padding:17px 20px 15px;border-radius:18px;background:linear-gradient(125deg,#20385d,#121d38);border:2px solid #e5bb72;box-shadow:0 8px 40px #000e,0 0 20px #dab26631;color:#f4f7ff}
+.tour-coach-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.tour-coach-head strong{font-size:clamp(1.05rem,2vw,1.3rem);color:#ffe5af}
+.tour-progress{font-size:.72rem;border-radius:99px;padding:5px 9px;color:#14213a;background:#f0c77d;font-weight:950;white-space:nowrap}
+.tour-coach p{margin:9px 0 12px;line-height:1.6;font-size:.94rem}
+.tour-coach-actions{display:flex;justify-content:space-between;gap:12px;align-items:center}
+.tour-coach .btn{min-height:41px;padding:9px 16px}
+.tour-restart{border:0;background:transparent;color:#a4c6ee;padding:7px;font-size:.84rem}
+.tour-do{color:#ffe6ad;font-size:.88rem;font-weight:800;text-align:right}
+@keyframes tour-glow{50%{box-shadow:0 0 0 6px #e2a9475e,0 0 42px #e8b966a2}}
+@media(max-width:600px){.guided-tour{padding-bottom:252px}.tour-top{font-size:.82rem;gap:6px}.tour-coach{bottom:7px;padding:13px 14px 12px;border-radius:14px}.tour-coach p{font-size:.86rem;line-height:1.5;margin:7px 0 9px}.tour-do{font-size:.77rem}}
+@media(prefers-reduced-motion:reduce){.guided-stage .tour-spotlight{animation:none}}
+/* v0.1.30: four shaded panes leave a real, unobscured window around the spotlight */
+.tour-veil{background:transparent!important;overflow:hidden}
+.tour-shade{position:absolute;background:rgba(5,10,23,.68);pointer-events:none}
+.tour-notice{padding:9px 12px;margin:7px 0 3px;border-radius:10px;border:1px solid #f0bb72;background:#583c27;color:#fff1c9;font-weight:850;font-size:.9rem}
+.tour-do{min-width:0}
+
 </style>
 </head>
 <body><main id="app" class="wrap"></main>
 <script>
 'use strict';
-const VERSION='0.1.28';
+const VERSION='0.1.30';
 const HANDS=[{label:'グー',emoji:'✊'},{label:'チョキ',emoji:'✌️'},{label:'パー',emoji:'✋'}];
 const RULES=[
  {id:'normal',name:'通常バトル',short:'通常',desc:'すべての数字をそのまま掛け算します。'},
@@ -524,7 +552,7 @@ const RULES=[
 ];
 const TUTORIAL_TITLES=['勝負の目的','数字の配置を体験','攻撃と防御を配分する','3つの手を使い分ける','じゃんけんとHP','相手の残り手を読む','あえて負ける作戦','特殊ルールとカード交換','秘密の画面で交代'];
 const app=document.querySelector('#app');
-const state={screen:'home',n:2,ruleMode:'normal',hpMax:100,names:['','','',''],players:[],round:0,rule:null,drawPile:[],setupIds:[],setupIndex:0,choiceIds:[],choiceIndex:0,firstClashPending:false,currentId:0,nextStage:'setup',clash:0,clashCap:3,selection:null,selectedDraw:[],mode:'move',handSelection:null,predictionDraft:{},soundOn:false,bgmOn:false,revealAnimating:false,revealTimeout:null,result:null,lastStage:'',tutorialStep:0,tutorialBoard:[9,2,3,4,5,6,7,8,1],tutorialSelection:null,tutorialTactic:null,handDecision:null,practice:false,practiceName:'',practiceHp:100,practiceRuleMode:'normal',cpuDifficulty:'normal'};
+const state={screen:'home',n:2,ruleMode:'normal',hpMax:100,names:['','','',''],players:[],round:0,rule:null,drawPile:[],setupIds:[],setupIndex:0,choiceIds:[],choiceIndex:0,firstClashPending:false,currentId:0,nextStage:'setup',clash:0,clashCap:3,selection:null,selectedDraw:[],mode:'move',handSelection:null,predictionDraft:{},soundOn:false,bgmOn:false,revealAnimating:false,revealTimeout:null,result:null,lastStage:'',tutorialStep:0,tutorialBoard:[9,2,3,4,5,6,7,8,1],tutorialSelection:null,tutorialTactic:null,tourSwaps:0,tourNotice:"",handDecision:null,practice:false,practiceName:'',practiceHp:100,practiceRuleMode:'normal',cpuDifficulty:'normal'};
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const R=()=>Math.random();
 function shuffle(a){for(let i=a.length-1;i>0;i--){let j=Math.floor(R()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
@@ -659,7 +687,7 @@ function syncStrategyBgm(){
 document.addEventListener('visibilitychange',syncStrategyBgm);
 
 function header(){return `<div class="topline"><div class="brand"><div class="brandmark">✦</div><span>タクティクスじゃんけん</span></div><span class="version">v${VERSION}</span></div>`;}
-function render(){let body='';if(state.screen==='home')body=home();if(state.screen==='practice-settings')body=practiceSettings();if(state.screen==='versus-settings')body=versusSettings();if(state.screen==='tutorial')body=tutorial();if(state.screen==='handoff')body=handoff();if(state.screen==='ready')body=ready();if(state.screen==='setup')body=setup();if(state.screen==='choose')body=choose();if(state.screen==='auto-janken')body=autoJankenScreen();if(state.screen==='janken')body=jankenScreen();if(state.screen==='result')body=resultScreen();if(state.screen==='hand-decision')body=handDecisionScreen();if(state.screen==='gameover')body=gameover();app.innerHTML=(state.screen==='tutorial'?header():'')+body+(state.screen==='home'||state.screen==='tutorial'?`<footer class="footer">タクティクスじゃんけん v${VERSION} · この端末だけで遊べます · 対戦中の情報はブラウザ内で管理</footer>`:'')+(!['home','tutorial','practice-settings','versus-settings'].includes(state.screen)?musicControl():'');syncStrategyBgm();}
+function render(){let body='';if(state.screen==='home')body=home();if(state.screen==='practice-settings')body=practiceSettings();if(state.screen==='versus-settings')body=versusSettings();if(state.screen==='tutorial')body=tutorial();if(state.screen==='handoff')body=handoff();if(state.screen==='ready')body=ready();if(state.screen==='setup')body=setup();if(state.screen==='choose')body=choose();if(state.screen==='auto-janken')body=autoJankenScreen();if(state.screen==='janken')body=jankenScreen();if(state.screen==='result')body=resultScreen();if(state.screen==='hand-decision')body=handDecisionScreen();if(state.screen==='gameover')body=gameover();app.innerHTML=(state.screen==='tutorial'?header():'')+body+(state.screen==='home'||state.screen==='tutorial'?`<footer class="footer">タクティクスじゃんけん v${VERSION} · この端末だけで遊べます · 対戦中の情報はブラウザ内で管理</footer>`:'')+(!['home','tutorial','practice-settings','versus-settings'].includes(state.screen)?musicControl():'');syncStrategyBgm();if(state.screen==='tutorial')focusGuidedTarget();}
 function svgBoard(){return `<svg viewBox="0 0 300 150" role="img" aria-label="3行3列の数字と、攻撃が縦、防御が横で決まる説明図"><defs><linearGradient id="br" x1="0" x2="1"><stop stop-color="#2e5585"/><stop offset="1" stop-color="#684b90"/></linearGradient></defs><g transform="translate(75 20)">${[8,2,5,4,9,1,7,3,6].map((x,i)=>`<rect x="${(i%3)*57}" y="${Math.floor(i/3)*35}" width="49" height="29" rx="7" fill="url(#br)" stroke="#9db5e7"/><text x="${(i%3)*57+24}" y="${Math.floor(i/3)*35+21}" text-anchor="middle" fill="white" font-weight="bold" font-size="20">${x}</text>`).join('')}</g><text x="100" y="13" fill="#ffcf99" font-size="12">攻撃（縦）↓</text><text x="3" y="76" fill="#aadaff" font-size="12">防御 →</text><text x="125" y="146" fill="#b9d5f6" font-size="12">数字の配置で強さが変わる</text></svg>`;}
 function svgRps(){return `<svg viewBox="0 0 300 150" role="img" aria-label="グー、チョキ、パーで勝敗を決めてHPを減らす説明図"><circle cx="60" cy="65" r="40" fill="#365d94" stroke="#8db9fa"/><circle cx="150" cy="65" r="40" fill="#77508e" stroke="#caa3fa"/><circle cx="240" cy="65" r="40" fill="#805345" stroke="#ffb39c"/><text x="60" y="77" text-anchor="middle" font-size="41">✊</text><text x="150" y="77" text-anchor="middle" font-size="41">✌️</text><text x="240" y="77" text-anchor="middle" font-size="41">✋</text><path d="M 88 35 Q 150 -4 212 35" stroke="#ffdf84" stroke-width="3" fill="none" stroke-dasharray="5 5"/><text x="150" y="17" fill="#ffdf84" text-anchor="middle" font-size="13">読み合い！</text><text x="150" y="135" fill="#c6def9" text-anchor="middle" font-size="13">手ごとにHPがある</text></svg>`;}
 function svgPass(){return `<svg viewBox="0 0 300 150" role="img" aria-label="自分の手札を隠して次のプレイヤーにPCを渡す説明図"><rect x="95" y="18" width="110" height="70" rx="9" fill="#1a314e" stroke="#9ecbff" stroke-width="4"/><path d="M 115 70 L 155 40 L 187 70" stroke="#f2cb7a" stroke-width="5" fill="none"/><circle cx="155" cy="37" r="9" fill="#f2cb7a"/><rect x="146" y="88" width="8" height="16" fill="#719bda"/><rect x="123" y="104" width="54" height="7" rx="3" fill="#719bda"/><circle cx="45" cy="54" r="17" fill="#7caff5"/><path d="M 17 105 Q 45 55 73 105" fill="#4371ac"/><circle cx="255" cy="54" r="17" fill="#dba4b8"/><path d="M 227 105 Q 255 55 283 105" fill="#895579"/><path d="M 78 127 H 220" stroke="#eacb82" stroke-width="3"/><path d="M 209 119 L 221 127 L 209 135" stroke="#eacb82" stroke-width="3" fill="none"/></svg>`;}
@@ -767,62 +795,107 @@ function handDecisionScreen(){
  return `<section class="hand-decision-stage" aria-live="polite"><div class="eyebrow">LAST HAND · 最後の手で決着</div><h1>残りの手で勝敗判定！</h1><p class="hand-decision-lead">全員が残り1種類の手になりました。<br>じゃんけんの相性で、勝つ手と負ける手が決まりました。</p><div class="hand-decision-versus"><div class="hand-decision-team win"><span class="hand-decision-label">勝ち</span><div class="hand-decision-emoji">${HANDS[d.winningHand].emoji}</div><strong>${HANDS[d.winningHand].label}</strong><div class="hand-decision-names">${d.winners.map(x=>esc(x.name)+'さん').join('・')}</div></div><div class="hand-decision-vs">VS</div><div class="hand-decision-team lose"><span class="hand-decision-label">負け・脱落</span><div class="hand-decision-emoji">${HANDS[d.losingHand].emoji}</div><strong>${HANDS[d.losingHand].label}</strong><div class="hand-decision-names">${d.losers.map(x=>esc(x.name)+'さん').join('・')}</div></div></div><p class="note">この判定では攻撃力・防御力・残りHPによるダメージ計算は行いません。</p><p class="hand-decision-message">${final?`🏆 ${esc(d.winners[0].name)}さんの優勝が決定！`:'勝った手を持つプレイヤー同士はあいこなので、対戦を続けます。'}</p><button class="btn gold large wide" data-action="hand-decision-next">${final?'最終結果を見る':'残ったプレイヤーで対戦を続ける'}</button></section>`;
 }
 function gameover(){let survivors=alivePlayers();let winner=survivors.length===1?survivors[0]:null;return `<section class="private gameover-finale ${winner?'winner':'tie'}"><div class="finale-sparkles" aria-hidden="true">${winner?Array.from({length:12},(_,i)=>`<i style="--sx:${8+(i*37)%84}%;--sy:${7+(i*23)%78}%;--sd:${(i%6)*.36}s">✦</i>`).join(''):''}</div><div class="symbol">${winner?'🏆':'🤝'}</div><div class="eyebrow">${winner&&state.handDecision?'最後の手で決着 · 対戦終了':'対戦終了'}</div><h1>${winner?`${esc(winner.name)}さんの勝利！`:'引き分け！'}</h1><p>${state.round}ラウンドの激戦、おつかれさまでした。</p><div class="grid2" style="text-align:left;margin:23px 0">${state.players.map(p=>`<div class="player-card"><strong>${esc(p.name)}</strong><div class="note">残りHP合計：${p.hp.reduce((s,h)=>s+h,0)}</div>${hpBars(p)}</div>`).join('')}</div><button class="btn gold large wide" data-action="home">トップページへ戻る</button></section>`;}
-function tutorial(){
- let step=state.tutorialStep;
- const titles=TUTORIAL_TITLES;
- let body='';
- if(step===0)body=`
- <p>配られた数字9枚を魔法陣に並べ、グー・チョキ・パーで競う2〜4人用の対戦ゲームです。相手の3つの手をすべてHP0にすると勝利します。</p>
- <div class="tutorial-keyphrase">勝てる手を出すだけが、勝つ方法じゃない！</div>
- <div class="tutorial-highlight">このゲームの醍醐味は、<strong>① 数字9枚をどう配分するか</strong>、<strong>② 相手の残りの手を読んで何を出すか</strong>、そして<strong>③ ときには、わざとじゃんけんに負けるか</strong>という駆け引きです。</div>
- <div class="rule-art" style="border-radius:15px;max-width:570px;margin:auto">${svgRps()}</div>
- <p style="margin:15px 0 0">攻撃力が高くても、じゃんけんで負ければ攻撃できません。反対に、負けても防御力が高ければ、ダメージを0にできることがあります。</p>`;
- if(step===1){let stats=stat(state.tutorialBoard,{id:'normal'});body=`
- <p>数字を2枚クリックして場所を交換してみましょう。<strong>縦3枚の積が攻撃力、横3枚の積が防御力</strong>になります。配置を変えると3つの手の強さが変わります。</p>
- <div class="challenge">チャレンジ：グーの攻撃力を、現在の <b>${stats.atk[0]}</b> より大きくしてみよう！</div>
- <div class="tutorial-demo">${boardHtml(state.tutorialBoard,{interactive:true,selected:state.tutorialSelection,rule:{id:'normal'}})}</div>
- <div class="tutorial-highlight">数字は9枚しかありません。<strong>1つの手の攻撃を強くすると、ほかの手の攻撃や防御にも影響します。</strong> どの手を強くするか、あえて弱い手をつくるかも戦略です。</div>`;}
- if(step===2){let stats=stat(state.tutorialBoard,{id:'normal'});body=`
- <p>3つの手には、それぞれ<strong>攻撃力と防御力</strong>があります。強い攻撃だけでなく、相手の一撃に耐えられる防御も重要です。</p>
- <div class="tactic-overview">${HANDS.map((h,i)=>`<div class="stat"><div class="hand">${h.emoji}</div><strong>${h.label}</strong><div class="pair"><span>攻撃 ${stats.atk[i]}</span><span>防御 ${stats.def[i]}</span></div></div>`).join('')}</div>
- <p class="note center">前のページで並べた9枚から計算した数値です。</p>
- <div class="tutorial-highlight"><strong>攻撃重視：</strong>相手に大きなダメージを狙う。<br><strong>防御重視：</strong>不利なじゃんけんでもHPを守る。<br><strong>バランス重視：</strong>どの手を出しても戦えるようにする。</div>
- <p>すべての手を最強にはできません。<strong>どの手で攻め、どの手で受けるか</strong>を、配置を決める前に考えてみましょう。</p>`;}
- if(step===3)body=`
- <p>数字を配置したら、グー・チョキ・パーを<strong>同じラウンドでそれぞれ1回まで</strong>使います。最初に強い手を出すか、後の勝負まで残すかも読み合いです。</p>
- <div class="grid3">${HANDS.map((h,i)=>`<div class="stat"><div style="font-size:2.6rem">${h.emoji}</div><strong>${h.label}</strong><span class="note">出した手は同じラウンドではもう使えません</span></div>`).join('')}</div>
- <div class="tutorial-highlight">数字の配置画面と手の選択画面では、<strong>相手がまだ出せる手</strong>だけを確認できます。相手が今回選んだ手は公開されないので、残りの手とこれまでの行動から予想して選びます。</div>
- <p>HP0の手は出せません。対戦回数は、生存している参加者の中で使用可能な手が最も少ない人に合わせます。<strong>全員が1種類の手だけになり、その手が2種類に分かれた場合は、数字で戦わずにじゃんけんの相性で決着します。</strong> 同じ手だけの場合、または3種類すべてが残る場合は、対戦が続きます。</p>`;
- if(step===4)body=`
- <p>じゃんけんに<strong>勝った側が攻撃</strong>し、負けた側が受けます。同じ手の<strong>あいこは、お互いに攻撃</strong>します。</p>
- <div class="tutorial-box"><div class="flex" style="justify-content:space-around"><span style="font-size:3rem">✊</span><strong>VS</strong><span style="font-size:3rem">✌️</span></div><p class="center">グーの攻撃力180、チョキの防御力65なら</p><div class="center" style="font-size:clamp(1.25rem,4.2vw,1.55rem);color:var(--gold);font-weight:900">180 − 65 = 115 ダメージ</div><p class="center note" style="margin-bottom:0">HP200なら、チョキのHPは85。減ったHPは次のラウンドにも引き継がれます。</p></div>
- <p style="margin-top:15px">防御力が攻撃力以上ならダメージは<strong>0</strong>です。4人戦などで複数の相手から攻撃されても、受けるのは<strong>最大の1撃だけ</strong>です。</p>`;
- if(step===5)body=`
- <p>じゃんけんでは、<strong>相手の「まだ出せる手」だけが分かります。</strong> 実際に何を選んだかは「ポン！」まで秘密です。</p>
- <div class="tactic-opponent"><strong>例えば、相手の残りの手がこの2つだったら？</strong><div class="icons">✊ ✋</div><span class="note">相手はグーかパーのどちらかを選びます</span></div>
- <p><strong>あなたなら、どちらを出しますか？</strong> 選んで結果の可能性を比べてみましょう。</p>
- <div class="tactic-buttons"><button type="button" class="tactic-choice ${state.tutorialTactic==='paper'?'active':''}" data-tactic="paper"><span class="icon">✋</span>パーを出す</button><button type="button" class="tactic-choice ${state.tutorialTactic==='scissors'?'active':''}" data-tactic="scissors"><span class="icon">✌️</span>チョキを出す</button></div>
- ${state.tutorialTactic==='paper'?`<div class="tactic-feedback" aria-live="polite"><div class="verdict">✋ パーを選んだ場合</div>相手が<strong>✊ グー</strong>なら勝ち。相手が<strong>✋ パー</strong>ならあいこで双方攻撃です。<br><b>グーを読むなら有力ですが、あいこになったときの防御力も考えましょう。</b></div>`:state.tutorialTactic==='scissors'?`<div class="tactic-feedback" aria-live="polite"><div class="verdict">✌️ チョキを選んだ場合</div>相手が<strong>✋ パー</strong>なら勝ち。相手が<strong>✊ グー</strong>なら負けです。<br><b>パーを読むなら有力ですが、負けた場合の防御力も考えましょう。</b></div>`:`<div class="tactic-feedback">どちらにも勝てる相手と、危険な相手がいます。<strong>相手が何を出しそうか</strong>を想像して選ぶのが戦略です。</div>`}
- <div class="tutorial-highlight">実戦では、<strong>相手ごとに出す手を予想する</strong>こともできます。予想は<strong>任意</strong>。「ポン！」で当たれば<strong>🎯 予想的中！</strong>と表示されますが、<strong>ダメージ・HP・勝敗には一切影響しません。</strong>予想しなくても不利になりません。</div><p>さらに、<strong>相手の残りHPや、自分が次に残したい手</strong>も考慮すると、読み合いはもっと深くなります。</p>`;
- if(step===6)body=`
- <p>普通のじゃんけんでは「負け」は失敗。でもこのゲームでは、<strong>わざと負ける選択が有利になる</strong>こともあります。</p>
- <div class="tactic-example"><div class="tactic-fighter"><div class="note">自分</div><div class="emoji">✊</div><strong>グー</strong><div class="stats">防御 160</div></div><div class="tactic-vs">負け</div><div class="tactic-fighter"><div class="note">相手</div><div class="emoji">✋</div><strong>パー</strong><div class="stats">攻撃 120</div></div></div>
- <div class="tutorial-keyphrase">120 − 160 → ダメージ 0！</div>
- <div class="tutorial-highlight">じゃんけんは負けでも、<strong>防御力が上回ればHPは減りません。</strong> 攻撃力の高い別の手を後の勝負に残すために、防御力の高い手であえて負ける――それも立派な作戦です。</div>
- <p class="note">これは考え方を示す例です。実際には相手の選んだ手や攻撃力は事前に分からず、予想が外れることもあります。また、使った手はそのラウンドでは再使用できません。</p>
- <p><strong>目先のじゃんけんの勝ち負けだけではなく、残りHPと次の勝負まで考えること</strong>が勝利につながります。</p>`;
- if(step===7)body=`
- <p>ゲーム開始前に<strong>「通常ルールのみ」</strong>と<strong>「特殊ルールあり」</strong>を選べます。特殊ルールありの場合は、ラウンドごとに6種類からルールが選ばれ、数字の配置で有利不利が変わります。</p>
- <details style="margin:12px 0"><summary style="cursor:pointer;padding:12px;background:#1a3150;border-radius:10px;font-weight:800">6種類のルールを見る</summary><div class="grid2" style="margin-top:12px">${RULES.map(r=>`<div class="player-card"><strong>${r.name}</strong><div class="note">${r.desc}</div></div>`).join('')}</div></details>
- <p>また、数字カードは<strong>2〜3人戦で2枚まで、4人戦で1枚まで</strong>引き直せます。狙う攻撃や防御に合わせて交換することも戦略です。</p>`;
- if(step===8)body=`
- <p>同じPCで遊ぶため、<strong>カード・魔法陣・選んだ手をほかの人に見せない</strong>ことが大切です。最初の勝負では数字の配置と手の選択を続けて行い、その後で次の人へPCを渡します。</p>
- <div class="rule-art" style="border-radius:15px;max-width:540px;margin:auto">${svgPass()}</div>
- <div class="tutorial-highlight">数字を配置 → 第1戦の手を選択 → PCを渡す → 全員の手が決まったら<strong>「じゃんけん・・・ポン！」</strong>で一斉公開！</div>
- <p>受け渡し時は本人が受け取ったことを確認し、周囲に誰もいないか確かめてから秘密の画面を開きます。<strong>ラウンド中のすべての勝負が終わるまで、他人の魔法陣は見られません。</strong></p>
- <p class="tutorial-keyphrase">さあ、数字の配置と相手の心理を読み合おう！</p><p class="note">一人で遊ぶときはトップページの「一人で練習」からCPUと対戦できます。CPUへの手の予想も任意で楽しめます。</p>`;
- return `<section class="panel"><div class="flex" style="justify-content:space-between"><div><div class="eyebrow">TUTORIAL</div><h2 style="margin:7px 0">チュートリアル</h2></div><button class="btn soft" data-action="home">トップへ戻る</button></div><div class="stepper">${titles.map((t,i)=>`<div class="step ${i===step?'current':i<step?'done':''}"><i>${i+1}</i>${i===step?esc(t):''}</div>`).join('')}</div><div class="tutorial-box"><h3>${step+1}. ${titles[step]}</h3>${body}</div><div class="flex" style="justify-content:space-between;margin-top:20px"><button class="btn" data-action="tutorial-prev" ${step===0?'disabled':''}>← 前へ</button><button class="btn gold" data-action="tutorial-next">${step===titles.length-1?'チュートリアル完了・トップへ':'次へ →'}</button></div></section>`;
+const TOUR_STEPS=[
+ {title:'実際の画面で練習しよう',text:'これは本番と同じ「数字9枚の配置」画面です。縦の3枚の積が攻撃力、横の3枚の積が防御力になります。',focus:'.battle-rule-banner',button:'攻撃・防御を確認する'},
+ {title:'3つの手の攻撃・防御を見る',text:'グー・チョキ・パーの攻撃力と防御力を見てください。配置の変化で数値も変わります。まずは数字を交換しましょう。',focus:'.statgrid',button:'数字の交換を体験する'},
+ {title:'「カードを引き直す」を押そう',text:'最初は配置変更モードです。「カードを引き直す」を押して交換する数字を選ぶ準備をしましょう。',focus:'[data-action="mode-draw"]',act:true},
+ {title:'一番小さい数字を選ぼう',text:'9枚の数字から一番小さい「1」を探して選んでください。別の数字を押した場合は、より小さい数字があることをお知らせします。',focus:'.battleboard',act:true},
+ {title:'選んだ数字を交換しよう',text:'「選んだ1枚を交換」を押して、新しい数字と交換しましょう。',focus:'[data-action="redraw"]',act:true},
+ {title:'交換された数字を確認しよう',text:'選んだ「1」が新しい数字に変わりました。盤面にどの数字が入ったか見比べてください。',focus:'[data-slot="4"]',button:'数字の強さを確認する'},
+ {title:'9枚の数字の強さを確認しよう',text:'「📊 9枚の数字の強さ」はここで確認できます。9枚から3枚を選んだときの積の平均をもとにした目安です。カード交換前後の強さを比較する参考にしましょう。',focus:'.deck-strength-meter',button:'配置を調整してみる'},
+ {title:'配置を入れ替えるモードに戻そう',text:'次は数字の場所を変えます。「配置を入れ替える」を押してください。',focus:'[data-action="mode-move"]',act:true},
+ {title:'3回入れ替えて攻防を比べよう',text:'盤面の異なる2枚を順にクリックすると位置が入れ替わります。3回試して、攻撃力と防御力がどう変化するか比べましょう。',focus:'.boardbox',act:true},
+ {title:'魔法陣を確定しよう',text:'カード交換と配置の調整ができました。攻撃力と防御力を確認して、魔法陣を確定しましょう。',focus:'[data-action="setup-done"]',act:true},
+ {title:'相手の残りの手を確認しよう',text:'相手のチョキはHP0です。今回はグーかパーを出せます。相手が今選んだ手は「ポン！」まで秘密です。',focus:'.opponent-hands',button:'自分の手を選ぶ'},
+ {title:'相手を読みながら手を選ぼう',text:'相手の残りの手を参考に、グー・チョキ・パーから1つ選んでください。攻撃力・防御力・HPも比較しましょう。',focus:'.rpschoice',act:true},
+ {title:'この手で勝負！',text:'選択した手が光っています。決定ボタンを押して勝負へ進みましょう。',focus:'[data-action="choose-done"]',act:true},
+ {title:'「ポン！」で同時公開',text:'相手の手はまだ見えません。「ポン！」を押してじゃんけんを公開しましょう。',focus:'[data-action="pon"]',act:true},
+ {title:'じゃんけんとダメージを確認',text:'手の勝ち負けと、攻撃力−防御力で決まるダメージを確認しましょう。あいこでは双方が攻撃します。',focus:'.reveal-grid',button:'HPの変化を確認する'},
+ {title:'HPと次の勝負',text:'各手のHPがダメージ分だけ減ります。使った手は同じラウンドではもう使えません。HPの変化を見てください。',focus:'.result-hp-grid',button:'チュートリアルを終える'},
+ {title:'練習完了！',text:'数字を受け取る → 攻防確認 → 数字交換と強さ確認 → 3回の配置変更 → 相手の手を読む → 手を選択 → ポン！の流れを体験しました。',focus:'.tour-finish',button:'トップページへ戻る'}
+];
+function initGuidedTutorial(){
+ clearTimeout(state.revealTimeout);state.revealAnimating=false;
+ state.tutorialStep=0;state.tourSwaps=0;state.tourNotice='';state.mode='move';state.selection=null;state.selectedDraw=[];state.handSelection=null;state.predictionDraft={};state.practice=true;
+ state.rule=RULES[0];state.hpMax=100;state.round=1;state.clash=1;state.clashCap=3;state.firstClashPending=true;state.currentId=0;state.drawPile=[8,7,6,4,3,9,2,5,1,0,8,4];
+ state.players=[{id:0,name:'あなた',hp:[100,100,100],board:[7,2,9,4,1,6,8,3,5],used:[],redrawUsed:0,choice:null,predictions:{},totalDamage:0},
+ {id:1,name:'相手',cpu:true,hp:[100,0,100],board:[4,2,6,3,5,1,7,8,9],used:[],redrawUsed:0,choice:null,predictions:{},totalDamage:0}];
+ state.choiceIds=[0,1];state.screen='tutorial';render();
 }
+function tutorial(){
+ const k=state.tutorialStep,info=TOUR_STEPS[k];
+ const content=k<10?setup():k<13?choose():k===13?jankenScreen():k<16?resultScreen():`<section class="panel tour-finish" style="max-width:750px;margin:25px auto;text-align:center"><h1>🎓 チュートリアル完了！</h1><p>戦略を練って、じゃんけんで勝負しましょう。</p><p>本番では相手のカード・配置・選んだ手は非公開です。</p></section>`;
+ return `<div class="guided-tour"><div class="tour-top"><span>🎓 操作型チュートリアル</span><span>${k+1} / ${TOUR_STEPS.length}</span><button class="btn soft" type="button" data-tour="exit">終了 ✕</button></div><div class="guided-stage">${content}</div><div class="tour-veil" aria-hidden="true"><div class="tour-shade"></div><div class="tour-shade"></div><div class="tour-shade"></div><div class="tour-shade"></div></div><aside class="tour-coach" role="status" aria-live="polite"><div class="tour-coach-head"><span class="tour-progress">STEP ${k+1} / ${TOUR_STEPS.length}</span><strong>${info.title}</strong></div><p>${info.text}</p>${state.tourNotice?`<div class="tour-notice" role="alert">${esc(state.tourNotice)}</div>`:""}<div class="tour-coach-actions"><button type="button" class="tour-restart" data-tour="restart">↻ 最初から</button>${info.act?`<span class="tour-do">${k===8?`入れ替え ${state.tourSwaps} / 3 回`:'↖ 光っている部分を操作してください'}</span>`:`<button class="btn gold" data-tour="next">${info.button} →</button>`}</div></aside></div>`;
+}
+function guidedAdvance(){state.tourNotice='';state.tutorialStep++;render();}
+function guidedBattle(){
+ const me=player(0),enemy=player(1);enemy.choice=me.choice===0?1:me.choice===1?2:0; // 選択の勝ち負けは本番と同じ計算で決定する
+ state.choiceIds=[0,1];computeBattle();clearTimeout(state.revealTimeout);state.revealTimeout=null;state.revealAnimating=false;state.screen='tutorial';state.tutorialStep=14;render();
+}
+function guidedClick(hit){
+ if(hit.dataset.tour==='exit'){state.screen='home';state.practice=false;render();return;}
+ if(hit.dataset.tour==='restart'){initGuidedTutorial();return;}
+ if(hit.dataset.tour==='next'){
+   if(TOUR_STEPS[state.tutorialStep].act)return;
+   if(state.tutorialStep===TOUR_STEPS.length-1){state.screen='home';state.practice=false;render();return;}
+   guidedAdvance();return;
+ }
+ const k=state.tutorialStep;
+ if(k===2&&hit.dataset.action==='mode-draw'){state.mode='draw';guidedAdvance();return;}
+ if(k===3&&hit.dataset.slot!==undefined&&state.mode==='draw'){
+   if(hit.dataset.slot!=='4'){
+     const picked=player(0).board[Number(hit.dataset.slot)];
+     state.tourNotice=`${picked}よりもっと小さい数字があります。いちばん小さい「1」を探してみましょう！`;
+     render();return;
+   }
+   state.selectedDraw=[4];guidedAdvance();return;
+ }
+ if(k===4&&hit.dataset.action==='redraw'&&state.selectedDraw.includes(4)){
+   const p=player(0);p.board[4]=state.drawPile.shift();p.redrawUsed++;state.selectedDraw=[];guidedAdvance();return;
+ }
+ if(k===7&&hit.dataset.action==='mode-move'){state.mode='move';state.selection=null;guidedAdvance();return;}
+ if(k===8&&hit.dataset.slot!==undefined){
+   const i=Number(hit.dataset.slot);
+   if(state.selection===null){state.selection=i;render();}
+   else if(state.selection!==i){
+     const b=player(0).board;[b[i],b[state.selection]]=[b[state.selection],b[i]];
+     state.selection=null;state.tourSwaps++;
+     if(state.tourSwaps>=3)guidedAdvance();else {state.tourNotice=`${state.tourSwaps}回目の入れ替えができました。あと${3-state.tourSwaps}回、別の2枚を入れ替えてみましょう。`;render();}
+   }
+   return;
+ }
+ if(k===9&&hit.dataset.action==='setup-done'){state.selection=null;state.handSelection=null;guidedAdvance();return;}
+ if(k===11&&hit.dataset.pick!==undefined){state.handSelection=Number(hit.dataset.pick);guidedAdvance();return;}
+ if(k===12&&hit.dataset.action==='choose-done'&&state.handSelection!==null){player(0).choice=state.handSelection;guidedAdvance();return;}
+ if(k===13&&hit.dataset.action==='pon'){playPonSound();guidedBattle();return;}
+}
+function updateTourShade(){
+ if(state.screen!=='tutorial')return;
+ const target=app.querySelector('.guided-stage .tour-spotlight');
+ const panes=app.querySelectorAll('.tour-shade');
+ if(!target||panes.length!==4)return;
+ const r=target.getBoundingClientRect(),w=window.innerWidth,h=window.innerHeight;
+ const left=Math.max(0,Math.min(w,r.left-7)),right=Math.max(0,Math.min(w,r.right+7));
+ const top=Math.max(0,Math.min(h,r.top-7)),bottom=Math.max(0,Math.min(h,r.bottom+7));
+ const sizes=[[0,0,w,top],[0,top,left,Math.max(0,bottom-top)],[right,top,Math.max(0,w-right),Math.max(0,bottom-top)],[0,bottom,w,Math.max(0,h-bottom)]];
+ panes.forEach((p,i)=>{const [x,y,ww,hh]=sizes[i];p.style.left=x+'px';p.style.top=y+'px';p.style.width=ww+'px';p.style.height=hh+'px';});
+}
+function focusGuidedTarget(){
+ if(state.screen!=='tutorial')return;
+ const sel=TOUR_STEPS[state.tutorialStep]?.focus;
+ const target=sel?app.querySelector('.guided-stage '+sel):null;
+ if(!target)return;
+ target.classList.add('tour-spotlight');
+ requestAnimationFrame(()=>{
+  if(state.screen!=='tutorial'||!target.isConnected)return;
+  const r=target.getBoundingClientRect(),limit=window.innerHeight-Math.min(215,Math.round(window.innerHeight*.34));
+  if(r.top<70||r.top>limit-45){window.scrollTo({top:Math.max(0,window.scrollY+r.top-100),behavior:'instant'});}
+  updateTourShade();
+ });
+}
+window.addEventListener('scroll',updateTourShade,{passive:true});
+window.addEventListener('resize',updateTourShade);
+
 function startMatch(){state.practice=false;clearTimeout(state.revealTimeout);state.revealAnimating=false;state.predictionDraft={};state.handDecision=null;let raw=Array.from(document.querySelectorAll('[data-player-name]'));raw.forEach(x=>state.names[Number(x.dataset.playerName)]=x.value.trim());state.players=Array.from({length:state.n},(_,i)=>({id:i,name:state.names[i]||`プレイヤー${i+1}`,hp:[state.hpMax,state.hpMax,state.hpMax],board:[],used:[],redrawUsed:0,choice:null,totalDamage:0}));state.round=0;startRound(true);}
 function startPractice(){
  clearTimeout(state.revealTimeout);state.revealAnimating=false;state.handDecision=null;state.predictionDraft={};
@@ -857,7 +930,7 @@ function changeCell(i){let b=state.screen==='setup'?player(state.currentId).boar
  let p=player(state.currentId);if(state.mode==='draw'){let idx=state.selectedDraw.indexOf(i),limit=(alivePlayers().length===4?1:2)-p.redrawUsed;if(idx>=0)state.selectedDraw.splice(idx,1);else if(state.selectedDraw.length<limit)state.selectedDraw.push(i);}else{if(state.selection===null)state.selection=i;else{[b[i],b[state.selection]]=[b[state.selection],b[i]];state.selection=null;}}render();}
 function redrawCards(){let p=player(state.currentId),limit=alivePlayers().length===4?1:2;if(p.redrawUsed+state.selectedDraw.length>limit||state.selectedDraw.length>state.drawPile.length)return;for(let i of state.selectedDraw){p.board[i]=state.drawPile.shift();p.redrawUsed++;}state.selectedDraw=[];if(p.redrawUsed===limit)state.mode='move';render();}
 app.addEventListener('input',ev=>{if(ev.target.matches('[data-player-name]'))state.names[Number(ev.target.dataset.playerName)]=ev.target.value;if(ev.target.matches('[data-practice-name]'))state.practiceName=ev.target.value;});
-app.addEventListener('click',ev=>{const hit=ev.target.closest('button');if(!hit||hit.disabled)return;
+app.addEventListener('click',ev=>{const hit=ev.target.closest('button');if(!hit||hit.disabled)return;if(state.screen==='tutorial'){guidedClick(hit);return;}
  if(hit.dataset.hp){state.hpMax=Number(hit.dataset.hp);render();return;}
   if(hit.dataset.practiceHp){state.practiceHp=Number(hit.dataset.practiceHp);render();return;}
   if(hit.dataset.practiceRule){state.practiceRuleMode=hit.dataset.practiceRule;render();return;}
@@ -877,7 +950,7 @@ app.addEventListener('click',ev=>{const hit=ev.target.closest('button');if(!hit|
   else if(action==='practice-open'){state.screen='practice-settings';render();}
   else if(action==='practice-start')startPractice();
  else if(action==='home'){state.screen='home';render();}
- else if(action==='tutorial'){state.tutorialStep=0;state.tutorialBoard=[9,2,3,4,5,6,7,8,1];state.tutorialSelection=null;state.tutorialTactic=null;state.screen='tutorial';render();}
+ else if(action==='tutorial'){initGuidedTutorial();}
  else if(action==='tutorial-prev'){state.tutorialStep=Math.max(0,state.tutorialStep-1);render();}
  else if(action==='tutorial-next'){if(state.tutorialStep>=TUTORIAL_TITLES.length-1)state.screen='home';else state.tutorialStep++;render();}
  else if(action==='handoff-done'){state.screen='ready';render();}
