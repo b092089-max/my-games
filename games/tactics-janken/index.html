@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>タクティクスじゃんけん v0.1.34</title>
+<title>タクティクスじゃんけん v0.1.38</title>
 <style>
 :root{color-scheme:dark;--bg:#0b1020;--panel:#17223b;--panel2:#1d2b49;--line:#354667;--ink:#f3f7ff;--muted:#b5c3df;--gold:#f7c96f;--blue:#74b8ff;--red:#ff8b8d;--green:#72d6ad;--purple:#c7a1ff;--shadow:0 12px 40px #02081770}
 *{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:"Segoe UI","Yu Gothic UI","Meiryo",sans-serif;background:radial-gradient(ellipse at 50% -10%,#2b3f75 0,transparent 48%),radial-gradient(ellipse at 100% 65%,#282255 0,transparent 40%),#0b1020;color:var(--ink);line-height:1.55}
@@ -540,7 +540,7 @@ button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,inpu
 <body><main id="app" class="wrap"></main>
 <script>
 'use strict';
-const VERSION='0.1.34';
+const VERSION='0.1.38';
 const HANDS=[{label:'グー',emoji:'✊'},{label:'チョキ',emoji:'✌️'},{label:'パー',emoji:'✋'}];
 const RULES=[
  {id:'normal',name:'通常バトル',short:'通常',desc:'すべての数字をそのまま掛け算します。'},
@@ -573,6 +573,75 @@ function cpuHypotheticalBoards(p,count){
  for(let k=0;k<count;k++)boards.push(stat(shuffle(bag.slice()).slice(0,9),state.rule));
  return boards;
 }
+// v0.1.37: Diverse plausible *unseen* opponents. Attack-oriented opponents
+// arrange their own cards to maximize column products; conservative opponents
+// favor row defenses. Both are simulated from the CPU's own observed digits,
+// never from the opponent's secret board or selection.
+function cpuScenarioBoards(p,count){
+ const bag=cpuNumberBag(p),boards=[];
+ const hp=state.hpMax||100;
+ for(let k=0;k<count;k++){
+  const cards=shuffle(bag.slice()).slice(0,9);
+  if(k%3===0){boards.push(stat(cards,state.rule));continue;}
+  const attack=k%3===1;
+  const merit=b=>{
+   const s=stat(b,state.rule),main=attack?s.atk:s.def,secondary=attack?s.def:s.atk;
+   let score=0;
+   for(let i=0;i<3;i++)score+=Math.min(main[i],hp*2.4)+.11*Math.min(secondary[i],hp*2.4);
+   return score;
+  };
+  let best=cards,bestScore=merit(best);
+  for(let i=0;i<32;i++){
+   const candidate=i%13===0?shuffle(cards.slice()):best.slice();
+   if(i%13!==0){const a=Math.floor(R()*9);let b=Math.floor(R()*8);if(b>=a)b++;[candidate[a],candidate[b]]=[candidate[b],candidate[a]];}
+   const v=merit(candidate);
+   if(v>bestScore){best=candidate;bestScore=v;}
+  }
+  boards.push(stat(best,state.rule));
+ }
+ return boards;
+}
+// v0.1.35: evaluate board layouts against public opposing hands and plausible, unseen boards.
+// This planning context contains only public HP/used information and random hypotheses
+// built from the CPU's own observed cards. Never store the enemy's actual board here.
+function cpuUltimatePlanningContext(p){
+ const enemy=state.players.find(x=>x.id!==p.id);
+ if(!enemy)return null;
+ const mine=unused(p),theirs=unused(enemy);
+ if(!mine.length||!theirs.length)return null;
+ return {mine,theirs,enemyHp:enemy.hp.slice(),samples:cpuHypotheticalBoards(p,7),cache:new Map()};
+}
+function cpuTacticalBoardScore(board,p,ctx){
+ const key=board.join(',');if(ctx.cache.has(key))return ctx.cache.get(key);
+ const own=stat(board,state.rule),hpMax=state.hpMax||100;
+ const pair=[];
+ for(const a of ctx.mine){
+  const values=[];
+  for(const b of ctx.theirs){
+   const r=cpuRpsValue(a,b);
+   let expected=0;
+   for(const unknown of ctx.samples){
+    const dealt=r>=0?Math.min(ctx.enemyHp[b],Math.max(0,own.atk[a]-unknown.def[b])):0;
+    const received=r<=0?Math.min(p.hp[a],Math.max(0,unknown.atk[b]-own.def[a])):0;
+    const ko=(dealt>=ctx.enemyHp[b]&&dealt>0)?1:0;
+    const danger=(received>=p.hp[a]&&received>0)?1:0;
+    expected+=.75*dealt/hpMax-.83*received/hpMax + .42*ko-.52*danger;
+   }
+   values.push(expected/ctx.samples.length);
+  }
+  // Opponent may anticipate the best response. Keep a strong worst-case weight,
+  // while rewarding lines with favorable damage against an uncertain opponent.
+  const avg=values.reduce((x,y)=>x+y,0)/values.length;
+  const worst=Math.min(...values);
+  pair.push(.63*avg+.37*worst);
+ }
+ // A strong lineup should have useful options, not solely one oversized column.
+ const best=Math.max(...pair),average=pair.reduce((x,y)=>x+y,0)/pair.length;
+ const weakest=Math.min(...pair);
+ const total=best*.55+average*.35+weakest*.10;
+ ctx.cache.set(key,total);
+ return total;
+}
 function cpuScoreBoard(board,p){
  const s=stat(board,state.rule),hpMax=state.hpMax||100;
  const active=unused(p),usable=active.length||1;
@@ -588,11 +657,12 @@ function cpuScoreBoard(board,p){
  }
  // A balanced set of three hands is preferable to a single huge attack column.
  if(usable>1){value+=.20*Math.min(...attacks)+.14*Math.min(...defenses);}
+ if(p._cpuPlanning)value+=2.4*cpuTacticalBoardScore(board,p,p._cpuPlanning);
  return value;
 }
 function cpuOptimizeBoard(p,board,level){
  let best=board.slice(),bestScore=cpuScoreBoard(best,p);
- const budget=level==='ultimate'?3600:level==='hard'?1000:90;
+ const budget=level==='ultimate'?850:level==='hard'?1000:level==='probe'?24:90;
  for(let i=0;i<budget;i++){
   let candidate;
   if(i%11===0)candidate=shuffle(board.slice());
@@ -619,6 +689,8 @@ function cpuArrange(p){
 function cpuPrepare(p){
  p.cpuSeenNumbers=p.board.slice();
  const difficulty=state.cpuDifficulty;
+ // Evaluate exchange and layout in the same tactical context as hand selection.
+ if(difficulty==='ultimate')p._cpuPlanning=cpuUltimatePlanningContext(p);
  if(difficulty==='easy'){
   // Easy CPU uses legal exchanges but does not evaluate their expected value.
   if(state.drawPile.length&&R()<.38){const idx=Math.floor(R()*9);p.board[idx]=state.drawPile.shift();p.redrawUsed++;p.cpuSeenNumbers.push(p.board[idx]);}
@@ -640,7 +712,7 @@ function cpuPrepare(p){
     if(!drawWeights[digit])continue;
     const candidate=p.board.slice();candidate[index]=digit;
     // A short local optimization estimates the resulting best formation.
-    const score=difficulty==='normal'?cpuScoreBoard(candidate,p):cpuOptimizeBoard(p,candidate,'normal').score;
+    const score=difficulty==='normal'?cpuScoreBoard(candidate,p):cpuOptimizeBoard(p,candidate,difficulty==='ultimate'?'probe':'normal').score;
     estimated+=score*drawWeights[digit];
    }
    estimated/=bag.length;
@@ -652,8 +724,11 @@ function cpuPrepare(p){
   if(bestIdx<0||bestGain<threshold)break;
   const newCard=state.drawPile.shift(); // Real exchange occurs only after choosing the slot.
   p.board[bestIdx]=newCard;p.cpuSeenNumbers.push(newCard);p.redrawUsed++;
+  if(p._cpuPlanning)p._cpuPlanning=cpuUltimatePlanningContext(p);
  }
  cpuArrange(p);
+ // No prediction state survives the preparation stage.
+ delete p._cpuPlanning;
 }
 // v0.1.33 最強CPU：同時手選択ゲームの混合戦略と最大2手先の評価。
 // 相手の非公開board / choice / predictions は決して参照しない。
@@ -708,12 +783,39 @@ function cpuDamageEstimates(p,other,own,enemyStats,options,possibilities){
  }
  return estimate;
 }
+// v0.1.36: learn from the opponent's PREVIOUSLY REVEALED hands only.
+// Histories are recorded after "Pon!", never while secret choices are pending.
+function cpuOpponentPattern(possibilities,base){
+ const history=state.cpuOpponentHistory||[];
+ if(!history.length)return null;
+ const counts=possibilities.map((_,j)=>2.2*base[j]+.35);
+ const mask=possibilities.join(',');
+ let evidence=0;
+ for(let k=Math.max(0,history.length-36);k<history.length;k++){
+  const observed=history[k];
+  const index=possibilities.indexOf(observed.hand);
+  if(index<0)continue;
+  // Prefer examples from the same set of legal hands. Older situations with
+  // other choices are only weak evidence; the opponent's options matter.
+  const match=observed.mask===mask?1:.04;
+  const decay=.65+.35*(k+1)/history.length;
+  const weight=match*decay;
+  counts[index]+=weight;evidence+=weight;
+ }
+ if(evidence<5)return null;
+ const sum=counts.reduce((a,b)=>a+b,0);
+ const dist=counts.map(x=>x/sum);
+ if(Math.max(...dist)<.64)return null;
+ // Do not treat small samples as certain: cap the exploitation component.
+ const strength=Math.min(.25,.08+.017*(evidence-5));
+ return {dist,strength,evidence};
+}
 // v0.1.34 experimental: sample hidden enemy boards then evaluate the full remainder
 // of the current round with exact damage, elimination and simultaneous mixed decisions.
 // Opponent board and selected hand are NEVER inspected.
-function cpuChooseUltimate(p,options,other,possibilities){
+function cpuChooseUltimateScenario(p,options,other,possibilities){
  const own=stat(p.board,state.rule),hpMax=state.hpMax||100;
- const possibleBoards=cpuHypotheticalBoards(p,24);
+ const possibleBoards=cpuScenarioBoards(p,18);
  const prior=possibilities.map(b=>{
   // Publicly rational safety prior: the opponent assesses its RPS results vs our remaining hands.
   let v=0;
@@ -755,7 +857,7 @@ function cpuChooseUltimate(p,options,other,possibilities){
    const nextM=ms.filter(h=>h!==a),nextE=es.filter(h=>h!==b);
    return continuation(nextM,nextE,m,e,enStats,depth-1);
   }));
-  return cpuMixedEquilibrium(payoff,45).value;
+  return cpuMixedEquilibrium(payoff,36).value;
  }
  for(const enemyStats of possibleBoards){
   for(let i=0;i<options.length;i++)for(let j=0;j<possibilities.length;j++){
@@ -774,13 +876,28 @@ function cpuChooseUltimate(p,options,other,possibilities){
   // Prefer high chance of ultimately surviving, retaining robustness to unknown boards.
   return .83*mean+.17*downside;
  }));
- const eq=cpuMixedEquilibrium(matrix,380);
- const opponent=eq.enemy.map((v,j)=>v*.76+priorWeights[j]*.18+.06/possibilities.length);
- const expected=matrix.map(row=>row.reduce((sum,v,j)=>sum+v*opponent[j],0));
- const robust=expected.map((v,i)=>v*.83+Math.min(...matrix[i])*.17);
- const policy=cpuSoftmax(robust,.105);
+ const eq=cpuMixedEquilibrium(matrix,360);
+ // Opponent models: game-theoretic, public-safety rational, and unpredictable.
+ // Exploit a plausible tendency without becoming vulnerable to another style.
+ const learned=cpuOpponentPattern(possibilities,priorWeights);
+ const safety=cpuSoftmax(possibilities.map(b=>{
+  let worst=0,favorable=0;
+  for(const a of options){const r=cpuRpsValue(a,b);if(r>0)worst++;if(r<0)favorable++;}
+  return -.90*worst+.32*favorable;
+ }),.27);
+ const models=[eq.enemy,priorWeights,possibilities.map(()=>1/possibilities.length),safety];
+ if(learned)models.push(learned.dist);
+ const payoffs=models.map(dist=>matrix.map(row=>row.reduce((sum,v,j)=>sum+v*dist[j],0)));
+ const robust=matrix.map((row,i)=>{
+  const conventional=.42*payoffs[0][i]+.26*payoffs[1][i]+.13*payoffs[2][i]+.19*payoffs[3][i];
+  const mixture=learned?(1-learned.strength)*conventional+learned.strength*payoffs[4][i]:conventional;
+  const crossModel=Math.min(...payoffs.map(p=>p[i]));
+  const singleOutcome=Math.min(...row);
+  return .78*mixture+.15*crossModel+.07*singleOutcome;
+ });
+ const policy=cpuSoftmax(robust,.085);
  const mx=Math.max(...robust);
- const weights=policy.map((v,i)=>mx-robust[i]>.50?0:v*.75+eq.mine[i]*.25);
+ const weights=policy.map((v,i)=>mx-robust[i]>.48?0:v*.77+eq.mine[i]*.23);
  const total=weights.reduce((a,b)=>a+b,0);
  let draw=R()*(total||1),selected=options[0];
  for(let i=0;i<options.length;i++){
@@ -788,6 +905,104 @@ function cpuChooseUltimate(p,options,other,possibilities){
   if(draw<=0){selected=options[i];break;}
  }
  p.choice=selected;
+}
+
+function cpuChooseUltimateBaseline(p,options,other,possibilities){
+ const own=stat(p.board,state.rule),hpMax=state.hpMax||100;
+ const possibleBoards=cpuHypotheticalBoards(p,18);
+ const prior=possibilities.map(b=>{
+  // Publicly rational safety prior: the opponent assesses its RPS results vs our remaining hands.
+  let v=0;
+  for(const a of options)v-=cpuRpsValue(a,b);
+  return v/Math.max(1,options.length)-.10*(1-other.hp[b]/hpMax);
+ });
+ const priorWeights=cpuSoftmax(prior,.36);
+ const pairSamples=options.map(a=>possibilities.map(b=>[]));
+ function terminal(hpMe,hpEn){
+  const aliveMe=[0,1,2].filter(h=>hpMe[h]>0);
+  const aliveEn=[0,1,2].filter(h=>hpEn[h]>0);
+  if(!aliveMe.length&&!aliveEn.length)return 0;
+  if(!aliveMe.length)return -1.8;
+  if(!aliveEn.length)return 1.8;
+  // Actual game ends by RPS when each player has exactly one living kind.
+  if(aliveMe.length===1&&aliveEn.length===1&&aliveMe[0]!==aliveEn[0])return cpuRpsValue(aliveMe[0],aliveEn[0])*1.8;
+  const hm=hpMe.reduce((a,b)=>a+b,0),he=hpEn.reduce((a,b)=>a+b,0);
+  const count=(aliveMe.length-aliveEn.length)/3;
+  const hpMargin=(hm-he)/(3*hpMax);
+  const critical=aliveEn.filter(h=>hpEn[h]<hpMax*.25).length-aliveMe.filter(h=>hpMe[h]<hpMax*.25).length;
+  return .88*hpMargin+.62*count+.11*critical;
+ }
+ function after(a,b,mine,theirs,enemyStats){
+  const m=mine.slice(),e=theirs.slice();const r=cpuRpsValue(a,b);
+  const outgoing=r>=0?Math.max(0,own.atk[a]-enemyStats.def[b]):0;
+  const incoming=r<=0?Math.max(0,enemyStats.atk[b]-own.def[a]):0;
+  m[a]=Math.max(0,m[a]-incoming);e[b]=Math.max(0,e[b]-outgoing);
+  return [m,e];
+ }
+ // Resolve the rest of a round (up to three distinct hand choices).
+ // Each subsequent move is a simultaneous zero-sum game, not a peek at the next move.
+ function continuation(myChoices,enChoices,myHp,enHp,enStats,depth){
+  const base=terminal(myHp,enHp);
+  if(Math.abs(base)>=1.8||depth<=0)return base;
+  const ms=myChoices.filter(h=>myHp[h]>0),es=enChoices.filter(h=>enHp[h]>0);
+  if(!ms.length||!es.length)return base; // next round redraws the boards
+  const payoff=ms.map(a=>es.map(b=>{
+   const [m,e]=after(a,b,myHp,enHp,enStats);
+   const nextM=ms.filter(h=>h!==a),nextE=es.filter(h=>h!==b);
+   return continuation(nextM,nextE,m,e,enStats,depth-1);
+  }));
+  return cpuMixedEquilibrium(payoff,36).value;
+ }
+ for(const enemyStats of possibleBoards){
+  for(let i=0;i<options.length;i++)for(let j=0;j<possibilities.length;j++){
+   const a=options[i],b=possibilities[j];
+   const [m,e]=after(a,b,p.hp,other.hp,enemyStats);
+   const nm=options.filter(h=>h!==a),ne=possibilities.filter(h=>h!==b);
+   const future=continuation(nm,ne,m,e,enemyStats,2);
+   pairSamples[i][j].push(future);
+  }
+ }
+ const matrix=pairSamples.map(row=>row.map(samples=>{
+  const sorted=samples.slice().sort((a,b)=>a-b);
+  const mean=samples.reduce((a,b)=>a+b,0)/samples.length;
+  const tail=sorted.slice(0,Math.max(1,Math.ceil(sorted.length*.20)));
+  const downside=tail.reduce((a,b)=>a+b,0)/tail.length;
+  // Prefer high chance of ultimately surviving, retaining robustness to unknown boards.
+  return .83*mean+.17*downside;
+ }));
+ const eq=cpuMixedEquilibrium(matrix,360);
+ // Opponent models: game-theoretic, public-safety rational, and unpredictable.
+ // Exploit a plausible tendency without becoming vulnerable to another style.
+ const models=[eq.enemy,priorWeights,possibilities.map(()=>1/possibilities.length)];
+ const payoffs=models.map(dist=>matrix.map(row=>row.reduce((sum,v,j)=>sum+v*dist[j],0)));
+ const robust=matrix.map((row,i)=>{
+  const mixture=.52*payoffs[0][i]+.32*payoffs[1][i]+.16*payoffs[2][i];
+  const crossModel=Math.min(...payoffs.map(p=>p[i]));
+  const singleOutcome=Math.min(...row);
+  return .78*mixture+.15*crossModel+.07*singleOutcome;
+ });
+ const policy=cpuSoftmax(robust,.085);
+ const mx=Math.max(...robust);
+ const weights=policy.map((v,i)=>mx-robust[i]>.48?0:v*.77+eq.mine[i]*.23);
+ const total=weights.reduce((a,b)=>a+b,0);
+ let draw=R()*(total||1),selected=options[0];
+ for(let i=0;i<options.length;i++){
+  draw-=(total?weights[i]:1/options.length);
+  if(draw<=0){selected=options[i];break;}
+ }
+ p.choice=selected;
+}
+
+
+// v0.1.38 最強CPU: validated long-match switch from simulation.
+// Rounds 1–5 use the diverse-opponent scenario (v0.1.37); from round 6 onward,
+// use the stable mixed-strategy baseline (v0.1.35). Both read only legal public data.
+function cpuChooseUltimate(p,options,other,possibilities){
+ if(state.round>=6){
+  cpuChooseUltimateBaseline(p,options,other,possibilities);
+ }else{
+  cpuChooseUltimateScenario(p,options,other,possibilities);
+ }
 }
 
 function cpuChoose(p){
@@ -931,7 +1146,7 @@ function versusSettings(){
 }
 function practiceSettings(){
  const hpOpts=[100,200,300,400].map(v=>`<button class="pill ${state.practiceHp===v?'active':''}" data-practice-hp="${v}" aria-pressed="${state.practiceHp===v}">${v} HP</button>`).join('');
- const cpuOpts=[['easy','やさしい','気軽に練習'],['normal','ふつう','配置と手を考える'],['hard','つよい','攻防・HPを判断'],['ultimate','最強','相互予測と先読み']].map(([id,name,desc])=>`<button class="practice-difficulty ${state.cpuDifficulty===id?'active':''}" data-cpu-difficulty="${id}" aria-pressed="${state.cpuDifficulty===id}"><strong>${name}</strong><span>${desc}</span></button>`).join('');
+ const cpuOpts=[['easy','やさしい','気軽に練習'],['normal','ふつう','配置と手を考える'],['hard','つよい','攻防・HPを判断'],['ultimate','最強','戦況を読み長期戦で戦略切替']].map(([id,name,desc])=>`<button class="practice-difficulty ${state.cpuDifficulty===id?'active':''}" data-cpu-difficulty="${id}" aria-pressed="${state.cpuDifficulty===id}"><strong>${name}</strong><span>${desc}</span></button>`).join('');
  return `<section class="panel practice-settings"><div class="flex" style="justify-content:space-between;align-items:center"><div><div class="eyebrow">SOLO PRACTICE</div><h1 class="practice-title">🤖 一人で練習</h1></div><button class="btn soft" data-action="home">← トップへ戻る</button></div><p>CPUと1対1で練習できます。数字の配置やじゃんけんの駆け引きは対人戦と同じです。</p><div class="practice-config"><div class="stack"><label class="field">自分の名前<input class="txt" maxlength="16" placeholder="プレイヤー1" data-practice-name value="${esc(state.practiceName)}" autocomplete="off"></label><div><div class="label" style="margin-bottom:9px">各手の初期HP</div><div class="pill-row">${hpOpts}</div></div><div><div class="label" style="margin-bottom:9px">対戦ルール</div><div class="pill-row"><button class="pill ${state.practiceRuleMode==='normal'?'active':''}" data-practice-rule="normal" aria-pressed="${state.practiceRuleMode==='normal'}">通常ルールのみ</button><button class="pill ${state.practiceRuleMode==='special'?'active':''}" data-practice-rule="special" aria-pressed="${state.practiceRuleMode==='special'}">特殊ルールあり</button></div></div></div><div class="stack"><div><div class="label" style="margin-bottom:9px">CPUの強さ</div><div class="practice-difficulties">${cpuOpts}</div></div></div></div><div style="margin-top:18px">${musicConfig()}</div><button class="btn gold large wide" style="margin-top:20px" data-action="practice-start">⚔ CPUと練習スタート</button></section>`;
 }
 function pStatus(){return '';}
@@ -989,7 +1204,19 @@ function choose(){let p=player(state.currentId),s=stat(p.board,state.rule);retur
 function autoJankenScreen(){return `${pStatus()}<section class="auto-choice-stage"><div class="symbol">🤖</div><h1>残った手が1つしかないため、<br>自動で選択します</h1><p class="note">次の画面で「じゃんけん・・・」と「ポン！」が表示されます。${state.practice?'準備ができたら進みましょう。':'みんなが画面を見られる状態にして進んでください。'}</p><button class="btn gold large wide" data-action="auto-janken-next">じゃんけんの画面へ進む</button></section>`;}
 function jankenScreen(){return `${pStatus()}<section class="janken-stage" aria-label="全員の選択完了・じゃんけん開始"><div class="janken-round">全員の手が決まりました · 第${state.clash}戦</div><p class="janken-note">${state.practice?'準備ができたら、大きなボタンを押してCPUと勝負！':'みんなが画面を見られる状態になったら、<br>大きなボタンを押して一斉公開しましょう！'}</p><h1 class="janken-heading">じゃんけん・・・</h1><button class="pon-button" type="button" data-action="pon" autofocus>ポン！</button><button class="sound-switch" type="button" data-action="sound-toggle" aria-pressed="${state.soundOn}">${state.soundOn?'🔊 効果音：オン':'🔇 効果音：オフ'}</button><p class="note" style="margin-top:18px">※「ポン！」を押すまでは、誰の手も表示しません。</p></section>`;}
 function showJanken(){if(!state.choiceIds.length||!state.choiceIds.every(id=>player(id)?.choice!==null&&player(id)?.choice!==undefined))return;state.handSelection=null;state.screen='janken';render();}
-function computeBattle(){let a=state.choiceIds.map(id=>player(id)).filter(Boolean);let entries=a.map(p=>({id:p.id,name:p.name,hand:p.choice,attack:stat(p.board,state.rule).atk[p.choice],defense:stat(p.board,state.rule).def[p.choice],before:p.hp[p.choice],predictions:{...(p.predictions||{})}}));let out=[];for(let d of entries){let attacks=[];for(let s of entries){if(s.id===d.id)continue;let tie=s.hand===d.hand;let wins=(s.hand===0&&d.hand===1)||(s.hand===1&&d.hand===2)||(s.hand===2&&d.hand===0);if(tie||wins){let dmg=Math.max(0,s.attack-d.defense);attacks.push({from:s.name,sourceId:s.id,attack:s.attack,damage:dmg,hand:s.hand});}}let best=attacks.sort((a,b)=>b.damage-a.damage)[0]||null;let damage=best?best.damage:0;out.push({...d,attacks,damage,source:best?best.from:null,remaining:Math.max(0,d.before-damage)});}
+function computeBattle(){
+ // Both hands have been committed and are now public. Only then may the CPU
+ // learn how this human selected from the options available at that time.
+ if(state.practice && state.cpuDifficulty==='ultimate' && !state.tourActive){
+  const human=player(0),shown=human?.choice;
+  if(human && Number.isInteger(shown)){
+   const mask=unused(human).join(',');
+   if(!state.cpuOpponentHistory)state.cpuOpponentHistory=[];
+   state.cpuOpponentHistory.push({mask,hand:shown});
+   if(state.cpuOpponentHistory.length>60)state.cpuOpponentHistory.shift();
+  }
+ }
+ let a=state.choiceIds.map(id=>player(id)).filter(Boolean);let entries=a.map(p=>({id:p.id,name:p.name,hand:p.choice,attack:stat(p.board,state.rule).atk[p.choice],defense:stat(p.board,state.rule).def[p.choice],before:p.hp[p.choice],predictions:{...(p.predictions||{})}}));let out=[];for(let d of entries){let attacks=[];for(let s of entries){if(s.id===d.id)continue;let tie=s.hand===d.hand;let wins=(s.hand===0&&d.hand===1)||(s.hand===1&&d.hand===2)||(s.hand===2&&d.hand===0);if(tie||wins){let dmg=Math.max(0,s.attack-d.defense);attacks.push({from:s.name,sourceId:s.id,attack:s.attack,damage:dmg,hand:s.hand});}}let best=attacks.sort((a,b)=>b.damage-a.damage)[0]||null;let damage=best?best.damage:0;out.push({...d,attacks,damage,source:best?best.from:null,remaining:Math.max(0,d.before-damage)});}
  for(let x of out){let p=player(x.id);p.hp[x.hand]=x.remaining;p.used.push(x.hand);p.choice=null;p.totalDamage=(p.totalDamage||0)+x.damage;}
  state.result=out;state.screen='result';state.revealAnimating=!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);render();window.scrollTo(0,0);if(state.revealAnimating){clearTimeout(state.revealTimeout);state.revealTimeout=setTimeout(finishReveal,3250);}}
 function playPonSound(){if(!state.soundOn)return;try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;const c=new C();const start=c.currentTime;[0,.105,.205].forEach((dt,i)=>{const o=c.createOscillator(),g=c.createGain();o.type=i===2?'triangle':'sine';o.frequency.setValueAtTime([370,470,660][i],start+dt);o.frequency.exponentialRampToValueAtTime([300,420,520][i],start+dt+.13);g.gain.setValueAtTime(.001,start+dt);g.gain.exponentialRampToValueAtTime(.09,start+dt+.014);g.gain.exponentialRampToValueAtTime(.001,start+dt+.145);o.connect(g).connect(c.destination);o.start(start+dt);o.stop(start+dt+.15);});setTimeout(()=>c.close().catch(()=>{}),1200);}catch(_e){/* muted when audio API is unavailable */}}
@@ -1120,6 +1347,7 @@ window.addEventListener('resize',updateTourShade);
 
 function startMatch(){state.practice=false;clearTimeout(state.revealTimeout);state.revealAnimating=false;state.predictionDraft={};state.handDecision=null;let raw=Array.from(document.querySelectorAll('[data-player-name]'));raw.forEach(x=>state.names[Number(x.dataset.playerName)]=x.value.trim());state.players=Array.from({length:state.n},(_,i)=>({id:i,name:state.names[i]||`プレイヤー${i+1}`,hp:[state.hpMax,state.hpMax,state.hpMax],board:[],used:[],redrawUsed:0,choice:null,totalDamage:0}));state.round=0;startRound(true);}
 function startPractice(){
+ state.cpuOpponentHistory=[];
  clearTimeout(state.revealTimeout);state.revealAnimating=false;state.handDecision=null;state.predictionDraft={};
  state.practice=true;state.n=2;state.hpMax=state.practiceHp;state.ruleMode=state.practiceRuleMode;
  state.players=[{id:0,name:state.practiceName.trim()||'プレイヤー1',hp:[state.hpMax,state.hpMax,state.hpMax],board:[],used:[],redrawUsed:0,choice:null,totalDamage:0},
