@@ -1,0 +1,24 @@
+{
+  "version": "1.7.3",
+  "sources": {
+    "floor": "math_factory_floor_01.png",
+    "straight": "math_factory_conveyor_straight_02_standard.png",
+    "corner": "math_factory_conveyor_corner_03_standard.png",
+    "cross": "math_factory_conveyor_cross_04_standard.png",
+    "mergeA": "math_factory_conveyor_merge_16_standard.png",
+    "mergeB": "math_factory_conveyor_merge_B_16_v4.png",
+    "input": "math_factory_input_05_approved.png",
+    "output": "math_factory_output_06.png",
+    "add": "青い加算処理モジュールアイコン.png",
+    "sub": "math_factory_subtract_08_v2.png",
+    "mul": "math_factory_multiply_09_v2_purple.png",
+    "div": "math_factory_divide_10.png",
+    "square": "math_factory_square_11.png",
+    "mod": "math_factory_remainder_12.png",
+    "even": "math_factory_even_detector_13.png",
+    "wall": "math_factory_fixed_equipment_14.png",
+    "token": "math_factory_number_tile_15.png",
+    "broken": "math_factory_broken_product_effect_17.png"
+  },
+  "note": "index.html is standalone; assets PNG are included for future editing and sprite replacement."
+}
