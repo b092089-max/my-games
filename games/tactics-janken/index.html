@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>タクティクスじゃんけん v0.1.26</title>
+<title>タクティクスじゃんけん v0.1.32</title>
 <style>
 :root{color-scheme:dark;--bg:#0b1020;--panel:#17223b;--panel2:#1d2b49;--line:#354667;--ink:#f3f7ff;--muted:#b5c3df;--gold:#f7c96f;--blue:#74b8ff;--red:#ff8b8d;--green:#72d6ad;--purple:#c7a1ff;--shadow:0 12px 40px #02081770}
 *{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:"Segoe UI","Yu Gothic UI","Meiryo",sans-serif;background:radial-gradient(ellipse at 50% -10%,#2b3f75 0,transparent 48%),radial-gradient(ellipse at 100% 65%,#282255 0,transparent 40%),#0b1020;color:var(--ink);line-height:1.55}
@@ -242,7 +242,7 @@ button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,inpu
 .practice-settings{max-width:1000px;margin:24px auto}
 .practice-title{margin:7px 0 13px;font-size:clamp(1.75rem,4vw,2.5rem)}
 .practice-config{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:20px}
-.practice-difficulties{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.practice-difficulties{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .practice-difficulty{display:flex;flex-direction:column;gap:5px;align-items:center;justify-content:center;text-align:center;min-height:85px;padding:9px 5px;color:#d8e8ff;background:#1a3050;border:2px solid #4b658c;border-radius:12px}
 .practice-difficulty.active{border-color:#f5d48c;background:#493d30;color:#fff0c0}
 .practice-difficulty strong{font-size:1.03rem}.practice-difficulty span{font-size:.73rem;line-height:1.3}
@@ -540,7 +540,7 @@ button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,inpu
 <body><main id="app" class="wrap"></main>
 <script>
 'use strict';
-const VERSION='0.1.30';
+const VERSION='0.1.32';
 const HANDS=[{label:'グー',emoji:'✊'},{label:'チョキ',emoji:'✌️'},{label:'パー',emoji:'✋'}];
 const RULES=[
  {id:'normal',name:'通常バトル',short:'通常',desc:'すべての数字をそのまま掛け算します。'},
@@ -560,53 +560,217 @@ function makeDeck(){return shuffle(Array.from({length:40},(_,i)=>Math.floor(i/4)
 // CPUはプレイヤーの未公開のカード・配置・今回選んだ手を参照しない。
 function cpuPlayer(){return state.practice?player(1):null;}
 function cpuRandomChoice(items){return items[Math.floor(R()*items.length)];}
+// The CPU only knows its own numbers and the opponent's public HP/available hands.
+// Samples below are hypothetical unseen boards, NEVER the opponent's actual board.
+function cpuNumberBag(p){
+ const counts=Array(10).fill(4);
+ for(const n of (p.cpuSeenNumbers||p.board))counts[n]--;
+ const bag=[];for(let n=0;n<10;n++)for(let k=0;k<Math.max(0,counts[n]);k++)bag.push(n);
+ return bag;
+}
+function cpuHypotheticalBoards(p,count){
+ const bag=cpuNumberBag(p),boards=[];
+ for(let k=0;k<count;k++)boards.push(stat(shuffle(bag.slice()).slice(0,9),state.rule));
+ return boards;
+}
 function cpuScoreBoard(board,p){
- const s=stat(board,state.rule),active=p.hp.map((hp,i)=>hp>0?i:-1).filter(i=>i>=0);
- return active.reduce((sum,i)=>sum+Math.log1p(s.atk[i])*1.05+Math.log1p(s.def[i])*.88,0);
+ const s=stat(board,state.rule),hpMax=state.hpMax||100;
+ const active=unused(p),usable=active.length||1;
+ let value=0,attacks=[],defenses=[];
+ for(const i of active){
+  const a=s.atk[i],d=s.def[i],life=p.hp[i]/hpMax;
+  const scaledA=a/hpMax,scaledD=d/hpMax;
+  // Diminishing returns: 600 attack is not six times as useful as 100 against 100 HP.
+  const offense=Math.log1p(scaledA*2.2)+.35*Math.min(1,scaledA);
+  const defense=Math.log1p(scaledD*2.2)+.25*Math.min(1,scaledD);
+  value+=(1.05+.22*life)*offense+(.88+.25*(1-life))*defense;
+  attacks.push(offense);defenses.push(defense);
+ }
+ // A balanced set of three hands is preferable to a single huge attack column.
+ if(usable>1){value+=.20*Math.min(...attacks)+.14*Math.min(...defenses);}
+ return value;
+}
+function cpuOptimizeBoard(p,board,level){
+ let best=board.slice(),bestScore=cpuScoreBoard(best,p);
+ const budget=level==='ultimate'?3600:level==='hard'?1000:90;
+ for(let i=0;i<budget;i++){
+  let candidate;
+  if(i%11===0)candidate=shuffle(board.slice());
+  else{
+   candidate=best.slice();
+   const a=Math.floor(R()*9);let b=Math.floor(R()*8);if(b>=a)b++;
+   [candidate[a],candidate[b]]=[candidate[b],candidate[a]];
+   if(i%17===0){const c=Math.floor(R()*9);let d=Math.floor(R()*8);if(d>=c)d++;[candidate[c],candidate[d]]=[candidate[d],candidate[c]];}
+  }
+  const score=cpuScoreBoard(candidate,p);
+  if(score>bestScore+1e-9){best=candidate;bestScore=score;}
+ }
+ return {board:best,score:bestScore};
 }
 function cpuArrange(p){
  if(state.cpuDifficulty==='easy'){shuffle(p.board);return;}
- const trials=state.cpuDifficulty==='hard'?1400:230;
- let best=p.board.slice(),bestScore=-Infinity;
- for(let k=0;k<trials;k++){
-  const candidate=shuffle(p.board.slice());
-  const score=cpuScoreBoard(candidate,p)+R()*(state.cpuDifficulty==='hard'?1:3);
-  if(score>bestScore){bestScore=score;best=candidate;}
- }
- p.board=best;
+ const {board}=cpuOptimizeBoard(p,p.board,state.cpuDifficulty);
+ if(state.cpuDifficulty==='normal'){
+  // Sometimes retain a decent, but non-perfect arrangement.
+  const random=shuffle(p.board.slice());
+  p.board=R()<.28?random:board;
+ }else p.board=board;
 }
 function cpuPrepare(p){
+ p.cpuSeenNumbers=p.board.slice();
+ const difficulty=state.cpuDifficulty;
+ if(difficulty==='easy'){
+  // Easy CPU uses legal exchanges but does not evaluate their expected value.
+  if(state.drawPile.length&&R()<.38){const idx=Math.floor(R()*9);p.board[idx]=state.drawPile.shift();p.redrawUsed++;p.cpuSeenNumbers.push(p.board[idx]);}
+  cpuArrange(p);return;
+ }
  const limit=2;
- if(state.cpuDifficulty!=='easy'&&state.drawPile.length){
-  const bad=p.board.map((n,i)=>({n,i,quality:state.rule.id==='zero'&&n===0?10:n})).sort((a,b)=>a.quality-b.quality);
-  for(const x of bad.slice(0,limit)){
-   if(x.quality>=4||!state.drawPile.length)break;
-   // 一度交換したカードは同じラウンド中に戻さない。
-   p.board[x.i]=state.drawPile.shift();p.redrawUsed++;
+ // Know only the numbers remaining after the CPU's own seen cards.
+ // Evaluate replacement candidates by expected strength, including a chance of drawing worse cards.
+ for(let exchange=0;exchange<limit&&state.drawPile.length;exchange++){
+  const current=cpuOptimizeBoard(p,p.board,difficulty==='ultimate'?'hard':'normal');
+  let bestIdx=-1,bestGain=0;
+  const bag=cpuNumberBag(p);
+  const drawWeights=Array(10).fill(0);for(const n of bag)drawWeights[n]++;
+  if(!bag.length)break;
+  for(let index=0;index<9;index++){
+   // Simulate unknown replacement outcomes. No real draw-pile peek.
+   let estimated=0;
+   for(let digit=0;digit<10;digit++){
+    if(!drawWeights[digit])continue;
+    const candidate=p.board.slice();candidate[index]=digit;
+    // A short local optimization estimates the resulting best formation.
+    const score=difficulty==='normal'?cpuScoreBoard(candidate,p):cpuOptimizeBoard(p,candidate,'normal').score;
+    estimated+=score*drawWeights[digit];
+   }
+   estimated/=bag.length;
+   // For normal CPU, don't overfit; strong CPU replaces only when an improvement is likely.
+   const gain=estimated-(difficulty==='normal'?cpuScoreBoard(p.board,p):current.score);
+   if(gain>bestGain){bestGain=gain;bestIdx=index;}
   }
+  const threshold=difficulty==='ultimate'?.025:difficulty==='hard'?.075:.23;
+  if(bestIdx<0||bestGain<threshold)break;
+  const newCard=state.drawPile.shift(); // Real exchange occurs only after choosing the slot.
+  p.board[bestIdx]=newCard;p.cpuSeenNumbers.push(newCard);p.redrawUsed++;
  }
  cpuArrange(p);
 }
-function cpuChoose(p){
- const options=unused(p);if(!options.length)return;
- if(state.cpuDifficulty==='easy'){p.choice=cpuRandomChoice(options);p.predictions={};return;}
- const me=stat(p.board,state.rule),opponent=state.players.find(x=>x.id!==p.id);
- const opponentChoices=unused(opponent);
- // 相手の残りの手だけを使う。相手の魔法陣や今回の確定手は見ない。
- const scores=options.map(h=>{
+// 最強CPU：公開情報だけによる対戦相手の行動予測と、次の勝負の先読み。
+// 相手の board / choice / predictions / 交換前の数字にはアクセスしない。
+// 偶然負ける手を選ぶ行動も排除せず、相手の選択確率に下限を残す。
+function cpuRpsValue(myHand,enemyHand){
+ return (myHand+1)%3===enemyHand?1:(enemyHand+1)%3===myHand?-1:0;
+}
+function cpuFutureHands(myHand,enemyHand,myOptions,enemyOptions){
+ const mine=myOptions.filter(h=>h!==myHand),theirs=enemyOptions.filter(h=>h!==enemyHand);
+ if(!mine.length&&!theirs.length)return 0;
+ if(!mine.length)return -1.2;
+ if(!theirs.length)return 1.2;
+ // 次の残り手が一つずつなら、HPを削らずじゃんけんだけで決着する場合がある。
+ if(mine.length===1&&theirs.length===1)return cpuRpsValue(mine[0],theirs[0])*.95;
+ // 二手以上が残る場合は、勝敗の有利さを弱く予測する。
+ let sum=0;
+ for(const a of mine)for(const b of theirs)sum+=cpuRpsValue(a,b);
+ return .36*sum/(mine.length*theirs.length);
+}
+function cpuSoftmax(values,temperature){
+ const top=Math.max(...values),weights=values.map(v=>Math.exp((v-top)/temperature));
+ const sum=weights.reduce((a,b)=>a+b,0)||1;
+ return weights.map(v=>v/sum);
+}
+function cpuChooseUltimate(p,options,other,possibilities){
+ const own=stat(p.board,state.rule),hpMax=state.hpMax||100;
+ const hypothetical=cpuHypotheticalBoards(p,144);
+ const rps=(a,b)=>cpuRpsValue(a,b);
+ const future=(a,b)=>cpuFutureHands(a,b,options,possibilities);
+ // まず相手の視点で、公開済みの残り手とHPを使って合理的な手を予測。
+ // 相手の見えない攻防値は評価に入れず、決め打ちもしない。
+ const enemyScores=possibilities.map(b=>{
   let score=0;
-  for(const other of opponentChoices){
-   const win=(h+1)%3===other,lose=(other+1)%3===h,tie=h===other;
-   const attackPressure=Math.min(me.atk[h],state.hpMax*2);
-   const defenseProtection=Math.min(me.def[h],state.hpMax*2);
-   score+=(win?2.3:tie?.55:-1.45)+ (win||tie?attackPressure/state.hpMax*.85:0)+(lose||tie?defenseProtection/state.hpMax*.6:0);
+  for(const a of options){
+   const matchup=rps(a,b);
+   // 相手の勝敗 + 次に残す手の相性。相手はCPUの今回の確定手を知らない。
+   score+=-matchup-future(a,b)*.72;
   }
-  return score/Math.max(1,opponentChoices.length);
+  score/=options.length;
+  // HPの少ない手は、あいこで被弾する可能性を少し警戒する。
+  const fragility=1-Math.min(1,other.hp[b]/hpMax);
+  score-=fragility*.12;
+  return score;
+ });
+ // 相手は最善以外の手を選ぶこともある。読みが外れる危険を常に残す。
+ const rational=cpuSoftmax(enemyScores,.42);
+ const enemyProb=rational.map(v=>v*.82+.18/possibilities.length);
+ const scores=options.map(a=>{
+  const perEnemy=possibilities.map((b,j)=>{
+   const result=rps(a,b),win=result===1,lose=result===-1,tie=result===0;
+   let total=0;
+   for(const e of hypothetical){
+    const deal=(win||tie)?Math.min(other.hp[b],Math.max(0,own.atk[a]-e.def[b])):0;
+    const taken=(lose||tie)?Math.min(p.hp[a],Math.max(0,e.atk[b]-own.def[a])):0;
+    const knockOut=deal>0&&deal>=other.hp[b];
+    const myKnockOut=taken>0&&taken>=p.hp[a];
+    let v=deal/hpMax*1.08-taken/hpMax*1.22
+     +(knockOut?.65:0)-(myKnockOut?.82:0)
+     +result*.24;
+    // 次戦の有利さは、現在の手が生き残る場合を優先して評価する。
+    // 将来の相手の攻防を知っているかのような予測は行わない。
+    if(!myKnockOut&&!knockOut)v+=future(a,b)*.44;
+    else if(myKnockOut&&!knockOut)v-=.28;
+    else if(knockOut&&!myKnockOut)v+=.28;
+    total+=v;
+   }
+   return total/hypothetical.length;
+  });
+  const expected=perEnemy.reduce((sum,v,j)=>sum+v*enemyProb[j],0);
+  // 読み違えても被害を抑えられる手を少し優遇する。
+  const worst=Math.min(...perEnemy);
+  return expected*.87+worst*.13;
  });
  const best=Math.max(...scores);
- if(state.cpuDifficulty==='normal'&&R()<.32)p.choice=cpuRandomChoice(options);
- else {const shortlist=options.filter((h,i)=>scores[i]>=best-(state.cpuDifficulty==='hard'?.08:.65));p.choice=cpuRandomChoice(shortlist);}
+ // 数値がほぼ同点の時だけランダム化して読みを一辺倒にしない。
+ const choices=options.filter((_,i)=>scores[i]>=best-.013);
+ p.choice=cpuRandomChoice(choices);
+}
+function cpuChoose(p){
+ const options=unused(p);if(!options.length)return;
  p.predictions={};
+ if(state.cpuDifficulty==='easy'){p.choice=cpuRandomChoice(options);return;}
+ const other=state.players.find(x=>x.id!==p.id);
+ const possibilities=unused(other);
+ if(!possibilities.length){p.choice=cpuRandomChoice(options);return;}
+ if(state.cpuDifficulty==='ultimate'){cpuChooseUltimate(p,options,other,possibilities);return;}
+ const me=stat(p.board,state.rule),difficulty=state.cpuDifficulty,hpMax=state.hpMax||100;
+ const samples=difficulty==='ultimate'?150:difficulty==='hard'?55:16;
+ const hypothetical=cpuHypotheticalBoards(p,samples);
+ const scores=options.map(h=>{
+  let total=0,totalWeight=0;
+  for(const e of hypothetical)for(const enemyHand of possibilities){
+   // Opponent hands are only public available possibilities. The current secret pick is never read.
+   const win=(h+1)%3===enemyHand,lose=(enemyHand+1)%3===h,tie=h===enemyHand;
+   const deal=(win||tie)?Math.min(other.hp[enemyHand],Math.max(0,me.atk[h]-e.def[enemyHand])):0;
+   const taken=(lose||tie)?Math.min(p.hp[h],Math.max(0,e.atk[enemyHand]-me.def[h])):0;
+   const knockOut=deal>=other.hp[enemyHand]&&deal>0;
+   const myKnockOut=taken>=p.hp[h]&&taken>0;
+   const enemyRemaining=possibilities.length;
+   const myRemaining=options.length;
+   let utility=deal/hpMax*(1.05+.12/(enemyRemaining))
+    -taken/hpMax*(1.1+.18/(myRemaining))
+    +(knockOut?.55:0)-(myKnockOut?.7:0)
+    +(win?.16:lose?-.13:0);
+   // Preserve a critical own hand if several alternatives are still available.
+   if(p.hp[h]<hpMax*.35)utility-=taken/hpMax*.30;
+   // Do not assume the opponent's actual move. Mild public-HP bias only.
+   const weight=.75+.25*(other.hp[enemyHand]/hpMax);
+   total+=utility*weight;totalWeight+=weight;
+  }
+  return total/Math.max(1,totalWeight);
+ });
+ const best=Math.max(...scores);
+ if(difficulty==='normal'&&R()<.30){p.choice=cpuRandomChoice(options);return;}
+ const tolerance=difficulty==='ultimate'?1e-7:difficulty==='hard'?.065:.26;
+ const picks=options.filter((_,i)=>scores[i]>=best-tolerance);
+ p.choice=cpuRandomChoice(picks);
 }
 function stat(board,rule){const b=board.map(v=>(rule?.id==='zero' && v===0)?10:v); const atk=[0,1,2].map(c=>b[c]*b[c+3]*b[c+6]); const def=[0,1,2].map(r=>b[r*3]*b[r*3+1]*b[r*3+2]);
  const typ=rule?.id.startsWith('even')?'even':rule?.id.startsWith('odd')?'odd':null;
@@ -709,7 +873,7 @@ function versusSettings(){
 }
 function practiceSettings(){
  const hpOpts=[100,200,300,400].map(v=>`<button class="pill ${state.practiceHp===v?'active':''}" data-practice-hp="${v}" aria-pressed="${state.practiceHp===v}">${v} HP</button>`).join('');
- const cpuOpts=[['easy','やさしい','気軽に練習'],['normal','ふつう','配置と手を考える'],['hard','つよい','読み合いを重視']].map(([id,name,desc])=>`<button class="practice-difficulty ${state.cpuDifficulty===id?'active':''}" data-cpu-difficulty="${id}" aria-pressed="${state.cpuDifficulty===id}"><strong>${name}</strong><span>${desc}</span></button>`).join('');
+ const cpuOpts=[['easy','やさしい','気軽に練習'],['normal','ふつう','配置と手を考える'],['hard','つよい','攻防・HPを判断'],['ultimate','最強','最適配置と確率予測']].map(([id,name,desc])=>`<button class="practice-difficulty ${state.cpuDifficulty===id?'active':''}" data-cpu-difficulty="${id}" aria-pressed="${state.cpuDifficulty===id}"><strong>${name}</strong><span>${desc}</span></button>`).join('');
  return `<section class="panel practice-settings"><div class="flex" style="justify-content:space-between;align-items:center"><div><div class="eyebrow">SOLO PRACTICE</div><h1 class="practice-title">🤖 一人で練習</h1></div><button class="btn soft" data-action="home">← トップへ戻る</button></div><p>CPUと1対1で練習できます。数字の配置やじゃんけんの駆け引きは対人戦と同じです。</p><div class="practice-config"><div class="stack"><label class="field">自分の名前<input class="txt" maxlength="16" placeholder="プレイヤー1" data-practice-name value="${esc(state.practiceName)}" autocomplete="off"></label><div><div class="label" style="margin-bottom:9px">各手の初期HP</div><div class="pill-row">${hpOpts}</div></div><div><div class="label" style="margin-bottom:9px">対戦ルール</div><div class="pill-row"><button class="pill ${state.practiceRuleMode==='normal'?'active':''}" data-practice-rule="normal" aria-pressed="${state.practiceRuleMode==='normal'}">通常ルールのみ</button><button class="pill ${state.practiceRuleMode==='special'?'active':''}" data-practice-rule="special" aria-pressed="${state.practiceRuleMode==='special'}">特殊ルールあり</button></div></div></div><div class="stack"><div><div class="label" style="margin-bottom:9px">CPUの強さ</div><div class="practice-difficulties">${cpuOpts}</div></div></div></div><div style="margin-top:18px">${musicConfig()}</div><button class="btn gold large wide" style="margin-top:20px" data-action="practice-start">⚔ CPUと練習スタート</button></section>`;
 }
 function pStatus(){return '';}
